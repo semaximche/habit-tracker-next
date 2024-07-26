@@ -10,3 +10,19 @@ export default function MainPage() {
     </div>
   );
 }
+
+//export default function MainPage() {
+//    return (
+//        <div className="h-8">
+//                <Topbar />
+//            <div className="grid lg:grid-cols-3">
+//                <div className="col-span-2 min-h-60 bg-white m-2 p-6 rounded-lg shadow-lg hidden lg:block">
+//                    left
+//                </div>
+//                <div className="min-h-60 m-2 p-6 bg-white rounded-lg shadow-lg">
+//                    right
+//                </div>
+//            </div>
+//        </div>
+//    );
+//}
