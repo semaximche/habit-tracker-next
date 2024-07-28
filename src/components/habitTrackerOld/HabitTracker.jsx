@@ -96,7 +96,7 @@ const HabitTracker = () => {
     };
 
     return (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col min-h-screen">
             <div className="flex-grow grid lg:grid-cols-3 gap-4 p-4">
                 <div className="lg:col-span-2 bg-white rounded-lg shadow-lg overflow-auto">
                     <div className="p-6">
@@ -115,10 +115,7 @@ const HabitTracker = () => {
                             </div>
                             <span>{progress}% achieved</span>
                         </div>
-                        <HabitTable
-                            habits={habits}
-                            handleMarkComplete={handleMarkComplete}
-                        />
+                        <HabitTable habits={habits} handleMarkComplete={handleMarkComplete} />
                     </div>
                 </div>
                 <div className="bg-white rounded-lg shadow-lg overflow-auto">
