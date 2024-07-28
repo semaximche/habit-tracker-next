@@ -1,35 +1,25 @@
-'use client';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import HabitTable from './HabitTable';
 import Habits from './Habits';
 
 const HabitTracker = () => {
     const [week, setWeek] = useState('Mon, Dec 14 - Sun, Dec 20');
     const [habits, setHabits] = useState([
-        { name: '💪 Exercise', color: 'bg-yellow-500', Active_days: [1, 3, 5, null, null, null, null], completedDays: [] },
-        { name: '📝 Journal', color: 'bg-purple-500', Active_days: [0, 2, 4, null, null, null, null], completedDays: [] },
-        { name: '❌ Alcohol', color: 'bg-pink-500', Active_days: [1, null, null, null, null, null, null], completedDays: [] },
-        { name: '🚿 Cold Shower', color: 'bg-blue-500', Active_days: [0, null, null, null, null, null], completedDays: [] },
-        { name: '🦷 Floss', color: 'bg-gray-500', Active_days: [0, 2, 4, 6, null, null, null], completedDays: [] },
-        { name: '🧘 Meditate', color: 'bg-orange-500', Active_days: [1, 3, 5, null, null, null, null], completedDays: [] },
-        { name: '🎧 eBook', color: 'bg-teal-500', Active_days: [1, 2, 3, 4, 5, null, null], completedDays: [] },
-        { name: 'Run', color: 'bg-red-500', Active_days: [0, 2, 4, null, null, null, null], completedDays: [] },
-        { name: 'Read', color: 'bg-green-500', Active_days: [0, 3, 6, null, null, null, null], completedDays: [] },
-        { name: 'Cook', color: 'bg-indigo-500', Active_days: [1, 2, 3, null, null, null, null], completedDays: [] },
+        // Your habit data here
     ]);
 
     const progress = 86; // Example progress
 
-    const updateCompletedDays = (updatedHabits) => {
+    const updateCompletedDays = useCallback((updatedHabits) => {
         setHabits(updatedHabits);
-    };
+    }, []);
 
-    const addHabit = (newHabit) => {
+    const addHabit = useCallback((newHabit) => {
         setHabits(prevHabits => [...prevHabits, newHabit]);
-    };
+    }, []);
 
-    const handleMarkComplete = (habit, dayIdx) => {
-        const updatedHabits = habits.map(h => {
+    const handleMarkComplete = useCallback((habit, dayIdx) => {
+        setHabits(prevHabits => prevHabits.map(h => {
             if (h.name === habit.name) {
                 return {
                     ...h,
@@ -39,9 +29,8 @@ const HabitTracker = () => {
                 };
             }
             return h;
-        });
-        setHabits(updatedHabits);
-    };
+        }));
+    }, []);
 
     return (
         <div className="flex flex-col min-h-screen">
@@ -80,4 +69,4 @@ const HabitTracker = () => {
     );
 };
 
-export default HabitTracker;
+export default React.memo(HabitTracker);
