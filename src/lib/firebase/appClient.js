@@ -8,13 +8,13 @@ import { getStorage } from 'firebase/storage';
 
 // Firebase configuration
 const firebaseConfig = {
-    apiKey: 'AIzaSyDMev8VCz-wDogE-jc4mLOG8m1ciNOGeaQ',
-    authDomain: 'habit-tracker-148d9.firebaseapp.com',
-    projectId: 'habit-tracker-148d9',
-    storageBucket: 'habit-tracker-148d9.appspot.com',
-    messagingSenderId: '1094967782047',
-    appId: '1:1094967782047:web:4a2d4a8767f55eefce50aa',
-    measurementId: 'G-SFXSDTBW6Q',
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase

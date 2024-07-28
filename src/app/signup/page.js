@@ -1,8 +1,7 @@
-import GoogleButton from '@/components/login/GoogleButton';
-import LoginForm from '@/components/login/LoginForm';
+import SignUpForm from '@/components/login/SignUpForm';
 import MainTopbar from '@/components/MainTopbar';
 
-export default function Login() {
+export default function SignUp() {
     return (
         <div className="flex w-full mt-14 mb-14 items-center justify-center bg-cover bg-center px-5 sm:px-0">
             <div className="flex w-full max-w-sm overflow-hidden rounded-lg border bg-white shadow-lg lg:max-w-4xl">
@@ -16,19 +15,9 @@ export default function Login() {
                 ></div>
                 <div className="w-full p-8 lg:w-1/2">
                     <p className="text-center text-2xl font-bold text-gray-600">
-                        Log in an existing account
+                        Create a new account
                     </p>
-                    <LoginForm />
-                    <GoogleButton />
-                    <div className="mt-4 flex w-full items-center text-center">
-                        <a
-                            href="#"
-                            className="w-full text-center text-xs capitalize text-gray-500"
-                        >
-                            Don&apos;t have an account yet?
-                            <span className="text-green-500"> Sign Up</span>
-                        </a>
-                    </div>
+                    <SignUpForm/>
                 </div>
             </div>
         </div>

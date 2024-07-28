@@ -1,4 +1,8 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithPopup,
+} from 'firebase/auth';
 import { auth } from './appClient';
 
 export async function signInWithGoogle() {
@@ -13,9 +17,9 @@ export async function signInWithGoogle() {
 
 export async function createUser(email, password) {
     try {
-        await createUserWithEmailAndPassword(auth, email, password)
+        await createUserWithEmailAndPassword(auth, email, password);
     } catch (error) {
-        console.error('Error creating new user', error)
+        console.error('Error creating new user', error);
     }
 }
 

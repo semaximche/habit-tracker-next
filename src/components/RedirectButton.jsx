@@ -4,7 +4,7 @@ import { signOut } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export default function LogoutButton() {
+export default function RedirectButton(props) {
     const { user } = UseAuth();
     const router = useRouter();
 
