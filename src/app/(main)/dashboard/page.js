@@ -1,10 +1,9 @@
-import MainTopbar from '@/components/MainTopbar';
 import HabitTracker from '@/components/habitTrackerOld/HabitTracker';
 
 export default function MainPage() {
     return (
-        <div className="flex flex-col h-screen">
-            <main className="flex-grow">
+        <div className="flex flex-col min-h-screen">
+            <main className="flex-grow overflow-hidden">
                 <HabitTracker />
             </main>
         </div>
