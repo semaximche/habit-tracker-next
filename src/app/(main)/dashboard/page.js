@@ -3,13 +3,12 @@ import HabitTracker from '@/components/habitTrackerOld/HabitTracker';
 export default function MainPage() {
     return (
         <div className="flex flex-col min-h-screen">
-            <main className="flex-grow overflow-hidden">
+            <main >
                 <HabitTracker />
             </main>
         </div>
     );
 }
-
 //<div className="col-span-2 min-h-60 bg-white m-2 p-6 rounded-lg shadow-lg hidden lg:block">
 //<div className="flex justify-between items-center">
 //<button className="text-xl">&lt;</button>
