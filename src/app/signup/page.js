@@ -1,9 +1,8 @@
-// pages/login/page.js
+// pages/signup/page.js
 
-import GoogleButton from '@/components/login/GoogleButton';
-import LoginForm from '@/components/login/LoginForm';
+import SignUpForm from '@/components/login/SignUpForm';
 
-export default function LoginPage() {
+export default function SignUpPage() {
     return (
         <div
             className="flex h-screen w-full items-center justify-center bg-cover bg-center px-5 sm:px-0"
@@ -22,19 +21,19 @@ export default function LoginPage() {
                 ></div>
                 <div className="w-full p-8 lg:w-1/2">
                     <p className="text-center text-2xl font-bold text-gray-600">
-                        Welcome back!
+                        Create an account
                     </p>
                     <p className="mb-4 text-center text-gray-500">
                         Track your habits and share your progress with friends
                     </p>
-                    <LoginForm />
+                    <SignUpForm />
                     <div className="mt-4 flex w-full items-center text-center">
                         <a
-                            href="/signup"
+                            href="/login"
                             className="w-full text-center text-xs capitalize text-gray-500"
                         >
-                            Don&apos;t have an account yet?
-                            <span className="text-green-500"> Sign Up</span>
+                            Already have an account?
+                            <span className="text-green-500"> Sign In</span>
                         </a>
                     </div>
                 </div>
