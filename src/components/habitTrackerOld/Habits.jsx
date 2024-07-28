@@ -82,20 +82,11 @@ const Habits = ({ statuses, updateCompletedDays, addHabit }) => {
 
                     return (
                         <Habit
-                            key={index}
-                            name={habit.name}
-                            status={status}
+                            key={`${habit.name}-${habit.completedDays.join(',')}`}
+                            habit={habit}
                             color={habit.color}
-                            onMarkComplete={
-                                isActiveToday
-                                    ? () => handleMarkComplete(habit)
-                                    : null
-                            }
-                            onUndo={
-                                isCompletedToday
-                                    ? () => handleMarkComplete(habit)
-                                    : null
-                            }
+                            onMarkComplete={isActiveToday ? () => handleMarkComplete(habit) : null}
+                            onUndo={isCompletedToday ? () => handleMarkComplete(habit) : null}
                         />
                     );
                 })}

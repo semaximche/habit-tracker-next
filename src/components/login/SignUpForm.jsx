@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 export default function SignUpForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
     const [error, setError] = useState('');
     const router = useRouter();
 
@@ -17,8 +18,8 @@ export default function SignUpForm() {
             return;
         }
         try {
-            await createUser(email, password);
-            router.push('/main'); // Redirect to main page after signing up
+            await createUser(email, password, username);
+            router.push('/dashboard'); // Redirect to main page after signing up
         } catch (error) {
             setError(error.message);
             console.error('Error creating user:', error);
@@ -28,6 +29,14 @@ export default function SignUpForm() {
     return (
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {error && <p className="text-red-500">{error}</p>}
+            <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Username"
+                required
+                className="p-2 border border-gray-300 rounded"
+            />
             <input
                 type="email"
                 value={email}

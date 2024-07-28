@@ -3,11 +3,11 @@
 import { useUserData } from "@/contexts/UserContext"
 
 export default function HabitsList() {
-    const { userdata } = useUserData()
-
+    //const { userdata } = useUserData()
+    //{ userdata }
     return (
         <div>
-            { userdata }
+            
         </div>
     )
 }

@@ -71,8 +71,8 @@ const HabitTracker = () => {
 
     const progress = 86; // Example progress
 
-    const updateCompletedDays = (updatedHabit) => {
-        setHabits(updatedHabit);
+    const updateCompletedDays = (updatedHabits) => {
+        setHabits(updatedHabits);
     };
 
     const addHabit = (newHabit) => {
@@ -80,34 +80,52 @@ const HabitTracker = () => {
         setHabits((prevHabits) => [...prevHabits, newHabit]);
         console.log(habits);
     };
+    const handleMarkComplete = (habit, dayIdx) => {
+        const updatedHabits = habits.map((h) => {
+            if (h.name === habit.name) {
+                return {
+                    ...h,
+                    completedDays: h.completedDays.includes(dayIdx)
+                        ? h.completedDays.filter(day => day !== dayIdx)
+                        : [...h.completedDays, dayIdx],
+                };
+            }
+            return h;
+        });
+        setHabits(updatedHabits);
+    };
 
     return (
-        <div className="h-8">
-            <div className="grid lg:grid-cols-3">
-                <div className="col-span-2 min-h-60 bg-white m-2 p-6 rounded-lg shadow-lg hidden lg:block">
-                    <div className="flex justify-between items-center">
-                        <button className="text-xl">&lt;</button>
-                        <h2 className="text-xl font-semibold">{week}</h2>
-                        <button className="text-xl">&gt;</button>
-                    </div>
-                    <div className="flex justify-between items-center mt-6">
-                        <span>Up 50% from the week before</span>
-                        <div className="w-3/4 bg-gray-200 rounded-full h-2.5">
-                            <div
-                                className="bg-blue-500 h-2.5 rounded-full"
-                                style={{ width: `${progress}%` }}
-                            ></div>
+        <div className="flex flex-col h-screen">
+            <div className="flex-grow grid lg:grid-cols-3 gap-4 p-4">
+                <div className="lg:col-span-2 bg-white rounded-lg shadow-lg overflow-auto">
+                    <div className="p-6">
+                        <div className="flex justify-between items-center">
+                            <button className="text-xl">&lt;</button>
+                            <h2 className="text-xl font-semibold">{week}</h2>
+                            <button className="text-xl">&gt;</button>
                         </div>
-                        <span>{progress}% achieved</span>
+                        <div className="flex justify-between items-center mt-6">
+                            <span>Up 50% from the week before</span>
+                            <div className="w-3/4 bg-gray-200 rounded-full h-2.5">
+                                <div
+                                    className="bg-blue-500 h-2.5 rounded-full"
+                                    style={{ width: `${progress}%` }}
+                                ></div>
+                            </div>
+                            <span>{progress}% achieved</span>
+                        </div>
+                        <HabitTable habits={habits} handleMarkComplete={handleMarkComplete} />
                     </div>
-                    <HabitTable habits={habits} />
                 </div>
-                <div className="min-h-60 m-2 p-6 bg-white rounded-lg shadow-lg">
-                    <Habits
-                        statuses={habits}
-                        updateCompletedDays={updateCompletedDays}
-                        addHabit={addHabit}
-                    />
+                <div className="bg-white rounded-lg shadow-lg overflow-auto">
+                    <div className="p-6">
+                        <Habits
+                            statuses={habits}
+                            updateCompletedDays={updateCompletedDays}
+                            addHabit={addHabit}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
