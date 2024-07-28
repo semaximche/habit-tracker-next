@@ -11,6 +11,8 @@ export default function MainPage() {
       </div>
   );
 }
+
+
 //export default function MainPage() {
 //    return (
 //        <div className="h-8">
@@ -25,4 +27,4 @@ export default function MainPage() {
 //            </div>
 //        </div>
 //    );
-//}
+
