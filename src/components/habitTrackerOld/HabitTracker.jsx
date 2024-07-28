@@ -69,4 +69,4 @@ const HabitTracker = () => {
     );
 };
 
-export default React.memo(HabitTracker);
+export default HabitTracker;
