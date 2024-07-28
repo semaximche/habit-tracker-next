@@ -17,7 +17,7 @@ export default function SignUp() {
                     <p className="text-center text-2xl font-bold text-gray-600">
                         Create a new account
                     </p>
-                    <SignUpForm/>
+                    <SignUpForm />
                 </div>
             </div>
         </div>

@@ -12,19 +12,19 @@ export const emptyUserData = {
 };
 
 export const UserContextProvider = ({ children }) => {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(true);
     const [userData, setUserData] = useState();
     const { user } = UseAuth();
 
     //detect whether user authentication has been loaded
     useEffect(() => {
-        if(user === null || typeof(user) === "undefined") {
-            setLoading(true)
-            setUserData(emptyUserData)
+        if (user === null || typeof user === 'undefined') {
+            setLoading(true);
+            setUserData(emptyUserData);
         } else {
-            setLoading(false)
+            setLoading(false);
         }
-    }, [user])
+    }, [user]);
 
     //realtime updater
     useEffect(() => {
@@ -41,20 +41,23 @@ export const UserContextProvider = ({ children }) => {
                 } else {
                     //Data to update
                     snapshot.docs.forEach((doc) => {
-                        setUserData((prev) => ({ ...prev, habits: {
-                            ...prev.habits,
-                            [doc.id]: doc.data()
-                        }}))
-                    })
+                        setUserData((prev) => ({
+                            ...prev,
+                            habits: {
+                                ...prev.habits,
+                                [doc.id]: doc.data(),
+                            },
+                        }));
+                    });
                 }
-                console.log(userData)
+                console.log(userData);
             }
         });
 
         return () => {
-            isMounted = false;                               // return this to true maybe
+            isMounted = false; // return this to true maybe
         };
-    }, [ setUserData, loading ]);
+    }, [setUserData, loading]);
 
     return (
         <UserContext.Provider value={{ userData }}>

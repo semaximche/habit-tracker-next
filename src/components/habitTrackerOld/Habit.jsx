@@ -29,7 +29,9 @@ const Habit = ({ habit, color, onMarkComplete, onUndo }) => {
             <div className="flex items-center">
                 {isPending && (
                     <div className="flex flex-col items-center mr-3">
-                        <span className={`block h-2 w-2 rounded-full ${color}`}></span>
+                        <span
+                            className={`block h-2 w-2 rounded-full ${color}`}
+                        ></span>
                         <span className={`block h-12 w-0.5 ${color}`}></span>
                     </div>
                 )}
@@ -38,7 +40,8 @@ const Habit = ({ habit, color, onMarkComplete, onUndo }) => {
                         {habit.name}
                     </h3>
                     <p className={`text-sm ${getTextColor()}`}>
-                        {isCompletedToday ? '✔️' : isPending ? '🕒' : ''} {status}
+                        {isCompletedToday ? '✔️' : isPending ? '🕒' : ''}{' '}
+                        {status}
                     </p>
                 </div>
             </div>

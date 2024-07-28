@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import GoogleButton from "@/components/login/GoogleButton";
+import GoogleButton from '@/components/login/GoogleButton';
 import { useRouter } from 'next/navigation';
 import { UseAuth } from '@/contexts/AuthContext';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -55,7 +55,10 @@ export default function LoginForm() {
                     required
                     className="p-2 border border-gray-300 rounded"
                 />
-                <button type="submit" className="p-2 bg-blue-500 text-white rounded">
+                <button
+                    type="submit"
+                    className="p-2 bg-blue-500 text-white rounded"
+                >
                     Log In
                 </button>
             </form>

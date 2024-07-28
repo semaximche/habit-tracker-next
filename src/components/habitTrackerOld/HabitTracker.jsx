@@ -86,7 +86,7 @@ const HabitTracker = () => {
                 return {
                     ...h,
                     completedDays: h.completedDays.includes(dayIdx)
-                        ? h.completedDays.filter(day => day !== dayIdx)
+                        ? h.completedDays.filter((day) => day !== dayIdx)
                         : [...h.completedDays, dayIdx],
                 };
             }
@@ -115,7 +115,10 @@ const HabitTracker = () => {
                             </div>
                             <span>{progress}% achieved</span>
                         </div>
-                        <HabitTable habits={habits} handleMarkComplete={handleMarkComplete} />
+                        <HabitTable
+                            habits={habits}
+                            handleMarkComplete={handleMarkComplete}
+                        />
                     </div>
                 </div>
                 <div className="bg-white rounded-lg shadow-lg overflow-auto">

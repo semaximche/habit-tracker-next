@@ -53,7 +53,10 @@ export default function SignUpForm() {
                 required
                 className="p-2 border border-gray-300 rounded"
             />
-            <button type="submit" className="p-2 bg-blue-500 text-white rounded">
+            <button
+                type="submit"
+                className="p-2 bg-blue-500 text-white rounded"
+            >
                 Sign Up
             </button>
         </form>

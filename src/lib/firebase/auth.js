@@ -2,7 +2,7 @@ import {
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithPopup,
-    updateProfile
+    updateProfile,
 } from 'firebase/auth';
 import { auth } from './appClient';
 
@@ -18,7 +18,11 @@ export async function signInWithGoogle() {
 
 export async function createUser(email, password, username) {
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
         await updateProfile(userCredential.user, { displayName: username });
     } catch (error) {
         console.error('Error creating new user:', error);
