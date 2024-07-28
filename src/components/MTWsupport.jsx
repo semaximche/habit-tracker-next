@@ -1,7 +1,7 @@
-'use client'
+import Script from 'next/script'
 
 export default function MTWSupport() {
     return (
-        <script src="https://morethanwallet.com/appstore/index.js"/>
+        <Script src="https://morethanwallet.com/appstore/index.js"/>
     )
 }
