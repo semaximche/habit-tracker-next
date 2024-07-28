@@ -3,7 +3,7 @@ import HabitTracker from '@/components/habitTrackerOld/HabitTracker';
 export default function MainPage() {
     return (
         <div className="flex flex-col min-h-screen">
-            <main >
+            <main className="flex-grow overflow-hidden">
                 <HabitTracker />
             </main>
         </div>
