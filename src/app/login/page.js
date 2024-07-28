@@ -2,7 +2,7 @@ import GoogleButton from '@/components/login/GoogleButton';
 import LoginForm from '@/components/login/LoginForm';
 import MainTopbar from '@/components/MainTopbar';
 
-export default function Login() {
+export default function LoginPage() {
     return (
         <div className="flex w-full mt-14 mb-14 items-center justify-center bg-cover bg-center px-5 sm:px-0">
             <div className="flex w-full max-w-sm overflow-hidden rounded-lg border bg-white shadow-lg lg:max-w-4xl">
@@ -22,7 +22,7 @@ export default function Login() {
                     <GoogleButton />
                     <div className="mt-4 flex w-full items-center text-center">
                         <a
-                            href="#"
+                            href="/signup"
                             className="w-full text-center text-xs capitalize text-gray-500"
                         >
                             Don&apos;t have an account yet?
