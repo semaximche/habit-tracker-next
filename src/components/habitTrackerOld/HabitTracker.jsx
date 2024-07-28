@@ -80,13 +80,14 @@ const HabitTracker = () => {
         setHabits((prevHabits) => [...prevHabits, newHabit]);
         console.log(habits);
     };
+
     const handleMarkComplete = (habit, dayIdx) => {
         const updatedHabits = habits.map((h) => {
             if (h.name === habit.name) {
                 return {
                     ...h,
                     completedDays: h.completedDays.includes(dayIdx)
-                        ? h.completedDays.filter((day) => day !== dayIdx)
+                        ? h.completedDays.filter(day => day !== dayIdx)
                         : [...h.completedDays, dayIdx],
                 };
             }
@@ -96,8 +97,8 @@ const HabitTracker = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-screen">
-            <div className="flex-grow grid lg:grid-cols-3 gap-4 p-4">
+        <div className="flex flex-col min-h-screen overflow-hidden">
+            <div className="flex-grow grid lg:grid-cols-3 gap-4 p-4 overflow-hidden">
                 <div className="lg:col-span-2 bg-white rounded-lg shadow-lg overflow-auto">
                     <div className="p-6">
                         <div className="flex justify-between items-center">
