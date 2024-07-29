@@ -16,7 +16,7 @@ export default function CreateHabit({isModalOpen, toggleModal}) {
                             {
                                 ['grey', 'orange', 'green', 'blue', 'purple', 'red'].map((color, index) => {
                                     return (
-                                        <div className="flex flex-col justify-center items-center p-0.5">
+                                        <div key={index} className="flex flex-col justify-center items-center p-0.5">
                                             <Radio name="color" color={color} id="color" value={color} />
                                             <label className={`text-${color}-500 text-sm`}>{color}</label>
                                         </div>
@@ -29,7 +29,7 @@ export default function CreateHabit({isModalOpen, toggleModal}) {
                             {
                                 ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => {
                                     return (
-                                        <div className="flex flex-col justify-center items-center p-0.5">
+                                        <div key={index} className="flex flex-col justify-center items-center p-0.5">
                                             <Checkbox id="activeDays" value={day}/>
                                             <label className={`text-sm`}>{day}</label>
                                         </div>
