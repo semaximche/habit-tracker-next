@@ -26,25 +26,23 @@ export const UserContextProvider = ({ children }) => {
     //realtime updater
     useEffect(() => {
         let unsubscribe = () => {};
-        const userdataRef = collection(db, `/users/${user?.uid}/habits`);
+        const habitsRef = collection(db, `/users/${user?.uid}/habits`);
 
         if(isUserLoaded) {
             //Create new database listener
-            unsubscribe = onSnapshot(userdataRef, (snapshot) => {
-                //No data in database
-                if (snapshot.docs.length === 0) {
-                    setUserData((prev) => ({ ...prev, habits: {} }));
-                } else {
-                    //Data to update
-                    snapshot.docs.forEach((doc) => {
-                        setUserData((prev) => ({ ...prev, habits: {
-                            ...prev.habits,
-                            [doc.id]: doc.data()
-                        }}))
-                    })
-                }
+            unsubscribe = onSnapshot(habitsRef, (snapshot) => {
+                //When executing set loading and refresh previous data
+                setIsUserDataLoaded(false);
+                setUserData((prev) => ({ ...prev, habits: {} }));
+                //Update data
+                snapshot.docs.forEach((doc) => {
+                    setUserData((prev) => ({ ...prev, habits: {
+                        ...prev.habits,
+                        [doc.id]: doc.data()
+                    }}))
+                })
+                setIsUserDataLoaded(true);
             });
-            setIsUserDataLoaded(true);
         }
 
         //Unsubscribe from listener when unmounted

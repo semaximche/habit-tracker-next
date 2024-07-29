@@ -12,12 +12,11 @@ export default function HabitsListContents() {
     return (
         <div>
         {
+            // TODO sort habits by active -> complete -> inactive before passing to function
             Object.keys(habitsGroup).map((habit, index) => {
                 const isCompletedToday = habitsGroup[habit].completeDays.includes(getDateNow())
                 const isActiveToday = habitsGroup[habit].activeDays.includes(getWeekday())
-                //List incomplete habits active today first
-                if(isActiveToday && !isCompletedToday) {
-                    return (
+                return (
                         <div key={`${index}`}>
                             <HabitItem
                                 name={habitsGroup[habit].name}
@@ -27,31 +26,6 @@ export default function HabitsListContents() {
                             />
                         </div>
                     )
-                //List complete habits active today second
-                } else if (isActiveToday && isCompletedToday) {
-                    return (
-                        <div key={`${index}`}>
-                            <HabitItem
-                                name={habitsGroup[habit].name}
-                                color={habitsGroup[habit].color}
-                                completeDays={habitsGroup[habit].completeDays}
-                                activeDays = {habitsGroup[habit].activeDays}
-                            />
-                        </div>
-                    )
-                //List inactive habits today last
-                } else {
-                    return (
-                        <div key={`${index}`}>
-                            <HabitItem
-                                name={habitsGroup[habit].name}
-                                color={habitsGroup[habit].color}
-                                completeDays={habitsGroup[habit].completeDays}
-                                activeDays = {habitsGroup[habit].activeDays}
-                            />
-                        </div>
-                    )
-                }
             })
         }
         </div>
