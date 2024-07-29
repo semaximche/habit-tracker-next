@@ -9,26 +9,28 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
     //Firebase user state
     const [user, setUser] = useState();
+    const [isUserLoaded, setIsUserLoaded] = useState(false)
 
-    //On user change effect
     useEffect(() => {
+        //Create observer for auth state changes
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (currentUser) {
                 //There is a user logged in
                 setUser(currentUser);
-                console.log('user:', currentUser);
             } else {
                 //There is no user logged in
                 setUser(null);
-                console.log('user not logged in');
             }
-        });
+            setIsUserLoaded(true);
+        }, []);
+
+        //Unsubscribe from auth state change observer when component is unmounted
         return () => unsubscribe();
-    }, [user]);
+    }, []);
 
     //Context wrapper
     return (
-        <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ user, isUserLoaded }}>{children}</AuthContext.Provider>
     );
 };
 

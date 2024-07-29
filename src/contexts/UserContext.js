@@ -1,5 +1,4 @@
 'use client';
-
 import { useContext, createContext, useState, useEffect } from 'react';
 import { UseAuth } from './AuthContext';
 import { db } from '@/lib/firebase/appClient';
@@ -12,29 +11,26 @@ export const emptyUserData = {
 };
 
 export const UserContextProvider = ({ children }) => {
-    const [loading, setLoading] = useState(true)
-    const [userData, setUserData] = useState();
-    const { user } = UseAuth();
+    const [isUserDataLoaded, setIsUserDataLoaded] = useState(false)
+    const [userData, setUserData] = useState(emptyUserData);
 
-    //detect whether user authentication has been loaded
+    const { user, isUserLoaded } = UseAuth();
+
+    //check for userdata updates
     useEffect(() => {
-        if(user === null || typeof(user) === "undefined") {
-            setLoading(true)
-            setUserData(emptyUserData)
-        } else {
-            setLoading(false)
+        if(isUserDataLoaded) {
+            console.log("userdata:", userData);
         }
-    }, [user])
+    }, [userData])
 
     //realtime updater
     useEffect(() => {
-        let isMounted = true;
+        let unsubscribe = () => {};
         const userdataRef = collection(db, `/users/${user?.uid}/habits`);
 
-        //habits realtime updates
-        onSnapshot(userdataRef, (snapshot) => {
-            if (isMounted && !loading) {
-                console.log(snapshot);
+        if(isUserLoaded) {
+            //Create new database listener
+            unsubscribe = onSnapshot(userdataRef, (snapshot) => {
                 //No data in database
                 if (snapshot.docs.length === 0) {
                     setUserData((prev) => ({ ...prev, habits: {} }));
@@ -47,17 +43,18 @@ export const UserContextProvider = ({ children }) => {
                         }}))
                     })
                 }
-                console.log(userData)
-            }
-        });
+            });
+            setIsUserDataLoaded(true);
+        }
 
+        //Unsubscribe from listener when unmounted
         return () => {
-            isMounted = false;                               // return this to true maybe
+            unsubscribe()
         };
-    }, [ setUserData, loading ]);
+    }, [ isUserLoaded ]);
 
     return (
-        <UserContext.Provider value={{ userData }}>
+        <UserContext.Provider value={{ userData, isUserDataLoaded }}>
             {children}
         </UserContext.Provider>
     );

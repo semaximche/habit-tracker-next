@@ -22,7 +22,7 @@ export default function Dashboard() {
                 Habit Table
             </div>
             <div className="min-h-60 m-2 p-6 bg-white rounded-lg shadow-lg">
-                <HabitsList/>
+                Habits List
             </div>
         </div>
     );
