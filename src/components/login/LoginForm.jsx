@@ -1,11 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import GoogleButton from "@/components/login/GoogleButton";
 import { useRouter } from 'next/navigation';
 import { UseAuth } from '@/contexts/AuthContext';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/lib/firebase/appClient';
+import { auth } from '@/lib/firebase/firebaseInit';
 
 export default function LoginForm() {
     const [email, setEmail] = useState('');
@@ -30,10 +29,6 @@ export default function LoginForm() {
             console.error('Error signing in:', error);
         }
     };
-
-    if (user) {
-        return null; // Optionally render a loading state or nothing if the user is already logged in
-    }
 
     return (
         <div className="flex flex-col gap-4">

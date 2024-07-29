@@ -15,7 +15,7 @@ export default function Topbar() {
     }
 
     return (
-        <Navbar className="text-center flex bg-gray-700 items-center">
+        <Navbar className="text-center flex bg-blue-gray-500 items-center">
             <div className="flex-inital">
                 <p>hamburger maybe here</p>
             </div>

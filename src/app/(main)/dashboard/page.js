@@ -1,4 +1,4 @@
-import HabitsList from "@/components/dashboard/HabitsList";
+import HabitsListTable from "@/components/dashboard/HabitsListTable";
 
 export default function Dashboard() {
     return (
@@ -22,7 +22,7 @@ export default function Dashboard() {
                 Habit Table
             </div>
             <div className="min-h-60 m-2 p-6 bg-white rounded-lg shadow-lg">
-                Habits List
+                <HabitsListTable />
             </div>
         </div>
     );

@@ -4,22 +4,20 @@ import LoginSignupGroup from './LoginSignupGroup';
 import { UseAuth } from '@/contexts/AuthContext';
 import UserSignoutGroup from './UserSignoutGroup';
 
-// TODO : MAKE THIS RECOGNIZE LOGGED IN USER AND CHANGE BUTTONS
-
 export default function MainTopbar() {
-    const { user } = UseAuth();
+    const { user, isUserLoaded } = UseAuth();
 
     return (
-        <div className=" bg-blue-gray-700 shadow-xl flex items-center">
+        <div className=" bg-blue-gray-500 shadow-xl flex items-center">
             <Link
                 href="/"
-                className="flex initial text-white font-bold text-2xl m-5"
+                className="text-white font-bold text-2xl m-5 hidden sm:block"
             >
                 Habit Tracker
             </Link>
 
             <div className="flex-auto"></div>
-            {user ? <UserSignoutGroup /> : <LoginSignupGroup />}
+            {isUserLoaded ? (user ? <UserSignoutGroup /> : <LoginSignupGroup />) : (<></>)}
         </div>
     );
 }

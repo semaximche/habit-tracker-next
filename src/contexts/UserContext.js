@@ -1,7 +1,7 @@
 'use client';
 import { useContext, createContext, useState, useEffect } from 'react';
 import { UseAuth } from './AuthContext';
-import { db } from '@/lib/firebase/appClient';
+import { db } from '@/lib/firebase/firebaseInit';
 import { collection, onSnapshot } from 'firebase/firestore';
 
 const UserContext = createContext();
@@ -19,7 +19,7 @@ export const UserContextProvider = ({ children }) => {
     //check for userdata updates
     useEffect(() => {
         if(isUserDataLoaded) {
-            console.log("userdata:", userData);
+            console.log("userdata:", userData.habits);
         }
     }, [userData])
 
