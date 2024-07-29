@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import Habit from './Habit';
 import HabitForm from './HabitForm';
-import { Button } from '@headlessui/react';
 
 const Habits = ({ statuses, updateCompletedDays, addHabit }) => {
     const [isModalOpened, setIsModalOpened] = useState(false);
