@@ -11,15 +11,15 @@ export default function HabitsListContents() {
     return (
         <div>
         {
-            Object.keys(habitsGroup).map((key, i) => {
-                console.log("iterating over", key);
+            Object.keys(habitsGroup).map((habit, index) => {
+                console.log("iterating over", habit);
                 return (
-                    <div>
+                    <div key={`${index}`}>
                         <HabitItem
-                            name={habitsGroup[key].name}
+                            name={habitsGroup[habit].name}
                             color="bg-red-500"
-                            completeDays={habitsGroup[key].completeDays}
-                            activeDays = {habitsGroup[key].activeDays}
+                            completeDays={habitsGroup[habit].completeDays}
+                            activeDays = {habitsGroup[habit].activeDays}
                         />
                     </div>
                 )
