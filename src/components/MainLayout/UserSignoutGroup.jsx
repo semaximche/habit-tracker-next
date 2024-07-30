@@ -9,7 +9,7 @@ export default function UserSignoutGroup() {
 
     return (
         <div className="flex-inital flex items-center">
-            <div className="p-2">
+            <div className="p-2 invisible sm:visible">
                 <div className=" text-white">{user.displayName}</div>
             </div>
             <div className="p-2">

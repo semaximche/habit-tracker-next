@@ -1,4 +1,5 @@
-import HabitsListTable from "@/components/dashboard/HabitsListTable";
+import HabitsListTable from '@/components/dashboard/HabitsListTable';
+import HabitTable from '@/components/habitTrackerOld/HabitTable';
 
 export default function Dashboard() {
     return (
@@ -19,7 +20,7 @@ export default function Dashboard() {
                     </div>
                     <span>80% achieved</span>
                 </div>
-                Habit Table
+                <HabitTable />
             </div>
             <div className="min-h-60 m-2 p-6 bg-white rounded-lg shadow-lg">
                 <HabitsListTable />

@@ -19,8 +19,10 @@ import {
     ListItem,
     ListItemPrefix,
     ListItemSuffix,
+    Drawer,
+    IconButton,
 } from '@material-tailwind/react';
-export { 
+export {
     ThemeProvider,
     Button,
     Card,
@@ -39,4 +41,6 @@ export {
     ListItem,
     ListItemPrefix,
     ListItemSuffix,
+    Drawer,
+    IconButton,
 };

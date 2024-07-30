@@ -1,7 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { AuthContextProvider } from '@/contexts/AuthContext';
-import MainTopbar from '@/components/MainTopbar';
+import Topbar from '@/components/MainLayout/Topbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className={inter.className}>
                 <AuthContextProvider>
-                    <MainTopbar />
+                    <Topbar />
                     {children}
                 </AuthContextProvider>
             </body>

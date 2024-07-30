@@ -1,7 +1,70 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 
-const HabitTable = ({ habits, handleMarkComplete }) => {
+const HabitTable = () => {
+    const [habits, setHabits] = useState([
+        {
+            name: '💪 Exercise',
+            color: 'bg-yellow-500',
+            Active_days: [1, 3, 5, null, null, null, null],
+            completedDays: [],
+        },
+        {
+            name: '📝 Journal',
+            color: 'bg-purple-500',
+            Active_days: [0, 2, 4, null, null, null, null],
+            completedDays: [],
+        },
+        {
+            name: '❌ Alcohol',
+            color: 'bg-pink-500',
+            Active_days: [1, null, null, null, null, null, null],
+            completedDays: [],
+        },
+        {
+            name: '🚿 Cold Shower',
+            color: 'bg-blue-500',
+            Active_days: [0, null, null, null, null, null],
+            completedDays: [],
+        },
+        {
+            name: '🦷 Floss',
+            color: 'bg-gray-500',
+            Active_days: [0, 2, 4, 6, null, null, null],
+            completedDays: [],
+        },
+        {
+            name: '🧘 Meditate',
+            color: 'bg-orange-500',
+            Active_days: [1, 3, 5, null, null, null, null],
+            completedDays: [],
+        },
+        {
+            name: '🎧 eBook',
+            color: 'bg-teal-500',
+            Active_days: [1, 2, 3, 4, 5, null, null],
+            completedDays: [],
+        },
+        {
+            name: 'Run',
+            color: 'bg-red-500',
+            Active_days: [0, 2, 4, null, null, null, null],
+            completedDays: [],
+        },
+        {
+            name: 'Read',
+            color: 'bg-green-500',
+            Active_days: [0, 3, 6, null, null, null, null],
+            completedDays: [],
+        },
+        {
+            name: 'Cook',
+            color: 'bg-indigo-500',
+            Active_days: [1, 2, 3, null, null, null, null],
+            completedDays: [],
+        },
+    ]);
+
     return (
         <table className="w-full mt-6 border-collapse">
             <thead>
@@ -29,7 +92,6 @@ const HabitTable = ({ habits, handleMarkComplete }) => {
                             <td
                                 key={dayIdx}
                                 className={`p-2 ${item.Active_days.includes(dayIdx) ? item.color : ''}`}
-                                onClick={() => handleMarkComplete(item, dayIdx)}
                             >
                                 {item.completedDays.includes(dayIdx)
                                     ? '✔️'

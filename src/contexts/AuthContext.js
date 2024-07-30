@@ -9,20 +9,24 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
     //Firebase user state
     const [user, setUser] = useState();
-    const [isUserLoaded, setIsUserLoaded] = useState(false)
+    const [isUserLoaded, setIsUserLoaded] = useState(false);
 
     useEffect(() => {
         //Create observer for auth state changes
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            if (currentUser) {
-                //There is a user logged in
-                setUser(currentUser);
-            } else {
-                //There is no user logged in
-                setUser(null);
-            }
-            setIsUserLoaded(true);
-        }, []);
+        const unsubscribe = onAuthStateChanged(
+            auth,
+            (currentUser) => {
+                if (currentUser) {
+                    //There is a user logged in
+                    setUser(currentUser);
+                } else {
+                    //There is no user logged in
+                    setUser(null);
+                }
+                setIsUserLoaded(true);
+            },
+            []
+        );
 
         //Unsubscribe from auth state change observer when component is unmounted
         return () => unsubscribe();
@@ -30,7 +34,9 @@ export const AuthContextProvider = ({ children }) => {
 
     //Context wrapper
     return (
-        <AuthContext.Provider value={{ user, isUserLoaded }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ user, isUserLoaded }}>
+            {children}
+        </AuthContext.Provider>
     );
 };
 

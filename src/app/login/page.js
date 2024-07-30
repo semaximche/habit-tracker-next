@@ -1,6 +1,5 @@
 import GoogleButton from '@/components/login/GoogleButton';
 import LoginForm from '@/components/login/LoginForm';
-import MainTopbar from '@/components/MainTopbar';
 
 export default function LoginPage() {
     return (

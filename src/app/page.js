@@ -1,5 +1,3 @@
-import MainTopbar from '@/components/MainTopbar';
-
 export default function Home() {
     return (
         <div>

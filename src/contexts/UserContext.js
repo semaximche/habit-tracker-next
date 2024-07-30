@@ -11,24 +11,24 @@ export const emptyUserData = {
 };
 
 export const UserContextProvider = ({ children }) => {
-    const [isUserDataLoaded, setIsUserDataLoaded] = useState(false)
+    const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
     const [userData, setUserData] = useState(emptyUserData);
 
     const { user, isUserLoaded } = UseAuth();
 
     //check for userdata updates
     useEffect(() => {
-        if(isUserDataLoaded) {
-            console.log("userdata:", userData.habits);
+        if (isUserDataLoaded) {
+            console.log('userdata:', userData.habits);
         }
-    }, [userData])
+    }, [userData]);
 
     //realtime updater
     useEffect(() => {
         let unsubscribe = () => {};
         const habitsRef = collection(db, `/users/${user?.uid}/habits`);
 
-        if(isUserLoaded) {
+        if (isUserLoaded) {
             //Create new database listener
             unsubscribe = onSnapshot(habitsRef, (snapshot) => {
                 //When executing set loading and refresh previous data
@@ -36,20 +36,23 @@ export const UserContextProvider = ({ children }) => {
                 setUserData((prev) => ({ ...prev, habits: {} }));
                 //Update data
                 snapshot.docs.forEach((doc) => {
-                    setUserData((prev) => ({ ...prev, habits: {
-                        ...prev.habits,
-                        [doc.id]: doc.data()
-                    }}))
-                })
+                    setUserData((prev) => ({
+                        ...prev,
+                        habits: {
+                            ...prev.habits,
+                            [doc.id]: doc.data(),
+                        },
+                    }));
+                });
                 setIsUserDataLoaded(true);
             });
         }
 
         //Unsubscribe from listener when unmounted
         return () => {
-            unsubscribe()
+            unsubscribe();
         };
-    }, [ isUserLoaded ]);
+    }, [isUserLoaded]);
 
     return (
         <UserContext.Provider value={{ userData, isUserDataLoaded }}>
