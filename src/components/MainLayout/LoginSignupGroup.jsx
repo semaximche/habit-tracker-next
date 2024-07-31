@@ -1,13 +1,16 @@
+'use client';
 import { Button } from '@/components/MaterialUI';
 import Link from 'next/link';
+import DarkModeToggle from '@/components/DarkMode';
 
 export default function LoginSignupGroup() {
     return (
-        <div className="flex-inital flex">
+        <div className="flex-initial flex">
+            <DarkModeToggle />
             <div className="p-2">
                 <Link href="/login">
                     <Button
-                        className="flex items-center gap-1"
+                        className="flex items-center gap-1 dark:bg-gray-800 dark:text-white"
                         color="white"
                         variant="outlined"
                     >
@@ -32,7 +35,7 @@ export default function LoginSignupGroup() {
             <div className="p-2">
                 <Link href="/signup">
                     <Button
-                        className="flex items-center gap-1"
+                        className="flex items-center gap-1 dark:bg-gray-800 dark:text-white"
                         color="white"
                         variant="outlined"
                     >

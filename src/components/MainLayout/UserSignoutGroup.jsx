@@ -3,12 +3,14 @@ import { UseAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/MaterialUI';
 import { signOut } from '@/lib/firebase/auth';
 import Link from 'next/link';
+import DarkModeToggle from '@/components/DarkMode';
 
 export default function UserSignoutGroup() {
     const { user } = UseAuth();
 
     return (
         <div className="flex-inital flex items-center">
+            <DarkModeToggle />
             <div className="p-2 invisible sm:visible">
                 <div className=" text-white">{user.displayName}</div>
             </div>

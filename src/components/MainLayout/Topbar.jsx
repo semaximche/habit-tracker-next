@@ -22,14 +22,14 @@ export default function Topbar() {
         <>
             <div
                 id="topbar-overlay-ref"
-                className=" bg-blue-gray-500 shadow-xl flex items-center"
+                className="bg-blue-gray-500 dark:bg-gray-800 shadow-xl flex items-center"
             >
                 <IconButton
                     onClick={toggleSidebar}
                     variant="outlined"
                     color="white"
                     size="xs"
-                    className="ml-4"
+                    className="ml-4 dark:text-gray-300"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -46,11 +46,10 @@ export default function Topbar() {
                 </IconButton>
                 <Link
                     href="/"
-                    className="text-white font-bold text-2xl m-5 hidden sm:block"
+                    className="text-white dark:text-gray-300 font-bold text-2xl m-5 hidden sm:block"
                 >
                     Habit Tracker
                 </Link>
-
                 <div className="flex-auto"></div>
                 {isUserLoaded ? (
                     user ? (
@@ -62,12 +61,13 @@ export default function Topbar() {
                     <></>
                 )}
             </div>
-            <Drawer open={sidebarOpen} onClose={toggleSidebar} className="p-4">
+            <Drawer open={sidebarOpen} onClose={toggleSidebar} className="p-4 dark:bg-gray-900">
                 <div className="mb-6 flex items-center">
                     <IconButton
                         variant="text"
                         color="blue-gray"
                         onClick={toggleSidebar}
+                        className="dark:text-gray-300"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -84,19 +84,19 @@ export default function Topbar() {
                             />
                         </svg>
                     </IconButton>
-                    <h1 className="text-blue-gray-500 font-bold text-xl ml-3">
+                    <h1 className="text-blue-gray-500 dark:text-gray-300 font-bold text-xl ml-3">
                         Habit Tracker
                     </h1>
                 </div>
                 <List>
                     <Link href="/">
-                        <ListItem>
+                        <ListItem className="dark:text-gray-300">
                             <ListItemPrefix>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
                                     fill="currentColor"
-                                    className="h-5 w-5"
+                                    className="h-5 w-5 dark:text-gray-300"
                                 >
                                     <path
                                         fillRule="evenodd"
@@ -109,13 +109,13 @@ export default function Topbar() {
                         </ListItem>
                     </Link>
                     <Link href="/">
-                        <ListItem>
+                        <ListItem className="dark:text-gray-300">
                             <ListItemPrefix>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
-                                    className="size-5"
+                                    className="size-5 dark:text-gray-300"
                                 >
                                     <path
                                         fillRule="evenodd"
@@ -128,17 +128,17 @@ export default function Topbar() {
                         </ListItem>
                     </Link>
                     <Link href="/">
-                        <ListItem>
+                        <ListItem className="dark:text-gray-300">
                             <ListItemPrefix>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20"
                                     fill="currentColor"
-                                    className="size-5"
+                                    className="size-5 dark:text-gray-300"
                                 >
                                     <path
                                         fillRule="evenodd"
-                                        d="M8.34 1.804A1 1 0 0 1 9.32 1h1.36a1 1 0 0 1 .98.804l.295 1.473c.497.144.971.342 1.416.587l1.25-.834a1 1 0 0 1 1.262.125l.962.962a1 1 0 0 1 .125 1.262l-.834 1.25c.245.445.443.919.587 1.416l1.473.294a1 1 0 0 1 .804.98v1.361a1 1 0 0 1-.804.98l-1.473.295a6.95 6.95 0 0 1-.587 1.416l.834 1.25a1 1 0 0 1-.125 1.262l-.962.962a1 1 0 0 1-1.262.125l-1.25-.834a6.953 6.953 0 0 1-1.416.587l-.294 1.473a1 1 0 0 1-.98.804H9.32a1 1 0 0 1-.98-.804l-.295-1.473a6.957 6.957 0 0 1-1.416-.587l-1.25.834a1 1 0 0 1-1.262-.125l-.962-.962a1 1 0 0 1-.125-1.262l.834-1.25a6.957 6.957 0 0 1-.587-1.416l-1.473-.294A1 1 0 0 1 1 10.68V9.32a1 1 0 0 1 .804-.98l1.473-.295c.144-.497.342-.971.587-1.416l-.834-1.25a1 1 0 0 1 .125-1.262l.962-.962A1 1 0 0 1 5.38 3.03l1.25.834a6.957 6.957 0 0 1 1.416-.587l.294-1.473ZM13 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                        d="M8.34 1.804A1 1 0 0 1 9.32 1h1.36a1 1 0 0 1 .98.804l.295 1.473c.497.144.971.342 1.416.587l1.25-.834a1 1 0 0 1 1.262.125l.962.962a1 1 0 0 1 .125 1.262l-.834 1.25c.245.445.443.919.587 1.416l1.473.294a1 1 0 0 1 .804.98v1.361a1 1 0 0 1-.804.98l-1.473.295a6.95 6.95 0 0 1-.587 1.416l.834 1.25a1 1 0 0 1-.125 1.262l-.962.962a1 1 0 0 1-1.262.125l-1.25-.834a6.953 6.953 0 0 1-1.416.587l-.294 1.473a1 1 0 0 1-.98.804H9.32a1 1 0 0 1-.98-.804l-.295-1.473a6.957 6.957 0 0 1-1.416-.587l-1.25.834a1 1 0 0 1-1.262-.125l-.962-.962a1 1 0 0 1-.125-1.262l.834-1.25a6.957 6.957 0 0 1-.587-1.416l-1.473-.294A1 1 0 0 1 1 10.68V9.32a1 1 0 0 1 .804-.98l1.473-.295c.144-.497.342-.971.587-1.416l-.834-1.25a1 1 0 0 1 .125-1.262l.962-.962a1 1 0 0 1 1.262-.125l1.25.834c.445-.245.919-.443 1.416-.587l.294-1.473ZM10 13.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
                                         clipRule="evenodd"
                                     />
                                 </svg>

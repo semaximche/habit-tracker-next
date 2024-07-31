@@ -1,13 +1,11 @@
 import HabitsListTable from '@/components/dashboard/HabitsListTable';
 import HabitTable from '@/components/habitTrackerOld/HabitTable';
-import DarkModeToggle from '@/components/DarkMode';
 
 export default function Dashboard() {
   return (
     <div className="grid lg:grid-cols-3">
       <div className="col-span-2 min-h-60 bg-white dark:bg-gray-800 m-2 p-6 rounded-lg shadow-lg hidden lg:block">
         <div className="flex justify-between items-center">
-          <DarkModeToggle />
           <button className="text-xl">&lt;</button>
           <h2 className="text-xl font-semibold">week</h2>
           <button className="text-xl">&gt;</button>
