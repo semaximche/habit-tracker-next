@@ -21,6 +21,10 @@ import {
     ListItemSuffix,
     Drawer,
     IconButton,
+    Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem,
 } from '@material-tailwind/react';
 export {
     ThemeProvider,
@@ -43,4 +47,8 @@ export {
     ListItemSuffix,
     Drawer,
     IconButton,
+    Menu,
+    MenuHandler,
+    MenuList,
+    MenuItem,
 };

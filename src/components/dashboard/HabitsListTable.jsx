@@ -18,9 +18,11 @@ export default function HabitsListTable() {
             {isUserDataLoaded ? (
                 <div className="flex flex-col">
                     <div className="flex flex-row justify-between items-center">
-                        <h2 className="text-2xl font-bold m-3">
-                            {getDateWords()}
-                        </h2>
+                        <div className='flex flex-row gap-4 mb-4 ml-1'>
+                            <button className="text-xl text-accent-light dark:text-accent-dark">&lt;</button>
+                            <h2 className="text-lg font-semibold text-accent-light dark:text-accent-dark">{getDateWords()}</h2>
+                            <button className="text-xl text-accent-light dark:text-accent-dark">&gt;</button>
+                        </div>
                         <div className="pb-3">
                             <Button
                                 onClick={toggleModal}

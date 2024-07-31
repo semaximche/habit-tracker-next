@@ -104,7 +104,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
 
                         <button
                             onClick={handleDelete}
-                            className={`flex-3 flex ${color} h-full overflow-hidden rounded-lg items-center justify-center transition-all w-6 hover:w-16 hover:bg-red-500`}
+                            className={`flex-3 flex ${color} h-full overflow-hidden rounded-lg items-center justify-center transition-all w-6 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700`}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -124,7 +124,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                     </div>
                 ) : (
                     /* Active and not complete format*/
-                    <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-50 mb-2 h-16 pl-2 transition-all">
+                    <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-50 dark:bg-background-dark mb-2 h-16 pl-2 transition-all">
                         <div className="flex-initial flex flex-col items-center mr-3">
                             <span
                                 className={`block h-2 w-2 rounded-full ${color}`}
@@ -133,11 +133,11 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                         </div>
 
                         <div className="flex-initial">
-                            <h3 className="font-bold text-md">{name}</h3>
-                            <p className="text-gray-400 text-sm">🕒 Pending</p>
+                            <h3 className="font-bold text-md text-accent-light dark:text-accent-dark">{name}</h3>
+                            <p className="text-gray-400 dark:text-gray-00 text-sm">🕒 Pending</p>
                         </div>
 
-                        <div className="flex-auto">
+                        <div className="flex-auto dark:text-blue-800">
                             <Button
                                 onClick={handleComplete}
                                 className="xl:ml-16"
@@ -152,7 +152,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                         <button
                             onClick={handleDelete}
                             className={
-                                'flex-3 flex bg-gray-50 h-full overflow-hidden rounded-lg items-center justify-center transition-all w-6 hover:w-16 hover:bg-red-500'
+                                'flex-3 flex bg-gray-50 dark:bg-background-dark h-full overflow-hidden rounded-lg items-center justify-center transition-all w-6 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700'
                             }
                         >
                             <svg
@@ -160,8 +160,8 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 strokeWidth={1.5}
-                                stroke="black"
-                                className="size-6 flex-none"
+                                stroke="currentColor"
+                                className="size-6 flex-none text-black dark:text-gray-200"
                             >
                                 <path
                                     strokeLinecap="round"
@@ -174,19 +174,19 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                 )
             ) : (
                 /* Not active today format*/
-                <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-300 mb-2 h-16 pl-2 transition-all">
+                <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-300 dark:bg-gray-800 mb-2 h-16 pl-2 transition-all">
                     <div className="flex-initial flex flex-col items-center mr-3">
                         <span
-                            className={`block h-2 w-2 rounded-full bg-gray-600`}
+                            className={`block h-2 w-2 rounded-full bg-gray-600 dark:bg-gray-500`}
                         ></span>
-                        <span className={`block h-8 w-0.5 bg-gray-600`}></span>
+                        <span className={`block h-8 w-0.5 bg-gray-600 dark:bg-gray-500`}></span>
                     </div>
 
                     <div className="flex-initial">
-                        <h3 className="font-bold text-md text-gray-600">
+                        <h3 className="font-bold text-md text-gray-600 dark:text-gray-500">
                             {name}
                         </h3>
-                        <p className="text-gray-400 text-sm">
+                        <p className="text-gray-400 dark:text-gray-600 text-sm">
                             Inactive on {getWeekdayWords()}
                         </p>
                     </div>
@@ -196,7 +196,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                     <button
                         onClick={handleDelete}
                         className={
-                            'flex-3 flex bg-gray-300 h-full overflow-hidden rounded-lg items-center justify-center transition-all w-6 hover:w-16 hover:bg-red-500'
+                            'flex-3 flex bg-gray-300 dark:bg-gray-800 h-full overflow-hidden rounded-lg items-center justify-center transition-all w-6 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700'
                         }
                     >
                         <svg
@@ -204,8 +204,8 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                             fill="none"
                             viewBox="0 0 24 24"
                             strokeWidth={1.5}
-                            stroke="white"
-                            className="size-6 flex-none"
+                            stroke="currentColor"
+                            className="size-6 flex-none text-white dark:text-gray-500"
                         >
                             <path
                                 strokeLinecap="round"
