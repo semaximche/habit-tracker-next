@@ -1,14 +1,13 @@
 import HabitsListTable from '@/components/dashboard/HabitsListTable';
-import DarkModeToggle from '@/components/DarkMode';
 
 export default function Dashboard() {
   return (
     <div className="grid lg:grid-cols-3">
       <div className="col-span-2 min-h-60 bg-foreground-light dark:bg-foreground-dark m-2 p-6 rounded-lg shadow-lg hidden lg:block">
         <div className="flex justify-between items-center">
-          <button className="text-xl text-accent-light dark:text-accent-dark">&lt;</button>
-          <h2 className="text-xl font-semibold text-accent-light dark:text-accent-dark">week</h2>
-          <button className="text-xl text-accent-light dark:text-accent-dark">&gt;</button>
+          <button className="text-xl">&lt;</button>
+          <h2 className="text-xl font-semibold">week</h2>
+          <button className="text-xl">&gt;</button>
         </div>
         <div className="flex justify-between items-center mt-6">
           <span className="text-accent-light dark:text-accent-dark">Up 50% from the week before</span>

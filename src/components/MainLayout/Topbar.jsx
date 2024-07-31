@@ -27,7 +27,7 @@ export default function Topbar() {
                     variant="outlined"
                     color="white"
                     size="xs"
-                    className="ml-4"
+                    className="ml-4 dark:text-gray-300"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -44,11 +44,10 @@ export default function Topbar() {
                 </IconButton>
                 <Link
                     href="/"
-                    className="text-white font-bold text-xl m-5 hidden sm:block"
+                    className="text-white dark:text-gray-300 font-bold text-2xl m-5 hidden sm:block"
                 >
                     Habit Tracker
                 </Link>
-
                 <div className="flex-auto"></div>
                 {isUserLoaded ? (
                     user ? (
