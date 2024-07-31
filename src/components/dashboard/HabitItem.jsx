@@ -104,7 +104,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
 
                         <button
                             onClick={handleDelete}
-                            className={`flex-3 flex ${color} h-full overflow-hidden rounded-lg items-center justify-center transition-all w-6 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700`}
+                            className={`flex-3 flex ${color} h-full overflow-hidden rounded-lg items-center justify-center transition-all w-8 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700`}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -152,7 +152,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                         <button
                             onClick={handleDelete}
                             className={
-                                'flex-3 flex bg-gray-50 dark:bg-background-dark h-full overflow-hidden rounded-lg items-center justify-center transition-all w-6 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700'
+                                'flex-3 flex bg-gray-50 dark:bg-background-dark h-full overflow-hidden rounded-lg items-center justify-center transition-all w-8 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700'
                             }
                         >
                             <svg
@@ -174,7 +174,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                 )
             ) : (
                 /* Not active today format*/
-                <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-300 dark:bg-gray-800 mb-2 h-16 pl-2 transition-all">
+                <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-300 dark:bg-primary-dark mb-2 h-16 pl-2 transition-all">
                     <div className="flex-initial flex flex-col items-center mr-3">
                         <span
                             className={`block h-2 w-2 rounded-full bg-gray-600 dark:bg-gray-500`}
@@ -196,7 +196,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                     <button
                         onClick={handleDelete}
                         className={
-                            'flex-3 flex bg-gray-300 dark:bg-gray-800 h-full overflow-hidden rounded-lg items-center justify-center transition-all w-6 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700'
+                            'flex-3 flex bg-gray-300 dark:bg-primary-dark h-full overflow-hidden rounded-lg items-center justify-center transition-all w-8 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700'
                         }
                     >
                         <svg

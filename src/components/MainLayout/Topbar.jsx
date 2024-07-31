@@ -18,10 +18,7 @@ export default function Topbar() {
 
     return (
         <>
-            <div
-                id="topbar-overlay-ref"
-                className="bg-primary-light dark:bg-primary-dark shadow-xl flex items-center"
-            >
+            <div className="bg-primary-light dark:bg-primary-dark shadow-xl flex items-center h-14">
                 <IconButton
                     onClick={toggleSidebar}
                     variant="outlined"

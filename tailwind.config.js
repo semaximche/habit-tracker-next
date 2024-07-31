@@ -11,23 +11,23 @@ module.exports = withMT({
         colors: {
             primary: {
                 light: '#607d8b',
-                dark: '#263238',
+                dark: '#293548',
             },
             secondary: {
                 light: '#eceff1',
-                dark: '#13191c',
+                dark: '#111628',
             },
             background: {
                 light: '#fafafa',
-                dark: '#212121',
+                dark: '#0F172A',
             },
             foreground: {
                 light: '#f5f5f5',
-                dark: '#292929',
+                dark: '#1E293B',
             },
             accent: {
                 light: '#4f6773',
-                dark: '#eceff1',
+                dark: '#8A98AD',
             },
         },
         extend: {
