@@ -22,7 +22,7 @@ export default function LoginPage() {
                             href="/signup"
                             className="w-full text-center text-xs capitalize text-gray-500"
                         >
-                            Don't have an account yet?
+                            Don&apos;t have an account yet?
                             <span className="text-green-500"> Sign Up</span>
                         </a>
                     </div>

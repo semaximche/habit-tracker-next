@@ -3,9 +3,8 @@
 import { useUserData } from '@/contexts/UserContext';
 import HabitItem from './HabitItem';
 import { convertToFormat, convertToWeekdayWords } from '@/lib/utils/dateUtils';
-import { memo, useState } from 'react';
 
-const HabitsListContents = memo(({date}) => {
+export default function HabitsListContents({date}) {
     const { userData } = useUserData();
     const habitsGroup = userData.habits;
 
@@ -34,6 +33,4 @@ const HabitsListContents = memo(({date}) => {
             }
         </div>
     );
-})
-
-export default HabitsListContents;
+}
