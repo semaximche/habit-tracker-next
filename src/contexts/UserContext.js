@@ -19,7 +19,7 @@ export const UserContextProvider = ({ children }) => {
     //check for userdata updates
     useEffect(() => {
         if (isUserDataLoaded) {
-            console.log('userdata:', userData.habits);
+            console.log('userdata:', userData);
         }
     }, [userData]);
 

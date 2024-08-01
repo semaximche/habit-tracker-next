@@ -1,38 +1,24 @@
-//Returns today's date string in format dd-mm-yyyy
-export function getDateNow() {
-    const date = new Date();
+//Convert Date object to format dd-mm-yyyy
+export function convertToFormat(date) {
     return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
 }
 
-//Returns today's date in format weekday, mmmmm dd
-export function getDateWords() {
+//Increment date by certain amount of days
+export function incrementDate(date, increment) {
+    const dateFormatTotime = new Date(date);
+    const increasedDate = new Date(dateFormatTotime.getTime() +(increment *86400000));
+    return increasedDate;
+}
+
+//Convert to weekday, mmmm dd
+export function convertToWords(date) {
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const monthNames = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-    ];
-    const date = new Date();
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
     return `${dayNames[date.getDay()]}, ${monthNames[date.getMonth()]} ${date.getDate()}`;
-}
+} 
 
-//Return today's weekday as number
-export function getWeekday() {
-    const date = new Date();
-    return date.getDay();
-}
-
-//Return today's weedday as words
-export function getWeekdayWords() {
+//Convert date to weekday in words
+export function convertToWeekdayWords(date) {
     const dayNames = [
         'Sunday',
         'Monday',
@@ -42,6 +28,10 @@ export function getWeekdayWords() {
         'Friday',
         'Saturday',
     ];
-    const date = new Date();
     return dayNames[date.getDay()];
+}
+
+//Convert date to weekday number
+export function convertToWeekdayNum(date) {
+    return date.getDay();
 }

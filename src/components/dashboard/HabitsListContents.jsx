@@ -2,29 +2,31 @@
 
 import { useUserData } from '@/contexts/UserContext';
 import HabitItem from './HabitItem';
-import { getDateNow, getWeekday } from '@/lib/utils/dateUtils';
+import { convertToFormat, convertToWeekdayWords } from '@/lib/utils/dateUtils';
+import { memo, useState } from 'react';
 
-export default function HabitsListContents() {
-    // Assume userData is already loaded by parent component
+const HabitsListContents = memo(({date}) => {
     const { userData } = useUserData();
     const habitsGroup = userData.habits;
 
+
     return (
-        <div>
+        <div key={date}>
             {
                 // TODO sort habits by active -> complete -> inactive before passing to function
                 Object.keys(habitsGroup).map((habit, index) => {
                     const isCompletedToday =
-                        habitsGroup[habit].completeDays.includes(getDateNow());
+                        habitsGroup[habit].completeDays.includes(convertToFormat(date));
                     const isActiveToday =
-                        habitsGroup[habit].activeDays.includes(getWeekday());
+                        habitsGroup[habit].activeDays.includes(convertToWeekdayWords(date));
                     return (
-                        <div key={`${index}`}>
+                        <div key={`${index}-${habit}-${date}`}>
                             <HabitItem
                                 name={habitsGroup[habit].name}
                                 color={habitsGroup[habit].color}
                                 completeDays={habitsGroup[habit].completeDays}
                                 activeDays={habitsGroup[habit].activeDays}
+                                thisDate={date}
                             />
                         </div>
                     );
@@ -32,4 +34,6 @@ export default function HabitsListContents() {
             }
         </div>
     );
-}
+})
+
+export default HabitsListContents;

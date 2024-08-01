@@ -1,6 +1,6 @@
 import { UseAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase/firebaseInit';
-import { getDateNow, getWeekday, getWeekdayWords } from '@/lib/utils/dateUtils';
+import { convertToFormat, convertToWeekdayWords, convertToWeekdayNum } from '@/lib/utils/dateUtils';
 import { Button } from '@/components/MaterialUI';
 import {
     arrayRemove,
@@ -14,9 +14,9 @@ import {
     where,
 } from 'firebase/firestore';
 
-export default function HabitItem({ name, color, completeDays, activeDays }) {
-    const isCompletedToday = completeDays.includes(getDateNow());
-    const isActiveToday = activeDays.includes(getWeekday());
+export default function HabitItem({ name, color, completeDays, activeDays, thisDate }) {
+    const isCompletedToday = completeDays.includes(convertToFormat(thisDate));
+    const isActiveToday = activeDays.includes(convertToWeekdayNum(thisDate));
     const { user } = UseAuth();
 
     const handleComplete = async (e) => {
@@ -31,7 +31,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
         });
         if (docIds.length > 0) {
             const itemRef = doc(db, `/users/${user?.uid}/habits`, docIds[0]);
-            updateDoc(itemRef, { completeDays: arrayUnion(getDateNow()) });
+            updateDoc(itemRef, { completeDays: arrayUnion(convertToFormat(thisDate)) });
         }
     };
 
@@ -47,7 +47,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
         });
         if (docIds.length > 0) {
             const itemRef = doc(db, `/users/${user?.uid}/habits`, docIds[0]);
-            updateDoc(itemRef, { completeDays: arrayRemove(getDateNow()) });
+            updateDoc(itemRef, { completeDays: arrayRemove(convertToFormat(thisDate)) });
         }
     };
 
@@ -187,7 +187,7 @@ export default function HabitItem({ name, color, completeDays, activeDays }) {
                             {name}
                         </h3>
                         <p className="text-gray-400 dark:text-gray-600 text-sm">
-                            Inactive on {getWeekdayWords()}
+                            Inactive on {convertToWeekdayWords(thisDate)}
                         </p>
                     </div>
 
