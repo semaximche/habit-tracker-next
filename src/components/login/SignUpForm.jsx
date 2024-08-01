@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { createUser } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
+import { Button, Input } from '@/components/MaterialUI';
 
 export default function SignUpForm() {
     const [email, setEmail] = useState('');
@@ -27,38 +28,43 @@ export default function SignUpForm() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {error && <p className="text-red-500">{error}</p>}
-            <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
-                required
-                className="p-2 border border-gray-300 rounded"
-            />
-            <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
-                required
-                className="p-2 border border-gray-300 rounded"
-            />
-            <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                required
-                className="p-2 border border-gray-300 rounded"
-            />
-            <button
-                type="submit"
-                className="p-2 bg-blue-500 text-white rounded"
-            >
-                Sign Up
-            </button>
-        </form>
+        <div className="flex flex-col items-center gap-3">
+            <form onSubmit={handleSubmit} className="flex flex-col w-52 items-center gap-3">
+                {error && <p className="text-red-500">{error}</p>}
+                <Input
+                    label="Display Name"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="John Smith"
+                    required
+                    className="p-2 border border-gray-300 rounded"
+                />
+                <Input
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="JohnSmith@gmail.com"
+                    required
+                    className="p-2 border border-gray-300 rounded"
+                />
+                <Input
+                    label="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="p-2 border border-gray-300 rounded"
+                />
+                <Button
+                    type="submit"
+                    className="w-52 h-10"
+                    color="blue-gray"
+                >
+                    Sign Up
+                </Button>
+            </form>
+        </div>
     );
 }
