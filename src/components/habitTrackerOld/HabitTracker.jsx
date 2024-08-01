@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import HabitTable from './HabitTable';
+import HabitTable from '../dashboard/HabitTable';
 import Habits from './Habits';
 
 const HabitTracker = () => {

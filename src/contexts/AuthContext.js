@@ -39,6 +39,8 @@ export const AuthContextProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+// Custom hook to use AuthContext
+export const useAuth = () => useContext(AuthContext);
 
 //user.displayName to get name
 //user.uid to get uid
