@@ -1,6 +1,7 @@
 import {
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
+    signInAnonymously,
     signInWithPopup,
     updateProfile,
 } from 'firebase/auth';
@@ -13,6 +14,15 @@ export async function signInWithGoogle() {
         await signInWithPopup(auth, provider);
     } catch (error) {
         console.error('Error signing in with google', error);
+    }
+}
+
+export async function signInAsGuest() {
+    try {
+        const userCredential = await signInAnonymously(auth);
+        await updateProfile(userCredential.user, { displayName: 'Guest'});
+    } catch (error) {
+        console.error('Error signing in as guest', error);
     }
 }
 
