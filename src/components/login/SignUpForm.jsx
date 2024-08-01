@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { createUser } from '@/lib/firebase/auth';
+import { createUser, signInAsGuest } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
 import {
     Button,
@@ -45,16 +45,17 @@ export default function SignUpForm({ darkMode }) {
             Sign Up
           </Typography>
           
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
             <div className="mb-4">
               <Typography className={`text-sm font-bold mb-2 ${darkMode ? 'text-foreground-light' : 'text-foreground-dark'}`}>
-                Username
+                Display Name
               </Typography>
               <Input 
+                label="Display Name"
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Username"
+                placeholder="John Smith"
                 required
                 className={`text-${darkMode ? 'foreground-light' : 'foreground-dark'} border-${darkMode ? 'accent-dark' : 'accent-light'}`} 
               />
@@ -65,10 +66,11 @@ export default function SignUpForm({ darkMode }) {
                 Email
               </Typography>
               <Input 
+                label="Email"
                 type="email" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email"
+                placeholder="JohnSmith@gmail.com"
                 required
                 className={`text-${darkMode ? 'foreground-light' : 'foreground-dark'} border-${darkMode ? 'accent-dark' : 'accent-light'}`} 
               />
@@ -79,20 +81,25 @@ export default function SignUpForm({ darkMode }) {
                 Password
               </Typography>
               <Input 
+                label="Password"
                 type="password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
                 required
-                className={`text-${darkMode ? 'foreground-light' : 'foreground-dark'} border-${darkMode ? 'accent-dark' : 'accent-light'}`} 
+                className={`text-foreground-light dark:text-foreground-dark border-${darkMode ? 'accent-dark' : 'accent-light'}`} 
               />
             </div>
   
-            <Button 
-              type="submit"
-              className={`bg-primary-${darkMode ? 'dark' : 'light'} text-foreground-light border-2 border-primary-${darkMode ? 'dark' : 'light'} px-6 py-3 rounded-full w-full hover:bg-primary-${darkMode ? 'dark' : 'light'} hover:text-foreground-light`}
-            >
+            <Button type="submit" color="blue-gray" className='h-10'>
               Sign Up
+            </Button>
+            <div className='flex flex-row items-center gap-2'>
+                <span className='bg-accent-light block px-10 h-0.5'></span>
+                <p className='text-accent-light'>Or</p>
+                <span className='bg-accent-light block px-10 h-0.5'></span>
+            </div>
+            <Button className="h-10" color="blue-gray" onClick={signInAsGuest} >
+                Login as Guest
             </Button>
           </form>
         </Card>

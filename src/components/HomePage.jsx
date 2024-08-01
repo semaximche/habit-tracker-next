@@ -91,13 +91,9 @@ export default function Home() {
 
   return (
     <div id="vanta-bg" className={`h-screen w-screen flex flex-col justify-center items-center ${darkMode ? 'bg-background-dark' : 'bg-background-light'}`}>
-      <Typography 
-        variant="h1" 
-        color={darkMode ? "foreground-light" : "foreground-dark"} 
-        className="font-bold text-5xl mb-4"
-      >
+      <h1 className="font-bold text-5xl mb-4 text-accent-light dark:text-white drop-shadow-2xl">
         Transform your life, one habit at a time.
-      </Typography>
+      </h1>
       {isUserLoaded ? (
         user ? (
           // Display content for authenticated users (if needed)
