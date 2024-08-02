@@ -1,6 +1,10 @@
 import { UseAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase/firebaseInit';
-import { convertToFormat, convertToWeekdayWords, convertToWeekdayNum } from '@/lib/utils/dateUtils';
+import {
+    convertToFormat,
+    convertToWeekdayWords,
+    convertToWeekdayNum,
+} from '@/lib/utils/dateUtils';
 import { Button } from '@/components/MaterialUI';
 import {
     arrayRemove,
@@ -14,7 +18,13 @@ import {
     where,
 } from 'firebase/firestore';
 
-export default function HabitItem({ name, color, completeDays, activeDays, thisDate }) {
+export default function HabitItem({
+    name,
+    color,
+    completeDays,
+    activeDays,
+    thisDate,
+}) {
     const isCompletedToday = completeDays.includes(convertToFormat(thisDate));
     const isActiveToday = activeDays.includes(convertToWeekdayNum(thisDate));
     const { user } = UseAuth();
@@ -31,7 +41,9 @@ export default function HabitItem({ name, color, completeDays, activeDays, thisD
         });
         if (docIds.length > 0) {
             const itemRef = doc(db, `/users/${user?.uid}/habits`, docIds[0]);
-            updateDoc(itemRef, { completeDays: arrayUnion(convertToFormat(thisDate)) });
+            updateDoc(itemRef, {
+                completeDays: arrayUnion(convertToFormat(thisDate)),
+            });
         }
     };
 
@@ -47,7 +59,9 @@ export default function HabitItem({ name, color, completeDays, activeDays, thisD
         });
         if (docIds.length > 0) {
             const itemRef = doc(db, `/users/${user?.uid}/habits`, docIds[0]);
-            updateDoc(itemRef, { completeDays: arrayRemove(convertToFormat(thisDate)) });
+            updateDoc(itemRef, {
+                completeDays: arrayRemove(convertToFormat(thisDate)),
+            });
         }
     };
 
@@ -133,8 +147,12 @@ export default function HabitItem({ name, color, completeDays, activeDays, thisD
                         </div>
 
                         <div className="flex-initial">
-                            <h3 className="font-bold text-md text-accent-light dark:text-accent-dark">{name}</h3>
-                            <p className="text-gray-400 dark:text-gray-00 text-sm">🕒 Pending</p>
+                            <h3 className="font-bold text-md text-accent-light dark:text-accent-dark">
+                                {name}
+                            </h3>
+                            <p className="text-gray-400 dark:text-gray-00 text-sm">
+                                🕒 Pending
+                            </p>
                         </div>
 
                         <div className="flex-auto dark:text-blue-800">
@@ -179,7 +197,9 @@ export default function HabitItem({ name, color, completeDays, activeDays, thisD
                         <span
                             className={`block h-2 w-2 rounded-full bg-gray-600 dark:bg-gray-500`}
                         ></span>
-                        <span className={`block h-8 w-0.5 bg-gray-600 dark:bg-gray-500`}></span>
+                        <span
+                            className={`block h-8 w-0.5 bg-gray-600 dark:bg-gray-500`}
+                        ></span>
                     </div>
 
                     <div className="flex-initial">

@@ -20,7 +20,7 @@ export async function signInWithGoogle() {
 export async function signInAsGuest() {
     try {
         const userCredential = await signInAnonymously(auth);
-        await updateProfile(userCredential.user, { displayName: 'Guest'});
+        await updateProfile(userCredential.user, { displayName: 'Guest' });
     } catch (error) {
         console.error('Error signing in as guest', error);
     }

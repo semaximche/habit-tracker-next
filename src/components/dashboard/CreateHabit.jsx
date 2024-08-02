@@ -45,11 +45,19 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
 
     return (
         <>
-            <Dialog open={isModalOpen} handler={toggleModal} size="xs">
-                <DialogHeader>New Habit</DialogHeader>
+            <Dialog
+                open={isModalOpen}
+                handler={toggleModal}
+                size="xs"
+                className=" bg-foreground-light dark:bg-foreground-dark"
+            >
+                <DialogHeader className=" text-accent-light dark:text-accent-dark">
+                    New Habit
+                </DialogHeader>
                 <form onSubmit={handleSubmit}>
                     <DialogBody>
                         <Input
+                            className=" text-accent-light dark:text-accent-dark"
                             label="Habit Name"
                             placeholder="Exercise"
                             id="name"
@@ -58,9 +66,9 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                         <label>Color</label>
                         <div className="flex flex-wrap">
                             {[
-                                'grey',
                                 'orange',
                                 'green',
+                                'teal',
                                 'blue',
                                 'purple',
                                 'red',
