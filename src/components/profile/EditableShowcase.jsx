@@ -9,7 +9,7 @@ const EditableShowcase = () => {
         <button onClick={() => setGotoEditShowCases(true)} className="mr-3">+ Add a Showcase</button>
       </div>
       <div className="mt-3">
-        <p>You've earned a slot for a showcase on your profile. Click here to select a showcase to display.</p>
+        <p>You&apos;ve earned a slot for a showcase on your profile. Click here to select a showcase to display.</p>
       </div>
     </div>
   );
