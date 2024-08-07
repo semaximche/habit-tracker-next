@@ -76,7 +76,7 @@ export default function UserGroup() {
                         />
                     </svg>
                     <Link
-                        href="/dashboard"
+                        href="/profile"
                         className="text-accent-light dark:text-accent-dark"
                     >
                         {user.displayName}
