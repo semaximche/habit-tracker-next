@@ -50,11 +50,11 @@ export function UseAuth() {
 
 //extra component to validate authentication and redirect to homepage if not authenticated
 export function AuthValidation({ children }) {
-    const { user } = UseAuth();
+    const { user, isUserLoaded } = UseAuth();
     const router = useRouter();
 
     useEffect(() => {
-        if (user === null) {
+        if (isUserLoaded && user === null) {
             router.push('/');
         }
     }, [user]);
