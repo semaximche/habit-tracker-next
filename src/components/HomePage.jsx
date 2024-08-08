@@ -2,9 +2,10 @@
 import { useEffect, useState } from 'react';
 import { useDarkMode } from '@/contexts/DarkModeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import { Typography } from '@material-tailwind/react';
 import SignUpForm from './login/SignUpForm';
 import Loading from '@/components/loading'; // Assuming you have a Loading component
+import { Button } from '@material-tailwind/react';
+import Link from 'next/link';
 
 export default function Home() {
     const [vantaEffect, setVantaEffect] = useState(null);
@@ -102,14 +103,21 @@ export default function Home() {
             {isUserLoaded ? (
                 user ? (
                     // Display content for authenticated users (if needed)
-                    <p className="text-accent-light dark:text-white">
-                        Welcome back, {user.displayName}!
-                    </p>
+                    <div>
+                        <p className="text-accent-light dark:text-white"> Welcome back, {user.displayName}! </p>
+                        <Link href='/dashboard'>
+                            <Button color='blue-gray'>
+                                Enter Dashboard
+                            </Button>
+                        </Link>
+                    </div>
                 ) : (
                     <SignUpForm darkMode={darkMode} />
                 )
             ) : (
-                <Loading />
+                <div>
+                    <Loading />
+                </div>
             )}
         </div>
     );

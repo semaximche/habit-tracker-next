@@ -11,6 +11,11 @@ export default function SignUpForm({ darkMode }) {
     const [error, setError] = useState('');
     const router = useRouter();
 
+    const handleGuest = () => {
+        signInAsGuest();
+        router.push('/dashboard');
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password.length < 6) {
@@ -109,7 +114,7 @@ export default function SignUpForm({ darkMode }) {
                 <Button
                     className="h-10"
                     color="blue-gray"
-                    onClick={signInAsGuest}
+                    onClick={handleGuest}
                 >
                     Login as Guest
                 </Button>
