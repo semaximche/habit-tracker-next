@@ -11,8 +11,8 @@ export default function SignUpForm({ darkMode }) {
     const [error, setError] = useState('');
     const router = useRouter();
 
-    const handleGuest = () => {
-        signInAsGuest();
+    const handleGuest = async () => {
+        await signInAsGuest();
         router.push('/dashboard');
     }
 
