@@ -24,6 +24,7 @@ export default function HabitItem({
     completeDays,
     activeDays,
     thisDate,
+    category,
 }) {
     const isCompletedToday = completeDays.includes(convertToFormat(thisDate));
     const isActiveToday = activeDays.includes(convertToWeekdayNum(thisDate));
@@ -32,8 +33,10 @@ export default function HabitItem({
     const handleComplete = async (e) => {
         const itemQuery = query(
             collection(db, `/users/${user?.uid}/habits`),
-            where('name', '==', name)
-        );
+            where('name', '==', name),
+            where('category', '==', category)  // Acan help with duplicates with same name
+    );        
+
         const docIds = [];
         const querySnapshot = await getDocs(itemQuery);
         querySnapshot.forEach((doc) => {
@@ -102,6 +105,7 @@ export default function HabitItem({
                                 {name}
                             </h3>
                             <p className="text-gray-100 text-sm">✔ Complete</p>
+                            <p className="text-gray-200 text-xs">{category}</p>  
                         </div>
 
                         <div className="flex-auto">
@@ -153,6 +157,7 @@ export default function HabitItem({
                             <p className="text-gray-400 dark:text-gray-00 text-sm">
                                 🕒 Pending
                             </p>
+                            <p className="text-gray-200 text-xs">{category}</p>  
                         </div>
 
                         <div className="flex-auto dark:text-blue-800">
@@ -209,6 +214,7 @@ export default function HabitItem({
                         <p className="text-gray-400 dark:text-gray-600 text-sm">
                             Inactive on {convertToWeekdayWords(thisDate)}
                         </p>
+                        <p className="text-gray-200 text-xs">{category}</p>  
                     </div>
 
                     <div className="flex-auto"></div>

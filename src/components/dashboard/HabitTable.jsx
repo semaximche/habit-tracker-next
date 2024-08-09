@@ -31,6 +31,7 @@ const HabitTable = () => {
                         color: habit.color,
                         activeDays: habit.activeDays,
                         completeDays: habit.completeDays,
+                        category: habit.category,
                     });
                 });
                 setHabits(habitsData);

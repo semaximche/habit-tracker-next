@@ -27,6 +27,7 @@ export default function HabitsListContents({ date }) {
                                 completeDays={habitsGroup[habit].completeDays}
                                 activeDays={habitsGroup[habit].activeDays}
                                 thisDate={date}
+                                category={habitsGroup[habit].category}
                             />
                         </div>
                     );
