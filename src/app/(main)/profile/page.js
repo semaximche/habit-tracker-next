@@ -7,6 +7,8 @@ import RecentActivity from '@/components/profile/RecentActivity';
 import LevelBadge from '@/components/profile/LevelBadge';
 import SideInfo from '@/components/profile/SideInfo';
 import EditProfile from '@/components/profile/EditProfile';
+import { UseAuth } from '@/contexts/AuthContext'; // Make sure this is correctly imported
+
 
 
 
@@ -64,10 +66,12 @@ const autumnBlazeGradientColors = {
   to: '#ff512f'   // Orange
 };
 
-
 function ProfileMain() {
   const [colors, setColors] = useState(mistySkyGradientColors);
   const [isEditing, setIsEditing] = useState(false);
+  const { user, isUserLoaded } = UseAuth();
+
+  const isGuest = isUserLoaded && user?.isAnonymous;
 
   return (
     <>
@@ -78,7 +82,7 @@ function ProfileMain() {
           </div>
           <div className="relative flex flex-wrap lg:flex-nowrap lg:space-x-5">
             <div className="flex-1 flex flex-col space-y-5">
-              {isEditing ? (
+              {isEditing && !isGuest ? (
                 <EditProfile onCancel={() => setIsEditing(false)} />
               ) : (
                 <>

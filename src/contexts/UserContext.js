@@ -1,12 +1,21 @@
-'use client';
+'use client'; // Add this at the very top of the file
+
 import { useContext, createContext, useState, useEffect } from 'react';
 import { UseAuth } from './AuthContext';
 import { db } from '@/lib/firebase/firebaseInit';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot, collection, updateDoc } from 'firebase/firestore';
 
 const UserContext = createContext();
 
 export const emptyUserData = {
+    profile: {
+        username: '',
+        about: '',
+        avatarURL: '',
+        location: '',
+        xp: 0,
+        level: 1,
+    },
     habits: {},
 };
 
@@ -16,25 +25,35 @@ export const UserContextProvider = ({ children }) => {
 
     const { user, isUserLoaded } = UseAuth();
 
-    //check for userdata updates
     useEffect(() => {
         if (isUserDataLoaded) {
             console.log('userdata:', userData);
         }
     }, [userData]);
 
-    //realtime updater
+    // Realtime updater for both profile and habits
     useEffect(() => {
-        let unsubscribe = () => {};
-        const habitsRef = collection(db, `/users/${user?.uid}/habits`);
+        let unsubscribeProfile = () => {};
+        let unsubscribeHabits = () => {};
 
-        if (isUserLoaded) {
-            //Create new database listener
-            unsubscribe = onSnapshot(habitsRef, (snapshot) => {
-                //When executing set loading and refresh previous data
+        if (isUserLoaded && user) {
+            // Listen for profile updates
+            const profileRef = doc(db, `users/${user.uid}`);
+            unsubscribeProfile = onSnapshot(profileRef, (doc) => {
+                setUserData((prev) => ({
+                    ...prev,
+                    profile: {
+                        ...prev.profile,
+                        ...doc.data(), // Merge the new profile data
+                    },
+                }));
+            });
+
+            // Listen for habit updates
+            const habitsRef = collection(db, `users/${user.uid}/habits`);
+            unsubscribeHabits = onSnapshot(habitsRef, (snapshot) => {
                 setIsUserDataLoaded(false);
                 setUserData((prev) => ({ ...prev, habits: {} }));
-                //Update data
                 snapshot.docs.forEach((doc) => {
                     setUserData((prev) => ({
                         ...prev,
@@ -48,14 +67,27 @@ export const UserContextProvider = ({ children }) => {
             });
         }
 
-        //Unsubscribe from listener when unmounted
+        // Unsubscribe from listeners when component is unmounted
         return () => {
-            unsubscribe();
+            unsubscribeProfile();
+            unsubscribeHabits();
         };
-    }, [isUserLoaded]);
+    }, [isUserLoaded, user]);
+
+    const updateUserXP = async (xp) => {
+        if (!user?.uid) return;
+
+        const profileRef = doc(db, `users/${user.uid}`);
+        const level = Math.floor(xp / 100) + 1;
+
+        await updateDoc(profileRef, {
+            xp,
+            level,
+        });
+    };
 
     return (
-        <UserContext.Provider value={{ userData, isUserDataLoaded }}>
+        <UserContext.Provider value={{ userData, setUserData, isUserDataLoaded, updateUserXP }}>
             {children}
         </UserContext.Provider>
     );

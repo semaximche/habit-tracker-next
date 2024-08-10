@@ -99,7 +99,7 @@ export default function SignUpForm({ darkMode }) {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        className={`text-foreground-light dark:text-foreground-dark border-${darkMode ? 'accent-dark' : 'accent-light'}`}
+                        className={`text-foreground-dark dark:text-foreground-dark border-${darkMode ? 'accent-dark' : 'accent-light'}`}
                     />
                 </div>
 

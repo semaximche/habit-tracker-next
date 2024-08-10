@@ -1,11 +1,26 @@
-import React from 'react';
+  'use client';
+  import React from 'react';
+  import { UseAuth } from '@/contexts/AuthContext';
 
-const Nickname = () => {
-  return (
-    <div>
-      <h1 className="text-3xl">Itzik The Habit Lover</h1>
-    </div>
-  );
-};
+  const Nickname = () => {
+    const { user, isUserLoaded } = UseAuth();
 
-export default Nickname;
+    if (!isUserLoaded) {
+      return <p>Loading...</p>; // or a spinner component
+    }
+
+    if (!user) {
+      return (<div>
+        <h1 className="text-3xl">Guest</h1>
+      </div>)
+    }
+
+    return (
+      <div>
+        <h1 className="text-3xl">{user.displayName || "Guest"}</h1>
+      </div>
+    );
+  };
+
+  export default Nickname;
+
