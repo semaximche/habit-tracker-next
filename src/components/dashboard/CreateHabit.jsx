@@ -90,7 +90,7 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                             className="w-full p-2 border rounded text-accent-light dark:text-accent-dark bg-background-light  dark:bg-foreground-dark"
                         >
                             <option value="">Select a category</option>
-                            {['Health', 'Fitness', 'Productivity', 'Learning', 'Wellness', 'Finance', 'Social', 'Creative'].map((cat, index) => (
+                            {['Health', 'Fitness', 'Productivity', 'Learning', 'Quitting', 'Finance', 'Social', 'Creative', 'Abstract'].map((cat, index) => (
                                 <option key={index} value={cat}>
                                     {cat}
                                 </option>

@@ -3,11 +3,12 @@ import React, { useState } from 'react';
 import UserProfile from '@/components/profile/UserProfile';
 import HabitSummary from '@/components/profile/HabitSummary';
 import EditableShowcase from '@/components/profile/EditableShowcase';
-import RecentActivity from '@/components/profile/RecentActivity';
+import RecentActivity from '@/components/profile/RecentCategories';
 import LevelBadge from '@/components/profile/LevelBadge';
 import SideInfo from '@/components/profile/SideInfo';
 import EditProfile from '@/components/profile/EditProfile';
 import { UseAuth } from '@/contexts/AuthContext'; // Make sure this is correctly imported
+import RecentCategories from '@/components/profile/RecentCategories';
 
 
 
@@ -90,7 +91,7 @@ function ProfileMain() {
                   <SideInfo className="lg:hidden" />
                   <HabitSummary />
                   <EditableShowcase />
-                  <RecentActivity />
+                  <RecentCategories />
                 </>
               )}
             </div>

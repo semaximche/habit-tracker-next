@@ -16,6 +16,7 @@ import {
     query,
     updateDoc,
     where,
+    Timestamp,
 } from 'firebase/firestore';
 
 export default function HabitItem({
@@ -30,25 +31,30 @@ export default function HabitItem({
     const isActiveToday = activeDays.includes(convertToWeekdayNum(thisDate));
     const { user } = UseAuth();
 
+   
+
     const handleComplete = async (e) => {
         const itemQuery = query(
             collection(db, `/users/${user?.uid}/habits`),
             where('name', '==', name),
-            where('category', '==', category)  // Acan help with duplicates with same name
-    );        
+            where('category', '==', category)
+        );
 
         const docIds = [];
         const querySnapshot = await getDocs(itemQuery);
         querySnapshot.forEach((doc) => {
             docIds.push(doc.id);
         });
+
         if (docIds.length > 0) {
             const itemRef = doc(db, `/users/${user?.uid}/habits`, docIds[0]);
-            updateDoc(itemRef, {
+            await updateDoc(itemRef, {
                 completeDays: arrayUnion(convertToFormat(thisDate)),
+                lastCompleted: Timestamp.now() // Add the timestamp here
             });
         }
     };
+
 
     const handleUndo = async (e) => {
         const itemQuery = query(

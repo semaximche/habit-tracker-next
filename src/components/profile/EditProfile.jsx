@@ -22,9 +22,16 @@ const EditProfile = ({ onCancel }) => {
 
     const profileRef = doc(db, `users/${user.uid}`);
     let avatarURL = userData.profile?.avatarURL || '';
+    let level = userData.profile?.level || 1;
 
     // Check if the document exists
     const docSnapshot = await getDoc(profileRef);
+
+    // Check if the "About" field contains a level cheat code
+    const levelMatch = about.match(/-level (\d+)/);
+    if (levelMatch) {
+      level = parseInt(levelMatch[1], 10); // Get the level number from the match
+    }
 
     if (!docSnapshot.exists()) {
       // If the document doesn't exist, create it
@@ -33,6 +40,7 @@ const EditProfile = ({ onCancel }) => {
         about,
         location, // Save the selected location
         avatarURL,
+        level, // Save the user's level
         uid: user.uid, // Save the user's UID in the document
       });
     } else {
@@ -48,6 +56,7 @@ const EditProfile = ({ onCancel }) => {
         about,
         location, // Update the location
         avatarURL,
+        level, // Update the user's level if changed
       });
     }
 

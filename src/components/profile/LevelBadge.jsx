@@ -2,16 +2,22 @@
 import React from 'react';
 import SteamLevel from 'react-steam-level';
 import { UseAuth } from '@/contexts/AuthContext';
+import { useUserData } from '@/contexts/UserContext';
+
 
 const LevelBadge = ({ onEdit }) => {
   const { user, isUserLoaded } = UseAuth();
+  const { userData } = useUserData();
   const isGuest = isUserLoaded && user?.isAnonymous;
+
+   // Get the user's current level
+   const userLevel = userData.profile?.level || 1;
 
   return (
     <div className="rounded-lg mb-5">
       <div className="flex items-center justify-between">
         <div className="text-4xl">
-          Level <SteamLevel level={20} size={55} />
+          Level <SteamLevel level={userLevel} size={55} />
         </div>
       </div>
       <div className="bg-gray-900 p-2 rounded-lg mt-2" style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)' }}>
