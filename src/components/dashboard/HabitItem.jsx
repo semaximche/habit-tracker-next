@@ -1,3 +1,4 @@
+import React from 'react';
 import { UseAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase/firebaseInit';
 import {
@@ -19,6 +20,24 @@ import {
     Timestamp,
 } from 'firebase/firestore';
 
+// Helper Functions
+function getTodayFormatted() {
+    const today = new Date();
+    return convertToFormat(today);
+}
+
+function getYesterdayFormatted() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return convertToFormat(yesterday);
+}
+
+function getTomorrowFormatted() {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return convertToFormat(tomorrow);
+}
+
 export default function HabitItem({
     name,
     color,
@@ -30,33 +49,33 @@ export default function HabitItem({
     const isCompletedToday = completeDays.includes(convertToFormat(thisDate));
     const isActiveToday = activeDays.includes(convertToWeekdayNum(thisDate));
     const { user } = UseAuth();
+    const isToday = convertToFormat(thisDate) === getTodayFormatted();
+    const isTomorrow = convertToFormat(thisDate) === getTomorrowFormatted();
+    const isYesterday = convertToFormat(thisDate) === getYesterdayFormatted();
 
-   
-
-    const handleComplete = async (e) => {
+    const handleComplete = async () => {
         const itemQuery = query(
             collection(db, `/users/${user?.uid}/habits`),
             where('name', '==', name),
             where('category', '==', category)
         );
-
+    
         const docIds = [];
         const querySnapshot = await getDocs(itemQuery);
         querySnapshot.forEach((doc) => {
             docIds.push(doc.id);
         });
-
+    
         if (docIds.length > 0) {
             const itemRef = doc(db, `/users/${user?.uid}/habits`, docIds[0]);
             await updateDoc(itemRef, {
                 completeDays: arrayUnion(convertToFormat(thisDate)),
-                lastCompleted: Timestamp.now() // Add the timestamp here
+                lastCompleted: Timestamp.now()
             });
         }
     };
 
-
-    const handleUndo = async (e) => {
+    const handleUndo = async () => {
         const itemQuery = query(
             collection(db, `/users/${user?.uid}/habits`),
             where('name', '==', name)
@@ -74,7 +93,7 @@ export default function HabitItem({
         }
     };
 
-    const handleDelete = async (e) => {
+    const handleDelete = async () => {
         const itemQuery = query(
             collection(db, `/users/${user?.uid}/habits`),
             where('name', '==', name)
@@ -90,12 +109,18 @@ export default function HabitItem({
         }
     };
 
+    const isDisabled = !isToday && !isTomorrow && !isYesterday;
+
+    // Determine button classes based on the disabled state
+    const buttonClasses = `text-sm mt-3 bg-black hover:bg-gray-700 hover:shadow-md bg-opacity-30 text-white py-1 px-2 rounded duration-150 ${
+        isDisabled ? 'cursor-not-allowed opacity-50' : ''
+    }`;
+
     return (
         <>
             {isActiveToday ? (
                 isCompletedToday ? (
-                    // TODO maybe merge the 3 different ones into one
-                    /* Active and complete format*/
+                    // Active and complete format
                     <div
                         className={`flex items-center justify-between shadow-md rounded-lg ${color} mb-2 h-16 pl-2 transition-all`}
                     >
@@ -147,7 +172,7 @@ export default function HabitItem({
                         </button>
                     </div>
                 ) : (
-                    /* Active and not complete format*/
+                    // Active and not complete format
                     <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-50 dark:bg-background-dark mb-2 h-16 pl-2 transition-all">
                         <div className="flex-initial flex flex-col items-center mr-3">
                             <span
@@ -165,7 +190,6 @@ export default function HabitItem({
                             </p>
                             <p className="text-gray-200 text-xs">{category}</p>  
                         </div>
-
                         <div className="flex-auto dark:text-blue-800">
                             <Button
                                 onClick={handleComplete}
@@ -173,6 +197,7 @@ export default function HabitItem({
                                 variant="text"
                                 color="blue"
                                 ripple={false}
+                                disabled={!isToday && !isTomorrow && !isYesterday}
                             >
                                 Mark Complete
                             </Button>
@@ -202,7 +227,7 @@ export default function HabitItem({
                     </div>
                 )
             ) : (
-                /* Not active today format*/
+                // Not active today format
                 <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-300 dark:bg-primary-dark mb-2 h-16 pl-2 transition-all">
                     <div className="flex-initial flex flex-col items-center mr-3">
                         <span
