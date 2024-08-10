@@ -7,9 +7,9 @@ import {
     Input,
     Radio,
     Checkbox,
-    Menu, // Replace Select with Menu
-    MenuItem, // Replace Option with MenuItem
-} from '@/components/MaterialUI'; // Update import statement
+    Select,
+    Option
+} from '@/components/MaterialUI';
 import { UseAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase/firebaseInit';
 import { addDoc, collection } from 'firebase/firestore';
@@ -35,7 +35,7 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
             const docRef = await addDoc(habitsRef, {
                 name: e.target.elements.name.value,
                 color: e.target.elements.color.value,
-                category: e.target.elements.category.value, // Capture selected category
+                category: category,
                 completeDays: [],
                 activeDays: formActiveDays,
             });
@@ -82,23 +82,20 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                             ))}
                         </div>
                         <br />
-                        <label>Category</label>
-                        <Menu>
-                            {[
-                                'Health',
-                                'Fitness',
-                                'Productivity',
-                                'Learning',
-                                'Wellness',
-                                'Finance',
-                                'Social',
-                                'Creative',
-                            ].map((category, index) => (
-                                <MenuItem key={index} value={category}>
-                                    {category}
-                                </MenuItem>
+                        <label htmlFor="category">Category</label>
+                        <select 
+                            id="category"
+                            value={category} 
+                            onChange={(e) => setCategory(e.target.value)}
+                            className="w-full p-2 border rounded text-accent-light dark:text-accent-dark bg-background-light  dark:bg-foreground-dark"
+                        >
+                            <option value="">Select a category</option>
+                            {['Health', 'Fitness', 'Productivity', 'Learning', 'Wellness', 'Finance', 'Social', 'Creative'].map((cat, index) => (
+                                <option key={index} value={cat}>
+                                    {cat}
+                                </option>
                             ))}
-                        </Menu>
+                        </select>
                         <br />
                         <label>Frequency</label>
                         <div className="flex flex-wrap">
