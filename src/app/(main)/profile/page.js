@@ -1,9 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import UserProfile from '@/components/profile/UserProfile';
-import HabitSummary from '@/components/profile/HabitSummary';
+import CategorySummary from '@/components/profile/CategorySummary';
 import EditableShowcase from '@/components/profile/EditableShowcase';
-import RecentActivity from '@/components/profile/RecentCategories';
 import LevelBadge from '@/components/profile/LevelBadge';
 import SideInfo from '@/components/profile/SideInfo';
 import EditProfile from '@/components/profile/EditProfile';
@@ -89,7 +88,7 @@ function ProfileMain() {
                 <>
                   <UserProfile />
                   <SideInfo className="lg:hidden" />
-                  <HabitSummary />
+                  <CategorySummary />
                   <EditableShowcase />
                   <RecentCategories />
                 </>

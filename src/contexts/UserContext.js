@@ -28,8 +28,22 @@ export const UserContextProvider = ({ children }) => {
     useEffect(() => {
         if (isUserDataLoaded) {
             console.log('userdata:', userData);
+            const totalXP = calculateTotalXP(userData.habits);
+            updateUserXP(totalXP);
         }
     }, [userData]);
+
+    // Function to calculate total XP based on all habits
+    const calculateTotalXP = (habits) => {
+        let totalXP = 0;
+        for (const habitKey in habits) {
+            if (habits.hasOwnProperty(habitKey)) {
+                const habit = habits[habitKey];
+                totalXP += habit.completeDays.length * 69; // Each completed day gives 30 XP
+            }
+        }
+        return totalXP;
+    };
 
     // Realtime updater for both profile and habits
     useEffect(() => {
@@ -78,8 +92,29 @@ export const UserContextProvider = ({ children }) => {
         if (!user?.uid) return;
 
         const profileRef = doc(db, `users/${user.uid}`);
-        const level = Math.floor(xp / 100) + 1;
 
+        const nick = userData.profile.username
+        // Check if the user is a developer via username
+        const devMatch = nick.match(/dev/);
+        let level;
+        if (!(devMatch && devMatch[0])) {
+            // Non-developer: Calculate level based on XP
+            level = Math.floor(xp / 100) + 1;
+        } else {
+            // Developer: Calculate level based on the string "-level" in the about field
+            const aboutText = userData.profile.about;
+            const levelMatch = aboutText.match(/-level\s(\d+)/);
+            if (levelMatch && levelMatch[1]) {
+                level = parseInt(levelMatch[1], 10);
+            } else {
+                level = userData.profile.level; // Keep the current level if no match (if no -level found in about)
+            }
+        }
+
+        // Ensure the level does not exceed 5299
+        if (level > 5299) {
+            level = 5299;
+        }
         await updateDoc(profileRef, {
             xp,
             level,

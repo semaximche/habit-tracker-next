@@ -27,12 +27,6 @@ const EditProfile = ({ onCancel }) => {
     // Check if the document exists
     const docSnapshot = await getDoc(profileRef);
 
-    // Check if the "About" field contains a level cheat code
-    const levelMatch = about.match(/-level (\d+)/);
-    if (levelMatch) {
-      level = parseInt(levelMatch[1], 10); // Get the level number from the match
-    }
-
     if (!docSnapshot.exists()) {
       // If the document doesn't exist, create it
       await setDoc(profileRef, {
