@@ -1,13 +1,14 @@
-// src/App.jsx
+'use client';
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import UserProfile from './profile/UserProfile';
-import HabitSummary from './profile/HabitSummary';
-import EditableShowcase from './profile/EditableShowcase';
-import RecentActivity from './profile/RecentActivity';
-import LevelBadge from './components/LevelBadge';
-import SideInfo from './components/SideInfo';
-import EditProfile from './components/EditProfile';
+import UserProfile from '@/components/profile/UserProfile';
+import CategorySummary from '@/components/profile/CategorySummary';
+import EditableShowcase from '@/components/profile/EditableShowcase';
+import LevelBadge from '@/components/profile/LevelBadge';
+import SideInfo from '@/components/profile/SideInfo';
+import EditProfile from '@/components/profile/EditProfile';
+import { UseAuth } from '@/contexts/AuthContext'; // Make sure this is correctly imported
+import RecentCategories from '@/components/profile/RecentCategories';
+
 
 
 
@@ -65,29 +66,30 @@ const autumnBlazeGradientColors = {
   to: '#ff512f'   // Orange
 };
 
-
 function ProfileMain() {
   const [colors, setColors] = useState(mistySkyGradientColors);
   const [isEditing, setIsEditing] = useState(false);
+  const { user, isUserLoaded } = UseAuth();
+
+  const isGuest = isUserLoaded && user?.isAnonymous;
 
   return (
-    <Router>
-      <div className="bg-gray-900 min-h-screen text-white p-5">
+    <>
         <div className="relative max-w-screen-xl mx-auto p-5 bg-gray-800">
           <div className="absolute inset-0"
                style={{ background: `linear-gradient(to right, ${colors.from}, ${colors.via}, ${colors.to})`, opacity: 0.7 }}>
           </div>
           <div className="relative flex flex-wrap lg:flex-nowrap lg:space-x-5">
             <div className="flex-1 flex flex-col space-y-5">
-              {isEditing ? (
+              {isEditing && !isGuest ? (
                 <EditProfile onCancel={() => setIsEditing(false)} />
               ) : (
                 <>
                   <UserProfile />
                   <SideInfo className="lg:hidden" />
-                  <HabitSummary />
+                  <CategorySummary />
                   <EditableShowcase />
-                  <RecentActivity />
+                  <RecentCategories />
                 </>
               )}
             </div>
@@ -97,8 +99,7 @@ function ProfileMain() {
             </div>
           </div>
         </div>
-      </div>
-    </Router>
+    </>
   );
 }
 
