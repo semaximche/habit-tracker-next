@@ -2,7 +2,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { AuthContextProvider } from '@/contexts/AuthContext';
 import { DarkModeProvider } from '@/contexts/DarkModeContext';
-import Topbar from '@/components/mainLayout/Topbar';
+import Topbar from '@/components/MainLayout/Topbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
