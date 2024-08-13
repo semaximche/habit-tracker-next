@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useDarkMode } from '@/contexts/DarkModeContext';
 import { useAuth } from '@/contexts/AuthContext';
-import SignUpForm from './login/SignUpForm';
+import SignUpForm from '../login/SignUpForm';
 import Loading from '@/components/loading'; // Assuming you have a Loading component
 import { Button } from '@material-tailwind/react';
 import Link from 'next/link';
@@ -95,11 +95,8 @@ export default function Home() {
     return (
         <div
             id="vanta-bg"
-            className={`h-screen w-screen flex flex-col justify-center items-center ${darkMode ? 'bg-background-dark' : 'bg-background-light'}`}
+            className={`h-screen w-full flex flex-col justify-center items-center ${darkMode ? 'bg-background-dark' : 'bg-background-light'}`}
         >
-            <h1 className="font-bold text-5xl mb-4 text-accent-light dark:text-white drop-shadow-2xl">
-                Transform your life, one habit at a time.
-            </h1>
             {isUserLoaded ? (
                 user ? (
                     // Display content for authenticated users (if needed)

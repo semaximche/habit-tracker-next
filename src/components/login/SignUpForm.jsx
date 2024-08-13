@@ -33,7 +33,7 @@ export default function SignUpForm({ darkMode }) {
 
     return (
         <Card
-            className={`p-8 rounded-lg shadow-lg ${darkMode ? 'bg-background-dark text-foreground-light' : 'bg-background-light text-foreground-dark'} max-w-sm w-full`}
+            className={`p-8 rounded-lg shadow-lg ${darkMode ? 'bg-background-dark text-foreground-light' : 'bg-background-light text-foreground-dark'} w-fit`}
         >
             {error && (
                 <Typography color="red" className="text-red-500 mb-4">
@@ -43,8 +43,15 @@ export default function SignUpForm({ darkMode }) {
 
             <Typography
                 variant="h1"
+                color={darkMode ? 'accent-light' : 'accent-dark'}
+                className="font-bold text-3xl mb-4 text-center hidden sm:block"
+            >
+                Transform your life, one habit at a time.
+            </Typography>
+            <Typography
+                variant="h2"
                 color={darkMode ? 'foreground-light' : 'foreground-dark'}
-                className="font-bold text-2xl mb-4"
+                className="font-bold text-xl mb-4 text-center"
             >
                 Sign Up
             </Typography>
@@ -53,12 +60,7 @@ export default function SignUpForm({ darkMode }) {
                 onSubmit={handleSubmit}
                 className="flex flex-col items-center gap-4"
             >
-                <div className="mb-4">
-                    <Typography
-                        className={`text-sm font-bold mb-2 ${darkMode ? 'text-foreground-light' : 'text-foreground-dark'}`}
-                    >
-                        Display Name
-                    </Typography>
+                <div>
                     <Input
                         label="Display Name"
                         type="text"
@@ -70,12 +72,7 @@ export default function SignUpForm({ darkMode }) {
                     />
                 </div>
 
-                <div className="mb-4">
-                    <Typography
-                        className={`text-sm font-bold mb-2 ${darkMode ? 'text-foreground-light' : 'text-foreground-dark'}`}
-                    >
-                        Email
-                    </Typography>
+                <div>
                     <Input
                         label="Email"
                         type="email"
@@ -87,12 +84,7 @@ export default function SignUpForm({ darkMode }) {
                     />
                 </div>
 
-                <div className="mb-4">
-                    <Typography
-                        className={`text-sm font-bold mb-2 ${darkMode ? 'text-foreground-light' : 'text-foreground-dark'}`}
-                    >
-                        Password
-                    </Typography>
+                <div>
                     <Input
                         label="Password"
                         type="password"
