@@ -3,10 +3,11 @@ import { useRouter } from 'next/navigation';
 import Badges from './Badges';
 import MiniProfile from './MiniProfile';
 import UserSearch from './UserSearch';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth} from '@/contexts/AuthContext';
 import { followUser } from './followSYS/Following';
 import { unfollowUser } from './followSYS/unFollowing';
 import { getFirestore, collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
+import { useUserData } from '@/contexts/UserContext';
 
 const db = getFirestore();
 
@@ -14,6 +15,7 @@ const SideInfo = ({ className }) => {
   const [followedUsers, setFollowedUsers] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
+  const {userData} = useUserData();
 
   useEffect(() => {
     if (user) {
@@ -64,10 +66,12 @@ const SideInfo = ({ className }) => {
     }
   };
 
+  // const handleNavigateToProfile = (username) => {
+  //   router.push(`/profile/${username}`);
+  // };
   const handleNavigateToProfile = (username) => {
-    router.push(`/profile/${username}`);
-  };
-
+    router.push(`/OtherUserProfile?username=${username}`);
+};
   return (
     <div className={`p-5 bg-gray-950 rounded-lg ${className}`} style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
       <div className="text-xl mb-4">
@@ -78,7 +82,7 @@ const SideInfo = ({ className }) => {
         <Badges />
       </div>
       <div className="mb-4">
-        <p className="text-lg">Habits 71</p>
+        <p className="text-lg">Habits {Object.keys(userData.habits).length}</p>
         <p>Something</p>
       </div>
       <div>
@@ -90,7 +94,7 @@ const SideInfo = ({ className }) => {
             lastOnline={friend.lastOnline || 'Unknown'}
             badgeNumber={friend.badgeNumber || 0}
             onFollow={() => friend.isFollowed ? handleUnfollow(friend.id) : handleFollow(friend.id)}
-            onNavigate={() => handleNavigateToProfile(friend.username)}
+            onNavigate={() => handleNavigateToProfile(friend.id)}
             isFollowed={friend.isFollowed}
           />
         ))}
