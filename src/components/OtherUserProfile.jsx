@@ -69,7 +69,7 @@ const OtherUserProfile = () => {
           />
         </div>
         <div className="flex-1 flex flex-col space-y-3">
-          <h1 className="text-4xl font-bold">{userData.username}'s Profile</h1>
+          <h1 className="text-4xl font-bold">{userData.username}&apos;s Profile</h1>
           <p className="text-xl"><span className="font-semibold">Location:</span> {userData.location}</p>
           <p className="text-xl"><span className="font-semibold">Level:</span> {userData.level}</p>
           <p className="text-xl"><span className="font-semibold">XP:</span> {userData.xp}</p>
