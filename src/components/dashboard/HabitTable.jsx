@@ -10,12 +10,14 @@ import {
     convertToWords,
     convertToWeekdayNum,
 } from '@/lib/utils/dateUtils';
+import { useDarkMode } from '@/contexts/DarkModeContext';
 
 const HabitTable = () => {
     const [habits, setHabits] = useState([]);
     const { user } = UseAuth();
     const { isUserDataLoaded } = useUserData();
     const [thisDate, setThisDate] = useState(new Date());
+    const { darkMode } = useDarkMode();
 
     useEffect(() => {
         if (user && isUserDataLoaded) {
@@ -97,9 +99,13 @@ const HabitTable = () => {
                                     style={{
                                         backgroundColor: item.activeDays.includes(convertToWeekdayNum(day))
                                             ? (item.completeDays.includes(convertToFormat(day))
-                                                ? item.color
-                                                : 'rgb(229, 231, 235)') // Equivalent to bg-gray-200
-                                            : 'rgb(209, 213, 219)', // Equivalent to bg-gray-300
+                                                ? item.color                    //Marked complete colour
+                                                : (darkMode) 
+                                                    ? 'rgb(15, 23, 42)'         //Active dark mode colour
+                                                    : 'rgb(229, 231, 235)' )    //Active light mode colour
+                                            : (darkMode)
+                                                ? 'rgb(25, 32, 52)'             //Inactive dark mode colour
+                                                : 'rgb(209, 213, 219)'          //Inactive light mode colour
                                     }}
                                 >
                                     {item.completeDays.includes(
