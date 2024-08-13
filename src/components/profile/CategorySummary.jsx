@@ -19,8 +19,30 @@ const CategorySummary = () => {
   }
 
   const lastMonthDate = subMonths(new Date(), 1);
-  const monthStart = startOfMonth(lastMonthDate);
-  const monthEnd = endOfMonth(lastMonthDate);
+  const currentMonthDate = new Date();
+  let monthStart, monthEnd;
+
+ // Check if the user has any habits completed before the current month
+const currentMonthStart = startOfMonth(currentMonthDate);
+
+const hasPastCompletions = Object.keys(userData.habits).some(habitKey => {
+  const habit = userData.habits[habitKey];
+  return habit.completeDays.some(dateStr => {
+    const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
+    return isValid(completedDate) && isBefore(completedDate, currentMonthStart);
+  });
+});
+
+  if (hasPastCompletions) {
+    // If the user has past completions, use the last month's range
+    monthStart = startOfMonth(lastMonthDate);
+    monthEnd = endOfMonth(lastMonthDate);
+  } else {
+    // If the user has no past completions, use the current month's range
+    monthStart = startOfMonth(currentMonthDate);
+    monthEnd = endOfMonth(currentMonthDate);
+  }
+
 
   let habitsAchieved = 0;
   let tasksCompleted = 0;
@@ -90,7 +112,7 @@ const CategorySummary = () => {
   const topCategories = sortedCategories.slice(0, 5);
 
   return (
-    <Container title={`Habit Month Review - ${format(lastMonthDate, 'MMMM')}`}>
+    <Container title={`Habit Month Review - ${format(hasPastCompletions ? lastMonthDate : currentMonthDate, 'MMMM')}`}>
       <div className="bg-gradient-to-r from-purple-700 via-purple-800 to-blue-900 p-5 mb-5 text-white items-center justify-center">
         <div className="flex justify-around items-center">
           <div className="flex items-center justify-center mr-4">
@@ -107,7 +129,7 @@ const CategorySummary = () => {
                   <div className="text-base">Tasks Completed</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-5xl font-bold">27</div>
+                  <div className="text-5xl font-bold">TBD</div>
                   <div className="text-base">Highest Streak</div>
                 </div>
                 <div className="text-center">

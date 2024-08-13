@@ -28,7 +28,24 @@ const getRank = (xp) => {
   return 'beginner';
 };
 
-const Category = ({ name, xp, sumOfDays, numOfHabits, lastCompleted  }) => {
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp * 1000);
+  const currentYear = new Date().getFullYear();
+  const completedYear = date.getFullYear();
+  
+  // Format date as "DD MMM"
+  const formattedDate = date.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+  });
+
+  // Add year if it's not the current year
+  return completedYear === currentYear 
+    ? formattedDate 
+    : `${formattedDate}, ${completedYear}`;
+};
+
+const Category = ({ name, xp, sumOfDays, numOfHabits, lastCompleted }) => {
   const categoryKey = name.toLowerCase().replace(' ', '_');
   const categoryImage = categoryImages[categoryKey] || '/images/placeholder.png';
   const rank = getRank(xp);
@@ -38,10 +55,15 @@ const Category = ({ name, xp, sumOfDays, numOfHabits, lastCompleted  }) => {
     <div className='p-3 bg-gray-900 rounded-lg mb-4'>
       <div className="flex items-center mt-2">
         <img src={categoryImage} alt={`${name} Icon`} className="w-32 h-32" />
-        <div className="text-2xl ml-3">{name}</div>
-        <div className="text-lg ml-auto">{numOfHabits} habits | {sumOfDays} days on record</div>
+        <div className="text-2xl ml-3 mr-2">{name}</div>
+        <div className="text-lg ml-auto">
+          <div className='text-xl'>{numOfHabits} habits | {sumOfDays} days on record</div>
+          <p className='text-sm text-gray-400'>
+            Last completed: {lastCompleted ? `on ${formatDate(lastCompleted.seconds)}` : 'Never'}
+          </p>
+        </div>
       </div>
-      <p>Last completed: {lastCompleted ? new Date(lastCompleted.seconds * 1000).toLocaleString() : 'Never'}</p>
+      
       <div className="bg-gray-800 p-2 rounded-lg mt-2 flex space-x-1">
         <img src={rankImage} alt="Badge" className="w-12 h-12" />
         <div className="text-lg">
