@@ -1,9 +1,9 @@
-
 'use client';
+
 import React, { useState, useEffect } from 'react';
 import { useUserData } from '@/contexts/UserContext';
 import { db } from '@/lib/firebase/firebaseInit';
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { UseAuth } from '@/contexts/AuthContext';
 import {
     convertToFormat,
@@ -21,7 +21,7 @@ const HabitTable = () => {
     useEffect(() => {
         if (user && isUserDataLoaded) {
             const habitsRef = collection(db, `/users/${user.uid}/habits`);
-            const q = query(habitsRef);
+            const q = query(habitsRef, where("isHidden", "==", false)); // Only fetch non-hidden habits
 
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const habitsData = [];
