@@ -19,9 +19,9 @@ export default function HabitsListTable() {
     const toggleManageModal = () => setIsManageModalOpen(!isManageModalOpen);
 
     return (
-        <>
+        <div>
             {isUserDataLoaded ? (
-                <div className="flex flex-col">
+                <div className="flex flex-col justify-between h-fit gap-2">
                     <div className="flex flex-row justify-between items-center">
                         <div className="pb-3">
                             <Button
@@ -68,12 +68,12 @@ export default function HabitsListTable() {
                             </svg>
                         </IconButton>
                     </div>
+                    <ManageHabitsVisibilityModal isOpen={isManageModalOpen} onClose={toggleManageModal} />
                 </div>
             ) : (
                 <Loading />
             )}
             <CreateHabit isModalOpen={isModalOpen} toggleModal={toggleModal} />
-            <ManageHabitsVisibilityModal isOpen={isManageModalOpen} onClose={toggleManageModal} />
-        </>
+        </div>
     );
 }

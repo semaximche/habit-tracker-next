@@ -40,7 +40,6 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                 category: category,
                 completeDays: [],
                 activeDays: formActiveDays,
-                isHidden: e.target.elements.isHidden.checked,
             });
             setHandling(false);
         }
@@ -65,13 +64,8 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                             placeholder="Exercise"
                             id="name"
                         />
-                        <br />
                         <label>Color</label>
                         <HexColorPicker color={color} onChange={setColor} />
-                        <div className="mt-2">
-                            Selected color: <span style={{color: color}}>{color}</span>
-                        </div>
-                        <br />
                         <label htmlFor="category">Category</label>
                         <select 
                             id="category"
@@ -102,14 +96,7 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                                     </label>
                                 </div>
                             ))}
-                        </div>                        <label>
-                        <input
-                            type="checkbox"
-                            id="isHidden"
-                            className="mr-2"
-                        />
-                            Hide Habit
-                        </label>
+                        </div>
                     </DialogBody>
                     <DialogFooter>
                         <Button
