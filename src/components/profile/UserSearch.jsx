@@ -1,8 +1,11 @@
 'use client';
 import React, { useState } from 'react';
-import { getFirestore, collection, query, where, getDocs, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
 import { useAuth } from '@/contexts/AuthContext';
 import { followUser } from './followSYS/Following';
+import { unfollowUser } from './followSYS/unFollowing';
+import MiniProfile from './MiniProfile';
+import { useRouter } from 'next/navigation';
 
 const db = getFirestore();
 
@@ -12,6 +15,7 @@ const UserSearch = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
   const { user } = useAuth();
+  const router = useRouter();
 
   const handleSearch = async () => {
     if (searchTerm.trim() === '') {
@@ -35,7 +39,6 @@ const UserSearch = () => {
 
       for (let doc of querySnapshot.docs) {
         const userData = { id: doc.id, ...doc.data() };
-        // Check if the current user already follows this user
         const followQuery = query(
           collection(db, 'follows'),
           where('followerId', '==', user.uid),
@@ -64,65 +67,74 @@ const UserSearch = () => {
     }
   };
 
-  const handleFollow = async (friendId) => {
+  const handleFollowToggle = async (friendId, isCurrentlyFollowed) => {
     if (user) {
       try {
-        await followUser(user.uid, friendId);
+        if (isCurrentlyFollowed) {
+          await unfollowUser(user.uid, friendId);
+          setMessage('User unfollowed successfully!');
+        } else {
+          await followUser(user.uid, friendId);
+          setMessage('User followed successfully!');
+        }
+
         setSearchResults(prevResults =>
           prevResults.map(result =>
-            result.id === friendId ? { ...result, isFollowed: true } : result
+            result.id === friendId ? { ...result, isFollowed: !isCurrentlyFollowed } : result
           )
         );
-        setMessage('User followed successfully!');
       } catch (error) {
-        console.error("Error following user:", error);
-        setMessage('An error occurred while following the user. Please try again.');
+        console.error("Error toggling follow status:", error);
+        setMessage('An error occurred. Please try again.');
       }
+    } else {
+      console.log("User must be logged in to follow/unfollow");
+      setMessage('You must be logged in to follow or unfollow users.');
     }
   };
 
+  const handleNavigate = (userId) => {
+    router.push(`/profile/${userId}`);
+  };
+
   return (
-    <div className="p-4 bg-gray-800 rounded-lg">
-      <div className="flex mb-4">
-        <input 
-          type="text" 
-          value={searchTerm} 
-          onChange={(e) => setSearchTerm(e.target.value)} 
-          placeholder="Search users"
-          className="flex-grow px-3 py-2 bg-gray-700 text-white rounded-l-lg focus:outline-none"
+    <div>
+      <div className="relative">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search for users..."
+          className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none"
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
           disabled={isLoading}
         />
-        <button 
+        <button
           onClick={handleSearch}
-          className={`px-4 py-2 text-white rounded-r-lg focus:outline-none ${
-            isLoading ? 'bg-gray-500 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600'
-          }`}
+          className="absolute right-0 top-0 mt-2 mr-2 text-white"
           disabled={isLoading}
         >
-          {isLoading ? 'Searching...' : 'Search'}
+          🔍
         </button>
       </div>
       
       {message && (
-        <div className="mb-4 p-2 bg-gray-700 text-white rounded">
+        <div className="mt-4 p-2 bg-gray-700 text-white rounded">
           {message}
         </div>
       )}
       
-      <div>
+      <div className="mt-4">
         {searchResults.map(result => (
-          <div key={result.id} className="flex items-center justify-between mb-2 p-2 bg-gray-700 rounded-lg">
-            <span>{result.username}</span>
-            <button 
-              onClick={() => handleFollow(result.id)}
-              className={`px-3 py-1 text-white rounded focus:outline-none ${
-                result.isFollowed ? 'bg-gray-500' : 'bg-green-500 hover:bg-green-600'
-              }`}
-              disabled={result.isFollowed}
-            >
-              {result.isFollowed ? 'Following' : 'Follow'}
-            </button>
-          </div>
+          <MiniProfile
+            key={result.id}
+            name={result.username}
+            lastOnline={result.lastOnline || 'Unknown'}
+            badgeNumber={result.badgeNumber || 1}
+            onFollow={() => handleFollowToggle(result.id, result.isFollowed)}
+            onNavigate={() => handleNavigate(result.id)}
+            isFollowed={result.isFollowed}
+          />
         ))}
       </div>
     </div>

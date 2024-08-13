@@ -14,12 +14,14 @@ import { UseAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase/firebaseInit';
 import { addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
+import { HexColorPicker } from "react-colorful";
 
 export default function CreateHabit({ isModalOpen, toggleModal }) {
     const [handling, setHandling] = useState(false);
     const [category, setCategory] = useState('');
+    const [color, setColor] = useState("#aabbcc");
     const { user } = UseAuth();
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!handling) {
@@ -34,10 +36,11 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
             });
             const docRef = await addDoc(habitsRef, {
                 name: e.target.elements.name.value,
-                color: e.target.elements.color.value,
+                color: color, // Use the color state
                 category: category,
                 completeDays: [],
                 activeDays: formActiveDays,
+                isHidden: e.target.elements.isHidden.checked,
             });
             setHandling(false);
         }
@@ -64,22 +67,9 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                         />
                         <br />
                         <label>Color</label>
-                        <div className="flex flex-wrap">
-                            {['orange', 'green', 'teal', 'blue', 'purple', 'red'].map((color, index) => (
-                                <div key={index} className="flex flex-col justify-center items-center p-0.5">
-                                    <Radio
-                                        ripple={false}
-                                        className="hover:before:opacity-0"
-                                        name="color"
-                                        color={color}
-                                        id="color"
-                                        value={`bg-${color}-500`}
-                                    />
-                                    <label className={`text-${color}-500 text-sm`}>
-                                        {color}
-                                    </label>
-                                </div>
-                            ))}
+                        <HexColorPicker color={color} onChange={setColor} />
+                        <div className="mt-2">
+                            Selected color: <span style={{color: color}}>{color}</span>
                         </div>
                         <br />
                         <label htmlFor="category">Category</label>
@@ -112,7 +102,14 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                                     </label>
                                 </div>
                             ))}
-                        </div>
+                        </div>                        <label>
+                        <input
+                            type="checkbox"
+                            id="isHidden"
+                            className="mr-2"
+                        />
+                            Hide Habit
+                        </label>
                     </DialogBody>
                     <DialogFooter>
                         <Button

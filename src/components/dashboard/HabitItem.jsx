@@ -122,13 +122,18 @@ export default function HabitItem({
                 isCompletedToday ? (
                     // Active and complete format
                     <div
-                        className={`flex items-center justify-between shadow-md rounded-lg ${color} mb-2 h-16 pl-2 transition-all`}
+                        className={`flex items-center justify-between shadow-md rounded-lg mb-2 h-16 pl-2 transition-all`}
+                        style={{ backgroundColor: color }}
                     >
                         <div className="flex-initial flex flex-col items-center mr-3">
                             <span
-                                className={`block h-2 w-2 rounded-full ${color}`}
+                                className={`block h-2 w-2 rounded-full`}
+                                style={{ backgroundColor: color }}
                             ></span>
-                            <span className={`block h-8 w-0.5 ${color}`}></span>
+                            <span 
+                                className={`block h-8 w-0.5`}
+                                style={{ backgroundColor: color }}
+                            ></span>
                         </div>
 
                         <div className="flex-initial">
@@ -153,7 +158,8 @@ export default function HabitItem({
 
                         <button
                             onClick={handleDelete}
-                            className={`flex-3 flex ${color} h-full overflow-hidden rounded-lg items-center justify-center transition-all w-8 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700`}
+                            className={`flex-3 flex h-full overflow-hidden rounded-lg items-center justify-center transition-all w-8 hover:w-16 hover:bg-red-500 dark:hover:bg-red-700`}
+                            style={{ backgroundColor: color }}
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -174,13 +180,16 @@ export default function HabitItem({
                 ) : (
                     // Active and not complete format
                     <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-50 dark:bg-background-dark mb-2 h-16 pl-2 transition-all">
-                        <div className="flex-initial flex flex-col items-center mr-3">
-                            <span
-                                className={`block h-2 w-2 rounded-full ${color}`}
-                            ></span>
-                            <span className={`block h-8 w-0.5 ${color}`}></span>
+                    <div className="flex-initial flex flex-col items-center mr-3">
+                        <span
+                            className={`block h-2 w-2 rounded-full`}
+                            style={{ backgroundColor: color }}
+                        ></span>
+                        <span 
+                            className={`block h-8 w-0.5`}
+                            style={{ backgroundColor: color }}
+                        ></span>
                         </div>
-
                         <div className="flex-initial">
                             <h3 className="font-bold text-md text-accent-light dark:text-accent-dark">
                                 {name}

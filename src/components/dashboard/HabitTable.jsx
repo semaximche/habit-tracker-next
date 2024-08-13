@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { useUserData } from '@/contexts/UserContext';
 import { db } from '@/lib/firebase/firebaseInit';
@@ -28,11 +27,13 @@ const HabitTable = () => {
                 querySnapshot.forEach((doc) => {
                     const habit = doc.data();
                     habitsData.push({
+                        id: doc.id,
                         name: habit.name,
                         color: habit.color,
                         activeDays: habit.activeDays,
                         completeDays: habit.completeDays,
                         category: habit.category,
+                        isHidden: habit.isHidden,
                     });
                 });
                 setHabits(habitsData);
@@ -67,16 +68,6 @@ const HabitTable = () => {
                 </button>
             </div>
 
-            {/* <div className="flex justify-between items-center mt-6">
-                <span className="text-accent-light dark:text-accent-dark">Up 50% from the week before</span>
-                <div className="w-3/4 bg-gray-200 dark:bg-background-dark rounded-full h-2.5">
-                    <div
-                    className="bg-blue-500 dark:bg-blue-900 h-2.5 w-8 rounded-full"
-                    ></div>
-                </div>
-                <span className="text-accent-light dark:text-accent-dark">80% achieved</span>
-            </div> */}
-
             <table className="w-full mt-6">
                 <thead>
                     <tr>
@@ -102,7 +93,14 @@ const HabitTable = () => {
                             {weekDays.map((day, dayIdx) => (
                                 <td
                                     key={dayIdx}
-                                    className={` border-gray-400 border-2 p-2 text-center ${item.activeDays.includes(convertToWeekdayNum(day)) ? (item.completeDays.includes(convertToFormat(day)) ? item.color : 'bg-gray-200 dark:bg-foreground-dark') : 'bg-gray-300 dark:bg-background-dark'}`}
+                                    className={`border-gray-400 border-2 p-2 text-center`}
+                                    style={{
+                                        backgroundColor: item.activeDays.includes(convertToWeekdayNum(day))
+                                            ? (item.completeDays.includes(convertToFormat(day))
+                                                ? item.color
+                                                : 'rgb(229, 231, 235)') // Equivalent to bg-gray-200
+                                            : 'rgb(209, 213, 219)', // Equivalent to bg-gray-300
+                                    }}
                                 >
                                     {item.completeDays.includes(
                                         convertToFormat(day)
