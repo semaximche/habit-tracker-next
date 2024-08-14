@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import Container from './pContainer';
 import Category from './Category';
