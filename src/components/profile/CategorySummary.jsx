@@ -95,24 +95,24 @@ const CategorySummary = () => {
   });
 
   // Award badges based on the criteria
-  useEffect(() => {
-    // Category badges
-    Object.keys(categoryStats).forEach(categoryName => {
-      if (categoryStats[categoryName].xp >= 300) {
-        awardBadge(`${categoryName} Expert`, `/images/${categoryName.toLowerCase().replace(/\s+/g, '_')}_expert.png`);
-      }
-    });
+  // useEffect(() => {
+  //   // Category badges
+  //   Object.keys(categoryStats).forEach(categoryName => {
+  //     if (categoryStats[categoryName].xp >= 300) {
+  //       awardBadge(`${categoryName} Expert`, `/images/${categoryName.toLowerCase().replace(/\s+/g, '_')}_expert.png`);
+  //     }
+  //   });
 
-    // Task badges
-    if (tasksCompleted >= 10) awardBadge('Little Task', '/images/little_task.png');
-    if (tasksCompleted >= 30) awardBadge('Tasky Tasky', '/images/tasky_tasky.png');
-    if (tasksCompleted >= 100) awardBadge('Task Expert', '/images/task_expert.png');
-    if (tasksCompleted >= 200) awardBadge('Task Ninja', '/images/task_ninja.png');
+  //   // Task badges
+  //   if (tasksCompleted >= 10) awardBadge('Little Task', '/images/little_task.png');
+  //   if (tasksCompleted >= 30) awardBadge('Tasky Tasky', '/images/tasky_tasky.png');
+  //   if (tasksCompleted >= 100) awardBadge('Task Expert', '/images/task_expert.png');
+  //   if (tasksCompleted >= 200) awardBadge('Task Ninja', '/images/task_ninja.png');
 
-    // Habit badges
-    if (habitsAchieved >= 5 && habitsAchieved <= 9) awardBadge('Habit Enjoyer', '/images/habit_enjoyer.png');
-    if (habitsAchieved >= 10) awardBadge('Habit Lover', '/images/habit_lover.png');
-  }, [tasksCompleted, habitsAchieved, categoryStats, awardBadge]);
+  //   // Habit badges
+  //   if (habitsAchieved >= 5 && habitsAchieved <= 9) awardBadge('Habit Enjoyer', '/images/habit_enjoyer.png');
+  //   if (habitsAchieved >= 10) awardBadge('Habit Lover', '/images/habit_lover.png');
+  // }, [tasksCompleted, habitsAchieved, categoryStats, awardBadge]);
 
   const sortedCategories = Object.values(categoryStats).map(cat => ({
     ...cat,
