@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from './pContainer';
 import { useUserData } from '@/contexts/UserContext';
 import { format, subMonths, startOfMonth, endOfMonth, parseISO, isBefore, isAfter, isValid, parse } from 'date-fns';
 import Loading from '../loading';
 
 const CategorySummary = () => {
-  const { userData, isUserDataLoaded } = useUserData();
+  const { userData, isUserDataLoaded, awardBadge } = useUserData();
 
   // If data is still loading, show the Loading component
   if (!isUserDataLoaded) {
@@ -22,27 +22,23 @@ const CategorySummary = () => {
   const currentMonthDate = new Date();
   let monthStart, monthEnd;
 
- // Check if the user has any habits completed before the current month
-const currentMonthStart = startOfMonth(currentMonthDate);
+  const currentMonthStart = startOfMonth(currentMonthDate);
 
-const hasPastCompletions = Object.keys(userData.habits).some(habitKey => {
-  const habit = userData.habits[habitKey];
-  return habit.completeDays.some(dateStr => {
-    const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
-    return isValid(completedDate) && isBefore(completedDate, currentMonthStart);
+  const hasPastCompletions = Object.keys(userData.habits).some(habitKey => {
+    const habit = userData.habits[habitKey];
+    return habit.completeDays.some(dateStr => {
+      const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
+      return isValid(completedDate) && isBefore(completedDate, currentMonthStart);
+    });
   });
-});
 
   if (hasPastCompletions) {
-    // If the user has past completions, use the last month's range
     monthStart = startOfMonth(lastMonthDate);
     monthEnd = endOfMonth(lastMonthDate);
   } else {
-    // If the user has no past completions, use the current month's range
     monthStart = startOfMonth(currentMonthDate);
     monthEnd = endOfMonth(currentMonthDate);
   }
-
 
   let habitsAchieved = 0;
   let tasksCompleted = 0;
@@ -51,10 +47,8 @@ const hasPastCompletions = Object.keys(userData.habits).some(habitKey => {
 
   Object.keys(userData.habits).forEach(habitKey => {
     const habit = userData.habits[habitKey];
-    const { completeDays, category, lastCompleted } = habit;
-    const lastCompletedDate = lastCompleted?.seconds ? new Date(lastCompleted.seconds * 1000) : null;
+    const { completeDays, category } = habit;
 
-    // Check if the habit was completed at least once in the last month
     const completedInMonth = completeDays.some(dateStr => {
       const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
       return isValid(completedDate) && isAfter(completedDate, monthStart) && isBefore(completedDate, monthEnd);
@@ -63,7 +57,6 @@ const hasPastCompletions = Object.keys(userData.habits).some(habitKey => {
     if (completedInMonth) {
       habitsAchieved += 1;
 
-      // Count only completions made in the last month
       const lastMonthCompletions = completeDays.filter(dateStr => {
         const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
         return isValid(completedDate) && isAfter(completedDate, monthStart) && isBefore(completedDate, monthEnd);
@@ -71,44 +64,62 @@ const hasPastCompletions = Object.keys(userData.habits).some(habitKey => {
 
       tasksCompleted += lastMonthCompletions.length;
 
-      // Update category stats
       if (!categoryStats[category]) {
         categoryStats[category] = {
           name: category,
+          xp: 0,
           daysCompleted: 0,
           totalDays: 0,
         };
       }
       categoryStats[category].daysCompleted += lastMonthCompletions.length;
       categoryStats[category].totalDays += 30; // Assuming each habit has 30 days in a month
+
+      // Calculate XP for the category
+      categoryStats[category].xp += lastMonthCompletions.length * 10; // XP per completed day
     }
 
-  // Iterate over completeDays to check the first completion in the last month
-  const firstCompletionInMonth = completeDays
-  .map(dateStr => parse(dateStr, 'd-M-yyyy', new Date()))
-  .filter(completedDate => isValid(completedDate) && isAfter(completedDate, monthStart) && isBefore(completedDate, monthEnd))
-  .sort((a, b) => a - b)[0]; // Get the earliest completion in the month
+    const firstCompletionInMonth = completeDays
+      .map(dateStr => parse(dateStr, 'd-M-yyyy', new Date()))
+      .filter(completedDate => isValid(completedDate) && isAfter(completedDate, monthStart) && isBefore(completedDate, monthEnd))
+      .sort((a, b) => a - b)[0];
 
-  // Ensure no completions before last month
-  const hadNoPriorCompletions = !completeDays.some(dateStr => {
-  const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
-  return isValid(completedDate) && isBefore(completedDate, monthStart);
+    const hadNoPriorCompletions = !completeDays.some(dateStr => {
+      const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
+      return isValid(completedDate) && isBefore(completedDate, monthStart);
+    });
+
+    if (firstCompletionInMonth && hadNoPriorCompletions) {
+      newHabits += 1;
+    }
   });
 
-  // If the habit was first completed last month and had no prior completions
-  if (firstCompletionInMonth && hadNoPriorCompletions) {
-  newHabits += 1;
-  }
+  // Award badges based on the criteria
+  useEffect(() => {
+    // Category badges
+    Object.keys(categoryStats).forEach(categoryName => {
+      if (categoryStats[categoryName].xp >= 300) {
+        awardBadge(`${categoryName} Expert`, `/images/${categoryName.toLowerCase().replace(/\s+/g, '_')}_expert.png`);
+      }
+      
+    });
 
-  });
+    // Task badges
+    if (tasksCompleted >= 10) awardBadge('Little Task', '/images/little_task.png');
+    if (tasksCompleted >= 30) awardBadge('Tasky Tasky', '/images/tasky_tasky.png');
+    if (tasksCompleted >= 100) awardBadge('Task Expert', '/images/task_expert.png');
+    if (tasksCompleted >= 200) awardBadge('Task Ninja', '/images/task_ninja.png');
 
-  // Sort categories by percentage of days completed
+    // Habit badges
+    if (habitsAchieved >= 5 && habitsAchieved <= 9) awardBadge('Habit Enjoyer', '/images/habit_enjoyer.png');
+    if (habitsAchieved >= 10) awardBadge('Habit Lover', '/images/habit_lover.png');
+  }, [tasksCompleted, habitsAchieved, categoryStats, awardBadge]);
+
   const sortedCategories = Object.values(categoryStats).map(cat => ({
     ...cat,
     percentage: (cat.daysCompleted / tasksCompleted) * 100,
   })).sort((a, b) => b.percentage - a.percentage);
 
-  // Slice to get the top 5 categories
   const topCategories = sortedCategories.slice(0, 5);
 
   return (
