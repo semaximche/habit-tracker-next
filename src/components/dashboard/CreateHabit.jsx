@@ -36,10 +36,11 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
             });
             const docRef = await addDoc(habitsRef, {
                 name: e.target.elements.name.value,
-                color: color, // Use the color state
+                color: color,
                 category: category,
                 completeDays: [],
                 activeDays: formActiveDays,
+                isHidden: false  // Add this line
             });
             setHandling(false);
         }
