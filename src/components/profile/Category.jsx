@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const categoryImages = {
   health: '/images/health.png',
@@ -49,30 +50,42 @@ const Category = ({ name, xp, sumOfDays, numOfHabits, lastCompleted }) => {
   const categoryKey = name.toLowerCase().replace(' ', '_');
   const categoryImage = categoryImages[categoryKey] || '/images/placeholder.png';
   const rank = getRank(xp);
-  const rankImage = rankImages[rank];
+  const rankImage = rankImages[rank] || '/images/placeholder.png';
 
   return (
-    <div className='p-3 bg-gray-900 rounded-lg mb-4'>
-      <div className="flex items-center mt-2">
-        <img src={categoryImage} alt={`${name} Icon`} className="w-32 h-32" />
-        <div className="text-2xl ml-3 mr-2">{name}</div>
-        <div className="text-lg ml-auto">
-          <div className='text-xl'>{numOfHabits} habits | {sumOfDays} days on record</div>
+    <div className='p-4 bg-gray-900 rounded-lg mb-4 shadow-lg'>
+      <div className="flex items-start">
+        <img src={categoryImage} alt={`${name} category icon`} className="w-32 h-32 object-cover" />
+        <div className="ml-4">
+          <h2 className="text-2xl font-semibold mb-2">{name}</h2>
+          <p className="text-lg mb-1">{numOfHabits} habits | {sumOfDays} days on record</p>
           <p className='text-sm text-gray-400'>
             Last completed: {lastCompleted ? `on ${formatDate(lastCompleted.seconds)}` : 'Never'}
           </p>
         </div>
       </div>
       
-      <div className="bg-gray-800 p-2 rounded-lg mt-2 flex space-x-1">
-        <img src={rankImage} alt="Badge" className="w-12 h-12" />
-        <div className="text-lg">
-          {rank.charAt(0).toUpperCase() + rank.slice(1).replace('_', ' ')}
-          <div className="text-base">{xp} XP</div>
+      <div className="bg-gray-800 p-2 rounded-lg mt-4 flex items-center space-x-2">
+        <img src={rankImage} alt={`${rank} badge`} className="w-12 h-12" />
+        <div>
+          <div className="text-lg font-semibold">
+            {rank.charAt(0).toUpperCase() + rank.slice(1).replace('_', ' ')}
+          </div>
+          <div className="text-base text-gray-300">{xp} XP</div>
         </div>
       </div>
     </div>
   );
+};
+
+Category.propTypes = {
+  name: PropTypes.string.isRequired,
+  xp: PropTypes.number.isRequired,
+  sumOfDays: PropTypes.number.isRequired,
+  numOfHabits: PropTypes.number.isRequired,
+  lastCompleted: PropTypes.shape({
+    seconds: PropTypes.number,
+  }),
 };
 
 export default Category;

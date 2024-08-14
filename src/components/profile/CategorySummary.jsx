@@ -101,7 +101,6 @@ const CategorySummary = () => {
       if (categoryStats[categoryName].xp >= 300) {
         awardBadge(`${categoryName} Expert`, `/images/${categoryName.toLowerCase().replace(/\s+/g, '_')}_expert.png`);
       }
-      
     });
 
     // Task badges
@@ -124,35 +123,35 @@ const CategorySummary = () => {
 
   return (
     <Container title={`Habit Month Review - ${format(hasPastCompletions ? lastMonthDate : currentMonthDate, 'MMMM')}`}>
-      <div className="bg-gradient-to-r from-purple-700 via-purple-800 to-blue-900 p-5 mb-5 text-white items-center justify-center">
-        <div className="flex justify-around items-center">
-          <div className="flex items-center justify-center mr-4">
-            <h3 className="text-9xl font-bold mb-1">
+      <div className="bg-gradient-to-r from-purple-700 via-purple-800 to-blue-900 p-5 mb-5 text-white">
+        <div className="flex flex-col lg:flex-row justify-around items-center">
+          <div className="flex items-center justify-center mb-4 lg:mb-0 lg:mr-4">
+            <h3 className="text-6xl lg:text-9xl font-bold mb-1">
               {habitsAchieved}
-              <span className="block text-2xl font-bold mb-1">Habits Achieved</span>
+              <span className="block text-xl lg:text-2xl font-bold mb-1">Habits Achieved</span>
             </h3>
           </div>
           <div className="flex items-center justify-center">
             <div className="flex flex-col items-center">
-              <div className="flex space-x-10">
-                <div className="text-center">
-                  <div className="text-5xl font-bold">{tasksCompleted}</div>
-                  <div className="text-base">Tasks Completed</div>
+              <div className="flex flex-wrap justify-center lg:justify-start lg:space-x-10">
+                <div className="text-center w-1/2 lg:w-auto mb-4 lg:mb-0">
+                  <div className="text-4xl lg:text-5xl font-bold">{tasksCompleted}</div>
+                  <div className="text-sm lg:text-base">Tasks Completed</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-5xl font-bold">TBD</div>
-                  <div className="text-base">Highest Streak</div>
+                <div className="text-center w-1/2 lg:w-auto mb-4 lg:mb-0">
+                  <div className="text-4xl lg:text-5xl font-bold">TBD</div>
+                  <div className="text-sm lg:text-base">Highest Streak</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-5xl font-bold">{newHabits}</div>
-                  <div className="text-base">New Habits</div>
+                <div className="text-center w-full lg:w-auto">
+                  <div className="text-4xl lg:text-5xl font-bold">{newHabits}</div>
+                  <div className="text-sm lg:text-base">New Habits</div>
                 </div>
               </div>
-              <div className="flex space-x-3 mt-5">
+              <div className="flex flex-wrap justify-center lg:justify-start lg:space-x-3 mt-5">
                 {topCategories.map((category, index) => (
-                  <div className="text-center" key={index}>
-                    <img src={`/images/${category.name.toLowerCase().replace(/\s+/g, '_')}.png`} alt={category.name} className="w-24 h-24 mb-1" />
-                    <p>{Math.round(category.percentage)}%</p>
+                  <div className="text-center w-1/3 lg:w-auto mb-3 lg:mb-0" key={index}>
+                    <img src={`/images/${category.name.toLowerCase().replace(/\s+/g, '_')}.png`} alt={category.name} className="w-16 h-16 lg:w-24 lg:h-24 mb-1 mx-auto" />
+                    <p className="text-sm lg:text-base">{Math.round(category.percentage)}%</p>
                   </div>
                 ))}
               </div>
