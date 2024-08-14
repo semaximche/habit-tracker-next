@@ -2,16 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Badges from './Badges';
 import MiniProfile from './MiniProfile';
+import BadgeModal from './BadgeModal';
 import UserSearch from './UserSearch';
 import { useAuth} from '@/contexts/AuthContext';
 import { followUser } from './followSYS/Following';
 import { unfollowUser } from './followSYS/unFollowing';
 import { getFirestore, collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
 import { useUserData } from '@/contexts/UserContext';
+import Link from 'next/link';
+import AllCategories from './AllCategories';
+
+
 
 const db = getFirestore();
 
 const SideInfo = ({ className }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
   const [followedUsers, setFollowedUsers] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
@@ -75,15 +82,21 @@ const SideInfo = ({ className }) => {
   return (
     <div className={`p-5 bg-gray-950 rounded-lg ${className}`} style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
       <div className="text-xl mb-4">
-        <p>Currently {user ? 'Online' : 'Offline'}</p>
-        <p className="text-sm text-gray-400">Last Online {user ? 'Now' : '23 days ago'}</p>
+        <p className={user ? 'text-green-500' : 'text-gray-600'}>
+          Currently {user ? 'Online' : 'Offline'}
+        </p>
+        <p className="text-sm text-gray-400">Last Online {user ? 'Now' : '1 hour ago'}</p>
       </div>
       <div className="mb-4">
-        <Badges />
+                <button onClick={toggleModal} className="text-white font-semibold">
+                    <Badges></Badges>
+                </button>
+                <BadgeModal isOpen={isModalOpen} toggleModal={toggleModal} />
       </div>
       <div className="mb-4">
         <p className="text-lg">Habits {Object.keys(userData.habits).length}</p>
-        <p>Something</p>
+        <Link href="/AllCategories" className="text-white"> Categories
+        </Link>
       </div>
       <div>
         <p className="text-lg mb-2">Following {followedUsers.length}</p>

@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { lightGradientColors, darkGradientColors } from '@/components/profile/gradientColors';
 
-const EditProfileInfoText = ({ username, setUsername, about, setAbout, location, setLocation }) => {
+const EditProfileInfoText = ({ 
+  username, setUsername, 
+  about, setAbout, 
+  location, setLocation, 
+  lightGradient, setLightGradient, 
+  darkGradient, setDarkGradient 
+}) => {
   const locations = ["Israel, Tel-Aviv", "Israel, Haifa", "Israel, Carmiel"];
 
   return (
@@ -36,6 +43,42 @@ const EditProfileInfoText = ({ username, setUsername, about, setAbout, location,
             {locations.map((loc, index) => (
               <option key={index} value={loc}>
                 {loc}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Light Mode Color Picker */}
+        <div className="mb-4">
+          <label htmlFor="lightGradient" className="block mb-2">Light Mode Gradient</label>
+          <select
+            id="lightGradient"
+            name="lightGradient"
+            className="form-control w-full px-3 py-2 text-gray-600"
+            value={lightGradient}
+            onChange={(e) => setLightGradient(e.target.value)}
+          >
+            {Object.keys(lightGradientColors).map((key) => (
+              <option key={key} value={key}>
+                {lightGradientColors[key].label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Dark Mode Color Picker */}
+        <div className="mb-4">
+          <label htmlFor="darkGradient" className="block mb-2">Dark Mode Gradient</label>
+          <select
+            id="darkGradient"
+            name="darkGradient"
+            className="form-control w-full px-3 py-2 text-gray-600"
+            value={darkGradient}
+            onChange={(e) => setDarkGradient(e.target.value)}
+          >
+            {Object.keys(darkGradientColors).map((key) => (
+              <option key={key} value={key}>
+                {darkGradientColors[key].label}
               </option>
             ))}
           </select>

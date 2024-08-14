@@ -15,6 +15,9 @@ export const emptyUserData = {
         location: '',
         xp: 0,
         level: 1,
+        badges: [],
+        lightGradient: 'oceanBreeze', // Default light gradient
+        darkGradient: 'forestWhisper', // Default dark gradient
     },
     habits: {},
 };
@@ -39,12 +42,12 @@ export const UserContextProvider = ({ children }) => {
         for (const habitKey in habits) {
             if (habits.hasOwnProperty(habitKey)) {
                 const habit = habits[habitKey];
-                totalXP += habit.completeDays.length * 69; // Each completed day gives 30 XP
+                totalXP += habit.completeDays.length * 69; // Each completed day gives 69 XP
             }
         }
         return totalXP;
     };
-
+    
     // Realtime updater for both profile and habits
     useEffect(() => {
         let unsubscribeProfile = () => {};
@@ -88,30 +91,27 @@ export const UserContextProvider = ({ children }) => {
         };
     }, [isUserLoaded, user]);
 
+    // Function to update the user's XP and level
     const updateUserXP = async (xp) => {
         if (!user?.uid) return;
 
         const profileRef = doc(db, `users/${user.uid}`);
 
-        const nick = userData.profile.username
-        // Check if the user is a developer via username
+        const nick = userData.profile.username;
         const devMatch = nick.match(/dev/);
         let level;
         if (!(devMatch && devMatch[0])) {
-            // Non-developer: Calculate level based on XP
             level = Math.floor(xp / 100) + 1;
         } else {
-            // Developer: Calculate level based on the string "-level" in the about field
             const aboutText = userData.profile.about;
             const levelMatch = aboutText.match(/-level\s(\d+)/);
             if (levelMatch && levelMatch[1]) {
                 level = parseInt(levelMatch[1], 10);
             } else {
-                level = userData.profile.level; // Keep the current level if no match (if no -level found in about)
+                level = userData.profile.level;
             }
         }
 
-        // Ensure the level does not exceed 5299
         if (level > 5299) {
             level = 5299;
         }
@@ -121,8 +121,40 @@ export const UserContextProvider = ({ children }) => {
         });
     };
 
+    // Function to award a badge to the user
+    const awardBadge = (badgeName, badgeIcon) => {
+    setUserData((prevUserData) => {
+        // Initialize badges as an empty array if it's undefined
+        const updatedBadges = prevUserData.profile.badges || [];
+
+        // Check if the user already has this badge
+        const alreadyHasBadge = updatedBadges.some(badge => badge.name === badgeName);
+
+        if (alreadyHasBadge) return prevUserData; // Don't add it again
+
+        // Add the new badge
+        const newBadges = [...updatedBadges, { name: badgeName, icon: badgeIcon }];
+
+        // Return the updated user data with the new badge added
+        return {
+            ...prevUserData,
+            profile: {
+                ...prevUserData.profile,
+                badges: newBadges,
+            },
+        };
+    });
+    };
+
+
+    // Function to get the user's badges
+    const getUserBadges = () => {
+        return userData.profile.badges || []; // Return an empty array if badges are undefined
+    };
+
+
     return (
-        <UserContext.Provider value={{ userData, setUserData, isUserDataLoaded, updateUserXP }}>
+        <UserContext.Provider value={{ userData, setUserData, isUserDataLoaded, updateUserXP, awardBadge, getUserBadges }}>
             {children}
         </UserContext.Provider>
     );

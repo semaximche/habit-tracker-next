@@ -2,34 +2,37 @@ import React, { useState } from 'react';
 import { useUserData } from '@/contexts/UserContext';
 import { db, storage } from '@/lib/firebase/firebaseInit';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, getDoc, setDoc } from 'firebase/firestore';
 import { updateProfile } from 'firebase/auth';
 import { UseAuth } from '@/contexts/AuthContext';
-import { setDoc, getDoc } from 'firebase/firestore';
 import AvatarUpload from './AvatarUpload';
 import EditProfileInfoText from './EditProfileInfoText';
 
 const EditProfile = ({ onCancel }) => {
   const { user } = UseAuth(); // Get the current authenticated user
   const { userData } = useUserData();
+  
+  // Initialize state for profile fields
   const [username, setUsername] = useState(userData.profile?.username || '');
   const [about, setAbout] = useState(userData.profile?.about || '');
   const [location, setLocation] = useState(userData.profile?.location || 'Israel, Tel-Aviv');
   const [avatar, setAvatar] = useState(null);
+  const [lightGradient, setLightGradient] = useState(userData.profile?.lightGradient || 'oceanBreeze');
+  const [darkGradient, setDarkGradient] = useState(userData.profile?.darkGradient || 'forestWhisper');
 
   const handleSaveChanges = async () => {
     if (!user?.uid) return; // Ensure user is logged in
-  
+    
     const profileRef = doc(db, `users/${user.uid}`);
     let avatarURL = userData.profile?.avatarURL || '';
     let level = userData.profile?.level || 1;
-  
+
     // Check if the document exists
     const docSnapshot = await getDoc(profileRef);
-  
+
     // Ensure the username is not blank
     const finalUsername = username.trim() === '' ? userData.profile?.username : username;
-  
+
     if (!docSnapshot.exists()) {
       // If the document doesn't exist, create it
       await setDoc(profileRef, {
@@ -37,6 +40,8 @@ const EditProfile = ({ onCancel }) => {
         about,
         location, // Save the selected location
         avatarURL,
+        lightGradient, // Save the selected light gradient
+        darkGradient, // Save the selected dark gradient
         level, // Save the user's level
         uid: user.uid, // Save the user's UID in the document
       });
@@ -47,19 +52,21 @@ const EditProfile = ({ onCancel }) => {
         await uploadBytes(avatarRef, avatar);
         avatarURL = await getDownloadURL(avatarRef);
       }
-  
+
       await updateDoc(profileRef, {
         username: finalUsername,
         about,
         location, // Update the location
         avatarURL,
+        lightGradient, // Update the light gradient
+        darkGradient, // Update the dark gradient
         level, // Update the user's level if changed
       });
     }
-  
+
     // Update Firebase Auth profile (username)
     await updateProfile(user, { displayName: finalUsername });
-  
+
     onCancel(); // Close the edit form after saving changes
   };
 
@@ -95,6 +102,10 @@ const EditProfile = ({ onCancel }) => {
                   setAbout={setAbout}
                   location={location}
                   setLocation={setLocation}
+                  lightGradient={lightGradient}
+                  setLightGradient={setLightGradient}
+                  darkGradient={darkGradient}
+                  setDarkGradient={setDarkGradient}
                 />
                 <div className="flex justify-end">
                   <button className="btn btn-primary" onClick={handleSaveChanges}>
