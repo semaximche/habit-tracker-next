@@ -5,9 +5,10 @@ import { useUserData } from '@/contexts/UserContext';
 import Loading from '../loading';
 import { UseAuth } from '@/contexts/AuthContext';
 
-const { user} = UseAuth();
+
 
 const AllCategories = () => {
+  const { user} = UseAuth();
   const { userData, isUserDataLoaded } = useUserData();
 
   if (!isUserDataLoaded) {
