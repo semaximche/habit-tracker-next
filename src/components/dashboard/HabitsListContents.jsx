@@ -10,10 +10,18 @@ export default function HabitsListContents({ date }) {
 
     // Sort habits by active -> complete -> inactive
     const sortedHabits = Object.keys(habitsGroup).sort((a, b) => {
-        const isActiveA = habitsGroup[a].activeDays.includes(convertToWeekdayWords(date));
-        const isActiveB = habitsGroup[b].activeDays.includes(convertToWeekdayWords(date));
-        const isCompletedA = habitsGroup[a].completeDays.includes(convertToFormat(date));
-        const isCompletedB = habitsGroup[b].completeDays.includes(convertToFormat(date));
+        const isActiveA = habitsGroup[a].activeDays.includes(
+            convertToWeekdayWords(date)
+        );
+        const isActiveB = habitsGroup[b].activeDays.includes(
+            convertToWeekdayWords(date)
+        );
+        const isCompletedA = habitsGroup[a].completeDays.includes(
+            convertToFormat(date)
+        );
+        const isCompletedB = habitsGroup[b].completeDays.includes(
+            convertToFormat(date)
+        );
 
         if (isActiveA !== isActiveB) return isActiveB - isActiveA;
         if (isCompletedA !== isCompletedB) return isCompletedB - isCompletedA;
@@ -23,10 +31,14 @@ export default function HabitsListContents({ date }) {
     return (
         <div key={date}>
             {sortedHabits
-                .filter(habit => !habitsGroup[habit].isHidden) // Filter out hidden habits
+                .filter((habit) => !habitsGroup[habit].isHidden) // Filter out hidden habits
                 .map((habit, index) => {
-                    const isCompletedToday = habitsGroup[habit].completeDays.includes(convertToFormat(date));
-                    const isActiveToday = habitsGroup[habit].activeDays.includes(convertToWeekdayWords(date));
+                    const isCompletedToday = habitsGroup[
+                        habit
+                    ].completeDays.includes(convertToFormat(date));
+                    const isActiveToday = habitsGroup[
+                        habit
+                    ].activeDays.includes(convertToWeekdayWords(date));
                     return (
                         <div key={`${index}-${habit}-${date}`}>
                             <HabitItem

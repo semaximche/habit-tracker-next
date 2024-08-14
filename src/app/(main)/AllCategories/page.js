@@ -1,4 +1,3 @@
-
 import AllCategories from '@/components/profile/AllCategories';
 
 export default function profile() {

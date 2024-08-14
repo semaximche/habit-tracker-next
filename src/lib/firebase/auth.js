@@ -16,12 +16,12 @@ export async function signInWithGoogle() {
         //Create user profile
         await setDoc(profileRef, {
             username: userCredential.user.displayName,
-            about: "",
-            location: "Location not known", // Save the selected location
-            avatarURL: "",
+            about: '',
+            location: 'Location not known', // Save the selected location
+            avatarURL: '',
             level: 0, // Save the user's level
             uid: userCredential.user.uid, // Save the user's UID in the document
-          });
+        });
     } catch (error) {
         console.error('Error signing in with google', error);
     }
@@ -36,12 +36,12 @@ export async function signInAsGuest() {
         const profileRef = doc(db, `users/${userCredential.user.uid}`);
         await setDoc(profileRef, {
             username: 'Guest',
-            about: "",
-            location: "Location not known", // Save the selected location
-            avatarURL: "",
+            about: '',
+            location: 'Location not known', // Save the selected location
+            avatarURL: '',
             level: 0, // Save the user's level
             uid: userCredential.user.uid, // Save the user's UID in the document
-          });
+        });
     } catch (error) {
         console.error('Error signing in as guest', error);
     }
@@ -61,12 +61,12 @@ export async function createUser(email, password, username) {
         const profileRef = doc(db, `users/${userCredential.user.uid}`);
         await setDoc(profileRef, {
             username: username,
-            about: "",
-            location: "Location not known", // Save the selected location
-            avatarURL: "",
+            about: '',
+            location: 'Location not known', // Save the selected location
+            avatarURL: '',
             level: 0, // Save the user's level
             uid: userCredential.user.uid, // Save the user's UID in the document
-          });
+        });
     } catch (error) {
         console.error('Error creating new user:', error);
         throw error;

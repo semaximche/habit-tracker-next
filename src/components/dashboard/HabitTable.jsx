@@ -22,7 +22,7 @@ const HabitTable = () => {
     useEffect(() => {
         if (user && isUserDataLoaded) {
             const habitsRef = collection(db, `/users/${user.uid}/habits`);
-            const q = query(habitsRef, where("isHidden", "==", false)); // Only fetch non-hidden habits
+            const q = query(habitsRef, where('isHidden', '==', false)); // Only fetch non-hidden habits
 
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 const habitsData = [];
@@ -97,15 +97,20 @@ const HabitTable = () => {
                                     key={dayIdx}
                                     className={`border-gray-400 border-2 p-2 text-center`}
                                     style={{
-                                        backgroundColor: item.activeDays.includes(convertToWeekdayNum(day))
-                                            ? (item.completeDays.includes(convertToFormat(day))
-                                                ? item.color                    //Marked complete colour
-                                                : (darkMode) 
-                                                    ? 'rgb(15, 23, 42)'         //Active dark mode colour
-                                                    : 'rgb(229, 231, 235)' )    //Active light mode colour
-                                            : (darkMode)
-                                                ? 'rgb(25, 32, 52)'             //Inactive dark mode colour
-                                                : 'rgb(209, 213, 219)'          //Inactive light mode colour
+                                        backgroundColor:
+                                            item.activeDays.includes(
+                                                convertToWeekdayNum(day)
+                                            )
+                                                ? item.completeDays.includes(
+                                                      convertToFormat(day)
+                                                  )
+                                                    ? item.color //Marked complete colour
+                                                    : darkMode
+                                                      ? 'rgb(15, 23, 42)' //Active dark mode colour
+                                                      : 'rgb(229, 231, 235)' //Active light mode colour
+                                                : darkMode
+                                                  ? 'rgb(25, 32, 52)' //Inactive dark mode colour
+                                                  : 'rgb(209, 213, 219)', //Inactive light mode colour
                                     }}
                                 >
                                     {item.completeDays.includes(

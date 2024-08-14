@@ -47,7 +47,7 @@ export const UserContextProvider = ({ children }) => {
         }
         return totalXP;
     };
-    
+
     // Realtime updater for both profile and habits
     useEffect(() => {
         let unsubscribeProfile = () => {};
@@ -123,38 +123,50 @@ export const UserContextProvider = ({ children }) => {
 
     // Function to award a badge to the user
     const awardBadge = (badgeName, badgeIcon) => {
-    setUserData((prevUserData) => {
-        // Initialize badges as an empty array if it's undefined
-        const updatedBadges = prevUserData.profile.badges || [];
+        setUserData((prevUserData) => {
+            // Initialize badges as an empty array if it's undefined
+            const updatedBadges = prevUserData.profile.badges || [];
 
-        // Check if the user already has this badge
-        const alreadyHasBadge = updatedBadges.some(badge => badge.name === badgeName);
+            // Check if the user already has this badge
+            const alreadyHasBadge = updatedBadges.some(
+                (badge) => badge.name === badgeName
+            );
 
-        if (alreadyHasBadge) return prevUserData; // Don't add it again
+            if (alreadyHasBadge) return prevUserData; // Don't add it again
 
-        // Add the new badge
-        const newBadges = [...updatedBadges, { name: badgeName, icon: badgeIcon }];
+            // Add the new badge
+            const newBadges = [
+                ...updatedBadges,
+                { name: badgeName, icon: badgeIcon },
+            ];
 
-        // Return the updated user data with the new badge added
-        return {
-            ...prevUserData,
-            profile: {
-                ...prevUserData.profile,
-                badges: newBadges,
-            },
-        };
-    });
+            // Return the updated user data with the new badge added
+            return {
+                ...prevUserData,
+                profile: {
+                    ...prevUserData.profile,
+                    badges: newBadges,
+                },
+            };
+        });
     };
-
 
     // Function to get the user's badges
     const getUserBadges = () => {
         return userData.profile.badges || []; // Return an empty array if badges are undefined
     };
 
-
     return (
-        <UserContext.Provider value={{ userData, setUserData, isUserDataLoaded, updateUserXP, awardBadge, getUserBadges }}>
+        <UserContext.Provider
+            value={{
+                userData,
+                setUserData,
+                isUserDataLoaded,
+                updateUserXP,
+                awardBadge,
+                getUserBadges,
+            }}
+        >
             {children}
         </UserContext.Provider>
     );

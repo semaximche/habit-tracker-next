@@ -101,11 +101,12 @@ export default function Home() {
                 user ? (
                     // Display content for authenticated users (if needed)
                     <div>
-                        <p className="text-accent-light dark:text-white"> Welcome back, {user.displayName}! </p>
-                        <Link href='/dashboard'>
-                            <Button color='blue-gray'>
-                                Enter Dashboard
-                            </Button>
+                        <p className="text-accent-light dark:text-white">
+                            {' '}
+                            Welcome back, {user.displayName}!{' '}
+                        </p>
+                        <Link href="/dashboard">
+                            <Button color="blue-gray">Enter Dashboard</Button>
                         </Link>
                     </div>
                 ) : (

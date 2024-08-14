@@ -14,7 +14,7 @@ export default function SignUpForm({ darkMode }) {
     const handleGuest = async () => {
         await signInAsGuest();
         router.push('/dashboard');
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();

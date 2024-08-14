@@ -8,20 +8,20 @@ import {
     Radio,
     Checkbox,
     Select,
-    Option
+    Option,
 } from '@/components/MaterialUI';
 import { UseAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase/firebaseInit';
 import { addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
-import { HexColorPicker } from "react-colorful";
+import { HexColorPicker } from 'react-colorful';
 
 export default function CreateHabit({ isModalOpen, toggleModal }) {
     const [handling, setHandling] = useState(false);
     const [category, setCategory] = useState('');
-    const [color, setColor] = useState("#aabbcc");
+    const [color, setColor] = useState('#aabbcc');
     const { user } = UseAuth();
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!handling) {
@@ -40,7 +40,7 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                 category: category,
                 completeDays: [],
                 activeDays: formActiveDays,
-                isHidden: false  // Add this line
+                isHidden: false, // Add this line
             });
             setHandling(false);
         }
@@ -68,14 +68,24 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                         <label>Color</label>
                         <HexColorPicker color={color} onChange={setColor} />
                         <label htmlFor="category">Category</label>
-                        <select 
+                        <select
                             id="category"
-                            value={category} 
+                            value={category}
                             onChange={(e) => setCategory(e.target.value)}
                             className="w-full p-2 border rounded text-accent-light dark:text-accent-dark bg-background-light  dark:bg-foreground-dark"
                         >
                             <option value="">Select a category</option>
-                            {['Health', 'Fitness', 'Productivity', 'Learning', 'Quitting', 'Finance', 'Social', 'Creative', 'Abstract'].map((cat, index) => (
+                            {[
+                                'Health',
+                                'Fitness',
+                                'Productivity',
+                                'Learning',
+                                'Quitting',
+                                'Finance',
+                                'Social',
+                                'Creative',
+                                'Abstract',
+                            ].map((cat, index) => (
                                 <option key={index} value={cat}>
                                     {cat}
                                 </option>
@@ -84,17 +94,26 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                         <br />
                         <label>Frequency</label>
                         <div className="flex flex-wrap">
-                            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
-                                <div key={index} className="flex flex-col justify-center items-center p-0.5">
+                            {[
+                                'Sun',
+                                'Mon',
+                                'Tue',
+                                'Wed',
+                                'Thu',
+                                'Fri',
+                                'Sat',
+                            ].map((day, index) => (
+                                <div
+                                    key={index}
+                                    className="flex flex-col justify-center items-center p-0.5"
+                                >
                                     <Checkbox
                                         ripple={false}
                                         className="hover:before:opacity-0"
                                         id="activeDays"
                                         value={day}
                                     />
-                                    <label className="text-sm">
-                                        {day}
-                                    </label>
+                                    <label className="text-sm">{day}</label>
                                 </div>
                             ))}
                         </div>

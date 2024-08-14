@@ -59,18 +59,18 @@ export default function HabitItem({
             where('name', '==', name),
             where('category', '==', category)
         );
-    
+
         const docIds = [];
         const querySnapshot = await getDocs(itemQuery);
         querySnapshot.forEach((doc) => {
             docIds.push(doc.id);
         });
-    
+
         if (docIds.length > 0) {
             const itemRef = doc(db, `/users/${user?.uid}/habits`, docIds[0]);
             await updateDoc(itemRef, {
                 completeDays: arrayUnion(convertToFormat(thisDate)),
-                lastCompleted: Timestamp.now()
+                lastCompleted: Timestamp.now(),
             });
         }
     };
@@ -130,7 +130,7 @@ export default function HabitItem({
                                 className={`block h-2 w-2 rounded-full`}
                                 style={{ backgroundColor: color }}
                             ></span>
-                            <span 
+                            <span
                                 className={`block h-8 w-0.5`}
                                 style={{ backgroundColor: color }}
                             ></span>
@@ -141,7 +141,7 @@ export default function HabitItem({
                                 {name}
                             </h3>
                             <p className="text-gray-100 text-sm">✔ Complete</p>
-                            <p className="text-gray-200 text-xs">{category}</p>  
+                            <p className="text-gray-200 text-xs">{category}</p>
                         </div>
 
                         <div className="flex-auto">
@@ -180,15 +180,15 @@ export default function HabitItem({
                 ) : (
                     // Active and not complete format
                     <div className="flex items-center justify-between shadow-md rounded-lg bg-gray-50 dark:bg-background-dark mb-2 h-16 pl-2 transition-all">
-                    <div className="flex-initial flex flex-col items-center mr-3">
-                        <span
-                            className={`block h-2 w-2 rounded-full`}
-                            style={{ backgroundColor: color }}
-                        ></span>
-                        <span 
-                            className={`block h-8 w-0.5`}
-                            style={{ backgroundColor: color }}
-                        ></span>
+                        <div className="flex-initial flex flex-col items-center mr-3">
+                            <span
+                                className={`block h-2 w-2 rounded-full`}
+                                style={{ backgroundColor: color }}
+                            ></span>
+                            <span
+                                className={`block h-8 w-0.5`}
+                                style={{ backgroundColor: color }}
+                            ></span>
                         </div>
                         <div className="flex-initial">
                             <h3 className="font-bold text-md text-accent-light dark:text-accent-dark">
@@ -197,7 +197,7 @@ export default function HabitItem({
                             <p className="text-gray-400 dark:text-gray-00 text-sm">
                                 🕒 Pending
                             </p>
-                            <p className="text-gray-200 text-xs">{category}</p>  
+                            <p className="text-gray-200 text-xs">{category}</p>
                         </div>
                         <div className="flex-auto dark:text-blue-800">
                             <Button
@@ -206,7 +206,9 @@ export default function HabitItem({
                                 variant="text"
                                 color="blue"
                                 ripple={false}
-                                disabled={!isToday && !isTomorrow && !isYesterday}
+                                disabled={
+                                    !isToday && !isTomorrow && !isYesterday
+                                }
                             >
                                 Mark Complete
                             </Button>
@@ -254,7 +256,7 @@ export default function HabitItem({
                         <p className="text-gray-400 dark:text-gray-600 text-sm">
                             Inactive on {convertToWeekdayWords(thisDate)}
                         </p>
-                        <p className="text-gray-200 text-xs">{category}</p>  
+                        <p className="text-gray-200 text-xs">{category}</p>
                     </div>
 
                     <div className="flex-auto"></div>

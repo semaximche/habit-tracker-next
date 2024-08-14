@@ -11,70 +11,86 @@ import RecentCategories from '@/components/profile/RecentCategories';
 import { useDarkMode } from '@/contexts/DarkModeContext';
 
 // Import the gradient color options
-import { darkGradientColors, lightGradientColors } from '@/components/profile/gradientColors';
+import {
+    darkGradientColors,
+    lightGradientColors,
+} from '@/components/profile/gradientColors';
 
 function ProfileMain() {
-  const { darkMode } = useDarkMode();
-  const { userData, isUserDataLoaded } = useUserData(); // Updated hook
-  const [colors, setColors] = useState(darkGradientColors.user.colors); 
+    const { darkMode } = useDarkMode();
+    const { userData, isUserDataLoaded } = useUserData(); // Updated hook
+    const [colors, setColors] = useState(darkGradientColors.user.colors);
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [selectedLightGradient, setSelectedLightGradient] = useState('oceanBreeze');
-  const [selectedDarkGradient, setSelectedDarkGradient] = useState('user');
-  
-  const isGuest = isUserDataLoaded && userData?.isAnonymous;
+    const [isEditing, setIsEditing] = useState(false);
+    const [selectedLightGradient, setSelectedLightGradient] =
+        useState('oceanBreeze');
+    const [selectedDarkGradient, setSelectedDarkGradient] = useState('user');
 
-  useEffect(() => {
-    if (isUserDataLoaded && userData) {
-      setSelectedLightGradient(userData.profile?.lightGradient || 'oceanBreeze');
-      setSelectedDarkGradient(userData.profile?.darkGradient || 'user');
-    }
-  }, [isUserDataLoaded, userData]);
+    const isGuest = isUserDataLoaded && userData?.isAnonymous;
 
-  const handleColorChange = (lightColorKey, darkColorKey) => {
-    setSelectedLightGradient(lightColorKey);
-    setSelectedDarkGradient(darkColorKey);
-    setColors(darkMode
-      ? darkGradientColors[darkColorKey].colors
-      : lightGradientColors[lightColorKey].colors);
-  };
+    useEffect(() => {
+        if (isUserDataLoaded && userData) {
+            setSelectedLightGradient(
+                userData.profile?.lightGradient || 'oceanBreeze'
+            );
+            setSelectedDarkGradient(userData.profile?.darkGradient || 'user');
+        }
+    }, [isUserDataLoaded, userData]);
 
-  useEffect(() => {
-    // Update colors when dark mode changes based on the selected gradient keys
-    setColors(darkMode
-      ? darkGradientColors[selectedDarkGradient].colors
-      : lightGradientColors[selectedLightGradient].colors);
-  }, [darkMode, selectedLightGradient, selectedDarkGradient]);
+    const handleColorChange = (lightColorKey, darkColorKey) => {
+        setSelectedLightGradient(lightColorKey);
+        setSelectedDarkGradient(darkColorKey);
+        setColors(
+            darkMode
+                ? darkGradientColors[darkColorKey].colors
+                : lightGradientColors[lightColorKey].colors
+        );
+    };
 
-  return (
-    <div className="relative max-w-screen-xl mx-auto p-5 bg-gray-800">
-      <div className="absolute inset-0"
-           style={{ background: `linear-gradient(to right, ${colors.from}, ${colors.via}, ${colors.to})`, opacity: 0.7 }}>
-      </div>
-      <div className="relative flex flex-wrap lg:flex-nowrap lg:space-x-5">
-        <div className="flex-1 flex flex-col space-y-5">
-          {isEditing && !isGuest ? (
-            <EditProfile 
-              onCancel={() => setIsEditing(false)} 
-              onSave={handleColorChange} 
-            />
-          ) : (
-            <>
-              <UserProfile />
-              <SideInfo className="lg:hidden" />
-              <CategorySummary />
-              <EditableShowcase />
-              <RecentCategories />
-            </>
-          )}
+    useEffect(() => {
+        // Update colors when dark mode changes based on the selected gradient keys
+        setColors(
+            darkMode
+                ? darkGradientColors[selectedDarkGradient].colors
+                : lightGradientColors[selectedLightGradient].colors
+        );
+    }, [darkMode, selectedLightGradient, selectedDarkGradient]);
+
+    return (
+        <div className="relative max-w-screen-xl mx-auto p-5 bg-gray-800">
+            <div
+                className="absolute inset-0"
+                style={{
+                    background: `linear-gradient(to right, ${colors.from}, ${colors.via}, ${colors.to})`,
+                    opacity: 0.7,
+                }}
+            ></div>
+            <div className="relative flex flex-wrap lg:flex-nowrap lg:space-x-5">
+                <div className="flex-1 flex flex-col space-y-5">
+                    {isEditing && !isGuest ? (
+                        <EditProfile
+                            onCancel={() => setIsEditing(false)}
+                            onSave={handleColorChange}
+                        />
+                    ) : (
+                        <>
+                            <UserProfile />
+                            <SideInfo className="lg:hidden" />
+                            <CategorySummary />
+                            <EditableShowcase />
+                            <RecentCategories />
+                        </>
+                    )}
+                </div>
+                <div className="w-full lg:w-[360px] flex-shrink-0 mt-5 lg:mt-0">
+                    <LevelBadge onEdit={() => setIsEditing(true)} />
+                    <div className="mt-5 lg:mt-24">
+                        <SideInfo className="hidden lg:block" />
+                    </div>
+                </div>
+            </div>
         </div>
-        <div className="w-full lg:w-[360px] flex-shrink-0 mt-5 lg:mt-0">
-          <LevelBadge onEdit={() => setIsEditing(true)} />
-          <div className="mt-5 lg:mt-24"><SideInfo className="hidden lg:block" /></div>
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default ProfileMain;
