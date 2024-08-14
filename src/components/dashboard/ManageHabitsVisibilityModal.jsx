@@ -31,8 +31,8 @@ export default function ManageHabitsVisibilityModal({ isOpen, onClose }) {
     };
 
     return (
-        <Dialog className='bg-foreground-light dark:bg-foreground-dark' open={isOpen} handler={onClose}>
-            <DialogHeader className='text-accent-light dark:text-accent-dark'>Manage Habits Visibility</DialogHeader>
+        <Dialog className='bg-foreground-light dark:bg-foreground-dark' open={isOpen} handler={onClose} size="xs">
+            <DialogHeader className='text-accent-light dark:text-accent-dark'>Habits Visibility</DialogHeader>
             <DialogBody>
                 {habits.map(habit => (
                     <div key={habit.id} className="flex items-center mb-2">
