@@ -119,14 +119,15 @@ const CategorySummary = () => {
     percentage: (cat.daysCompleted / tasksCompleted) * 100,
   })).sort((a, b) => b.percentage - a.percentage);
 
-  const topCategories = sortedCategories.slice(0, 5);
+  const topCategories = sortedCategories.slice(0, 4);
 
   return (
     <Container title={`Habit Month Review - ${format(hasPastCompletions ? lastMonthDate : currentMonthDate, 'MMMM')}`}>
       <div className="bg-gradient-to-r from-purple-700 via-purple-800 to-blue-900 p-5 mb-5 text-white">
         <div className="flex flex-col lg:flex-row justify-around items-center">
-          <div className="flex items-center justify-center mb-4 lg:mb-0 lg:mr-4">
-            <h3 className="text-6xl lg:text-9xl font-bold mb-1">
+          <div
+           className="flex items-center justify-center mb-4 lg:mb-0 lg:mr-4">
+            <h3 className="text-6xl lg:text-9xl font-bold mb-1 text-center">
               {habitsAchieved}
               <span className="block text-xl lg:text-2xl font-bold mb-1">Habits Achieved</span>
             </h3>
