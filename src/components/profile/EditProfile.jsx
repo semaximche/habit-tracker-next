@@ -71,15 +71,15 @@ const EditProfile = ({ onCancel }) => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 lg:px-8 lg:py-6">
       <div className="flex flex-col lg:flex-row lg:space-x-4">
         <div className="w-full lg:w-1/4 mb-4 lg:mb-0">
           <div className="card p-4">
-            <div className="nav flex flex-col">
-              <a href="#" className="py-2 text-blue-300" onClick={onCancel}>
+            <div className="nav flex flex-col space-y-2">
+              <a href="#" className="text-blue-300 hover:underline" onClick={onCancel}>
                 Back To Profile
               </a>
-              <a href="#" className="py-2">
+              <a href="#" className="text-blue-300 hover:underline">
                 Settings
               </a>
             </div>
@@ -107,7 +107,7 @@ const EditProfile = ({ onCancel }) => {
                   darkGradient={darkGradient}
                   setDarkGradient={setDarkGradient}
                 />
-                <div className="flex justify-end">
+                <div className="flex justify-end mt-4">
                   <button className="btn btn-primary" onClick={handleSaveChanges}>
                     Save Changes
                   </button>
@@ -115,8 +115,8 @@ const EditProfile = ({ onCancel }) => {
               </div>
             </div>
           </div>
-          <div className="mt-4 absolute bottom-0">
-            <div className="card mt-4">
+          <div className="mt-4 lg:mt-6">
+            <div className="card">
               <div className="card-body">
                 <h6 className="font-bold">Support</h6>
                 <p>Get fast, free help from our friendly assistants.</p>

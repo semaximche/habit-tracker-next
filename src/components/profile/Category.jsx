@@ -53,18 +53,26 @@ const Category = ({ name, xp, sumOfDays, numOfHabits, lastCompleted }) => {
   const rankImage = rankImages[rank] || '/images/placeholder.png';
 
   return (
-    <div className='p-4 bg-gray-900 rounded-lg mb-4 shadow-lg'>
-      <div className="flex items-start">
-        <img src={categoryImage} alt={`${name} category icon`} className="w-32 h-32 object-cover" />
-        <div className="ml-4">
-          <h2 className="text-2xl font-semibold mb-2">{name}</h2>
-          <p className="text-lg mb-1">{numOfHabits} habits | {sumOfDays} days on record</p>
-          <p className='text-sm text-gray-400'>
-            Last completed: {lastCompleted ? `on ${formatDate(lastCompleted.seconds)}` : 'Never'}
-          </p>
-        </div>
-      </div>
-      
+  <div className='p-4 bg-gray-900 rounded-lg mb-4 shadow-lg'>
+  <div className="flex items-start">
+    <img src={categoryImage} alt={`${name} category icon`} className="w-14 h-14 lg:w-32 lg:h-32 object-cover" />
+    <h2 className="text-base lg:text-2xl font-semibold my-auto">{name}</h2>
+    <div className="ml-auto my-auto">
+      <div>
+      <p className="mb-1 text-sm lg:text-xl">
+        {numOfHabits} habits
+        <span className="hidden lg:inline"> | {sumOfDays} days on record</span>
+      </p>
+      <p className="text-xs lg:text-sm text-gray-400">
+        <span className="hidden lg:inline">Last completed: </span>
+        {lastCompleted ? `on ${formatDate(lastCompleted.seconds)}` : 'Never'}
+      </p>
+
+      </div> 
+    </div>
+  </div>
+
+
       <div className="bg-gray-800 p-2 rounded-lg mt-4 flex items-center space-x-2">
         <img src={rankImage} alt={`${rank} badge`} className="w-12 h-12" />
         <div>
