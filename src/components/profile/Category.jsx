@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Maps category names to their respective images
 const categoryImages = {
     health: '/images/health.png',
     fitness: '/images/fitness.png',
@@ -13,6 +14,7 @@ const categoryImages = {
     abstract: '/images/abstract.png',
 };
 
+// Maps ranks to their respective images
 const rankImages = {
     beginner: '/images/beginner.png',
     good: '/images/good.png',
@@ -21,6 +23,7 @@ const rankImages = {
     world_class: '/images/world_class.png',
 };
 
+// Determines the rank based on XP
 const getRank = (xp) => {
     if (xp >= 700) return 'world_class';
     if (xp >= 400) return 'elite';
@@ -29,6 +32,7 @@ const getRank = (xp) => {
     return 'beginner';
 };
 
+// Formats the date for display
 const formatDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
     const currentYear = new Date().getFullYear();
@@ -47,6 +51,7 @@ const formatDate = (timestamp) => {
 };
 
 const Category = ({ name, xp, sumOfDays, numOfHabits, lastCompleted }) => {
+    // Generate image URLs based on category and rank
     const categoryKey = name.toLowerCase().replace(' ', '_');
     const categoryImage =
         categoryImages[categoryKey] || '/images/placeholder.png';

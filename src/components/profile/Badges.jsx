@@ -12,12 +12,15 @@ const Badges = () => {
         awardBadge('Badge 4', '/images/badge4.png');
     }, [awardBadge]);
 
+    // Get the list of user badges
     const badges = getUserBadges();
 
     return (
         <div className="p-5 rounded-lg mb-2">
+            {/* Section title */}
             <h2 className="text-xl font-bold">Badges</h2>
             <div className="flex space-x-4 mt-3">
+                {/* Display each badge */}
                 {badges.map((badge, index) => (
                     <img
                         key={index}
