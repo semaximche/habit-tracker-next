@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * Badge component displays a badge with an icon and name.
+ * Renders a styled container with an icon and text side by side.
+ */
+
 const Badge = ({ name, icon }) => {
     return (
         <div className="flex items-center space-x-2 p-2 bg-white rounded-lg shadow-sm dark:bg-gray-300">

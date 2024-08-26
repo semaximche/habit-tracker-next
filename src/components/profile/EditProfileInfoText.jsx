@@ -4,6 +4,11 @@ import {
     darkGradientColors,
 } from '@/components/profile/gradientColors';
 
+/**
+ * EditProfileInfoText component allows users to edit their profile information,
+ * including username, about, location, and color gradients for light and dark modes.
+ */
+
 const EditProfileInfoText = ({
     username,
     setUsername,

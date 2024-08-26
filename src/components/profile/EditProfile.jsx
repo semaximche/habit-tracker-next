@@ -8,6 +8,10 @@ import { UseAuth } from '@/contexts/AuthContext';
 import AvatarUpload from './AvatarUpload';
 import EditProfileInfoText from './EditProfileInfoText';
 
+/**
+ * EditProfile component allows users to edit their profile information, including username, about, location, and avatar.
+ */
+
 const EditProfile = ({ onCancel }) => {
     const { user } = UseAuth(); // Get the current authenticated user
     const { userData } = useUserData();
@@ -26,6 +30,7 @@ const EditProfile = ({ onCancel }) => {
         userData.profile?.darkGradient || 'forestWhisper'
     );
 
+    // Handles saving changes to the profile.
     const handleSaveChanges = async () => {
         if (!user?.uid) return; // Ensure user is logged in
 
@@ -45,12 +50,12 @@ const EditProfile = ({ onCancel }) => {
             await setDoc(profileRef, {
                 username: finalUsername,
                 about,
-                location, // Save the selected location
+                location, 
                 avatarURL,
-                lightGradient, // Save the selected light gradient
-                darkGradient, // Save the selected dark gradient
-                level, // Save the user's level
-                uid: user.uid, // Save the user's UID in the document
+                lightGradient, 
+                darkGradient, 
+                level, 
+                uid: user.uid, 
             });
         } else {
             // Update the document if it exists
@@ -63,11 +68,11 @@ const EditProfile = ({ onCancel }) => {
             await updateDoc(profileRef, {
                 username: finalUsername,
                 about,
-                location, // Update the location
+                location, 
                 avatarURL,
-                lightGradient, // Update the light gradient
-                darkGradient, // Update the dark gradient
-                level, // Update the user's level if changed
+                lightGradient, 
+                darkGradient,
+                level, 
             });
         }
 

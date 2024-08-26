@@ -4,6 +4,14 @@ import { useState } from 'react';
 import { createUser, signInAsGuest } from '@/lib/firebase/auth';
 import { useRouter } from 'next/navigation';
 import { Button, Card, Typography, Input } from '@material-tailwind/react';
+
+/**
+ * SignUpForm component allows users to create a new account
+ * or log in as a guest. It handles user registration, including
+ * form validation for password length, and redirects to the
+ * dashboard upon successful registration or guest login.
+ */
+
 export default function SignUpForm({ darkMode }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -11,11 +19,14 @@ export default function SignUpForm({ darkMode }) {
     const [error, setError] = useState('');
     const router = useRouter();
 
+       
+    //Handles guest login when the "Login as Guest" button is clicked.
     const handleGuest = async () => {
         await signInAsGuest();
         router.push('/dashboard');
     };
-
+    
+    //Handles the form submission for user registration.
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (password.length < 6) {

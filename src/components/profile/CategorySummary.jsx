@@ -6,13 +6,18 @@ import {
     subMonths,
     startOfMonth,
     endOfMonth,
-    parseISO,
     isBefore,
     isAfter,
     isValid,
     parse,
 } from 'date-fns';
 import Loading from '../loading';
+
+/**
+ * CategorySummary component displays a summary of habits for the past month,
+ * including the number of habits achieved, tasks completed, new habits,
+ * and a breakdown of performance by category.
+ */
 
 const CategorySummary = () => {
     const { userData, isUserDataLoaded, awardBadge } = useUserData();
@@ -36,6 +41,7 @@ const CategorySummary = () => {
 
     const currentMonthStart = startOfMonth(currentMonthDate);
 
+    // Check if there are any habit completions in the past
     const hasPastCompletions = Object.keys(userData.habits).some((habitKey) => {
         const habit = userData.habits[habitKey];
         return habit.completeDays.some((dateStr) => {
@@ -47,6 +53,7 @@ const CategorySummary = () => {
         });
     });
 
+    // Set the month start and end dates based on past completions
     if (hasPastCompletions) {
         monthStart = startOfMonth(lastMonthDate);
         monthEnd = endOfMonth(lastMonthDate);
@@ -60,10 +67,12 @@ const CategorySummary = () => {
     let newHabits = 0;
     const categoryStats = {};
 
+    // Loop through each habit to gather statistics
     Object.keys(userData.habits).forEach((habitKey) => {
         const habit = userData.habits[habitKey];
         const { completeDays, category } = habit;
 
+         // Check if the habit was completed in the selected month
         const completedInMonth = completeDays.some((dateStr) => {
             const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
             return (
@@ -87,6 +96,7 @@ const CategorySummary = () => {
 
             tasksCompleted += lastMonthCompletions.length;
 
+            // Initialize category stats if not already done
             if (!categoryStats[category]) {
                 categoryStats[category] = {
                     name: category,
@@ -95,6 +105,7 @@ const CategorySummary = () => {
                     totalDays: 0,
                 };
             }
+            // Update category stats
             categoryStats[category].daysCompleted +=
                 lastMonthCompletions.length;
             categoryStats[category].totalDays += 30; // Assuming each habit has 30 days in a month
@@ -103,6 +114,7 @@ const CategorySummary = () => {
             categoryStats[category].xp += lastMonthCompletions.length * 10; // XP per completed day
         }
 
+        // Determine the first completion of the habit in the month
         const firstCompletionInMonth = completeDays
             .map((dateStr) => parse(dateStr, 'd-M-yyyy', new Date()))
             .filter(
@@ -113,6 +125,7 @@ const CategorySummary = () => {
             )
             .sort((a, b) => a - b)[0];
 
+        // Check if the habit had no prior completions    
         const hadNoPriorCompletions = !completeDays.some((dateStr) => {
             const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
             return (
@@ -125,26 +138,7 @@ const CategorySummary = () => {
         }
     });
 
-    // Award badges based on the criteria
-    // useEffect(() => {
-    //   // Category badges
-    //   Object.keys(categoryStats).forEach(categoryName => {
-    //     if (categoryStats[categoryName].xp >= 300) {
-    //       awardBadge(`${categoryName} Expert`, `/images/${categoryName.toLowerCase().replace(/\s+/g, '_')}_expert.png`);
-    //     }
-    //   });
-
-    //   // Task badges
-    //   if (tasksCompleted >= 10) awardBadge('Little Task', '/images/little_task.png');
-    //   if (tasksCompleted >= 30) awardBadge('Tasky Tasky', '/images/tasky_tasky.png');
-    //   if (tasksCompleted >= 100) awardBadge('Task Expert', '/images/task_expert.png');
-    //   if (tasksCompleted >= 200) awardBadge('Task Ninja', '/images/task_ninja.png');
-
-    //   // Habit badges
-    //   if (habitsAchieved >= 5 && habitsAchieved <= 9) awardBadge('Habit Enjoyer', '/images/habit_enjoyer.png');
-    //   if (habitsAchieved >= 10) awardBadge('Habit Lover', '/images/habit_lover.png');
-    // }, [tasksCompleted, habitsAchieved, categoryStats, awardBadge]);
-
+    // Prepare sorted categories with completion percentages
     const sortedCategories = Object.values(categoryStats)
         .map((cat) => ({
             ...cat,

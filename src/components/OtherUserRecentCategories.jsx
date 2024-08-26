@@ -9,6 +9,13 @@ import {
     getDocs,
 } from 'firebase/firestore';
 
+/**
+ * Fetches and displays the most recent habit categories for a user.
+ * Retrieves user data and their habits from Firestore, calculates 
+ * XP, total days completed, and counts habits for each category. 
+ * Shows the three most recent categories based on the last completion date.
+ */
+
 const db = getFirestore();
 
 const OtherUserRecentCategories = ({ userId }) => {

@@ -20,6 +20,18 @@ import {
 } from 'date-fns';
 import Loading from './loading';
 
+/**
+ * Displays a summary of habit completions for a specified user.
+ * Features:
+ * - Fetches user and habit data from Firestore.
+ * - Shows a loading spinner during data retrieval.
+ * - Calculates and displays:
+ *   - Total habits achieved
+ *   - Total tasks completed
+ *   - New habits created in the last month
+ * - Renders the top habit categories with their completion percentages.
+ */
+
 const db = getFirestore();
 
 const OtherUserCategorySummary = ({ userId }) => {

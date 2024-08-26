@@ -8,6 +8,13 @@ import { auth } from '@/lib/firebase/firebaseInit';
 import { Button, Input } from '@/components/MaterialUI';
 import { signInAsGuest, signInWithGoogle } from '@/lib/firebase/auth';
 
+/**
+ * LoginForm component allows users to log in to the application
+ * using email and password, Google, or as a guest. It handles
+ * user authentication and redirects to the dashboard if the user
+ * is already logged in or after a successful login.
+ */
+
 export default function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,12 +22,17 @@ export default function LoginForm() {
     const { user } = UseAuth();
     const router = useRouter();
 
+    // Effect to redirect to the dashboard if the user is already logged in
     useEffect(() => {
         if (user) {
             router.push('/dashboard'); // Redirect if already logged in
         }
     }, [user, router]);
 
+
+    
+    //Handles the form submission for email and password login.
+    // It attempts to sign in the user and redirects to the dashboard
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {

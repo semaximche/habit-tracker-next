@@ -4,6 +4,12 @@ import SteamLevel from 'react-steam-level';
 import { UseAuth } from '@/contexts/AuthContext';
 import { useUserData } from '@/contexts/UserContext';
 
+/**
+ * LevelBadge component displays the user's level and a badge
+ * representing their service duration. It also includes an option 
+ * to edit the profile if the user is not a guest.
+ */
+
 const LevelBadge = ({ onEdit }) => {
     const { user, isUserLoaded } = UseAuth();
     const { userData } = useUserData();
