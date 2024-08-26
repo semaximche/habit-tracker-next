@@ -13,8 +13,12 @@ export async function followUser(followerId, followedId) {
             timestamp: new Date(),
         });
     } catch (error) {
-        // Log and rethrow error
-        console.error('Error adding follow relationship:', error.message);
+        console.error(
+            'Error adding follow relationship:',
+            error.message,
+            error.code,
+            error.stack
+        );
         throw error;
     }
 }

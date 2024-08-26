@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useUserData } from '@/contexts/UserContext';
 import Modal from './Modal'; // Assuming you have a Modal component
 import Badge from './Badge'; // Assuming you have a Badge component
