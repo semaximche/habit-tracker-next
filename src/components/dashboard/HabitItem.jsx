@@ -20,7 +20,11 @@ import {
     Timestamp,
 } from 'firebase/firestore';
 
-// Helper Functions
+// In summary, this JSX structure creates a visual representation of a habit item,
+// allowing the user to see the habit's status, mark it as complete, undo completion,
+// or delete it, all within a styled, responsive UI component.
+
+// Helper functions to format dates
 function getTodayFormatted() {
     const today = new Date();
     return convertToFormat(today);
@@ -46,6 +50,7 @@ export default function HabitItem({
     thisDate,
     category,
 }) {
+     // Determine if the habit is completed today and if it's active today
     const isCompletedToday = completeDays.includes(convertToFormat(thisDate));
     const isActiveToday = activeDays.includes(convertToWeekdayNum(thisDate));
     const { user } = UseAuth();
@@ -53,6 +58,7 @@ export default function HabitItem({
     const isTomorrow = convertToFormat(thisDate) === getTomorrowFormatted();
     const isYesterday = convertToFormat(thisDate) === getYesterdayFormatted();
 
+    // Function to mark the habit as complete for the day
     const handleComplete = async () => {
         const itemQuery = query(
             collection(db, `/users/${user?.uid}/habits`),
@@ -75,6 +81,7 @@ export default function HabitItem({
         }
     };
 
+    // Function to undo the completion of the habit for the day
     const handleUndo = async () => {
         const itemQuery = query(
             collection(db, `/users/${user?.uid}/habits`),
@@ -93,6 +100,7 @@ export default function HabitItem({
         }
     };
 
+    // Function to delete the habit
     const handleDelete = async () => {
         const itemQuery = query(
             collection(db, `/users/${user?.uid}/habits`),
@@ -109,9 +117,9 @@ export default function HabitItem({
         }
     };
 
-    const isDisabled = !isToday && !isTomorrow && !isYesterday;
 
     // Determine button classes based on the disabled state
+    const isDisabled = !isToday && !isTomorrow && !isYesterday;
     const buttonClasses = `text-sm mt-3 bg-black hover:bg-gray-700 hover:shadow-md bg-opacity-30 text-white py-1 px-2 rounded duration-150 ${
         isDisabled ? 'cursor-not-allowed opacity-50' : ''
     }`;

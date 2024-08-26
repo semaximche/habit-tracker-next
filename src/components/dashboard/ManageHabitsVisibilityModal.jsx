@@ -11,6 +11,17 @@ import {
     Checkbox,
 } from '@/components/MaterialUI';
 
+/**
+ * ManageHabitsVisibilityModal component allows users to toggle the visibility 
+ * of their habits. Users can check or uncheck habits to show or hide them. 
+ * The component fetches the user's habits from Firestore when opened and 
+ * updates the habit visibility in the database. 
+ * 
+ * Props:
+ * - isOpen: Boolean indicating if the modal is open
+ * - onClose: Function to close the modal
+ */
+
 export default function ManageHabitsVisibilityModal({ isOpen, onClose }) {
     const [habits, setHabits] = useState([]);
     const { user } = UseAuth();

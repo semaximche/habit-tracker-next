@@ -12,6 +12,14 @@ import {
 } from '@/lib/utils/dateUtils';
 import { useDarkMode } from '@/contexts/DarkModeContext';
 
+/**
+ * HabitTable component displays a table of habits for the current week.
+ * - Fetches user habits from Firestore, only including non-hidden habits.
+ * - Allows navigation through weeks, updating the displayed date range.
+ * - Displays active and completed statuses of habits for each day of the week.
+ * - Applies different background colors based on habit status and dark mode preference.
+ */
+
 const HabitTable = () => {
     const [habits, setHabits] = useState([]);
     const { user } = UseAuth();
@@ -20,6 +28,7 @@ const HabitTable = () => {
     const { darkMode } = useDarkMode();
 
     useEffect(() => {
+        // Fetch habits from Firestore when user is authenticated and data is loaded
         if (user && isUserDataLoaded) {
             const habitsRef = collection(db, `/users/${user.uid}/habits`);
             const q = query(habitsRef, where('isHidden', '==', false)); // Only fetch non-hidden habits

@@ -16,12 +16,21 @@ import { addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 
+/*
+This component allows users to create a new habit within a modal dialog. 
+It utilizes various imported UI components and Firebase services. 
+Users can enter a habit name, pick a color, select a category, and choose active days for the habit.
+Upon submission, the new habit is added to the user's habits collection in Firestore, and the modal is closed.
+The form prevents duplicate submissions by tracking the handling state.
+*/
+
 export default function CreateHabit({ isModalOpen, toggleModal }) {
     const [handling, setHandling] = useState(false);
     const [category, setCategory] = useState('');
     const [color, setColor] = useState('#aabbcc');
     const { user } = UseAuth();
 
+    // Function to handle form submission for creating a new habit
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!handling) {
@@ -34,18 +43,19 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                     formActiveDays.push(index);
                 }
             });
+            // Add a new document to the user's habits collection in Firestore
             const docRef = await addDoc(habitsRef, {
                 name: e.target.elements.name.value,
                 color: color,
                 category: category,
                 completeDays: [],
                 activeDays: formActiveDays,
-                isHidden: false, // Add this line
+                isHidden: false, 
             });
             setHandling(false);
         }
     };
-
+    
     return (
         <>
             <Dialog
@@ -110,7 +120,7 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                                     <Checkbox
                                         ripple={false}
                                         className="hover:before:opacity-0"
-                                        id="activeDays"
+                                        id="activeDays" // Checkbox for selecting active day
                                         value={day}
                                     />
                                     <label className="text-sm">{day}</label>

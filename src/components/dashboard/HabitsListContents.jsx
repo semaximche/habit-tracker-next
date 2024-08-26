@@ -4,6 +4,12 @@ import { useUserData } from '@/contexts/UserContext';
 import HabitItem from './HabitItem';
 import { convertToFormat, convertToWeekdayWords } from '@/lib/utils/dateUtils';
 
+// This component, `HabitsListContents`, displays a list of habit items for a specific date.
+// It retrieves user data and habits from context and sorts them by their status: 
+// active habits first, then completed habits, and finally inactive habits. 
+// The list filters out hidden habits before rendering each habit item using the `HabitItem` component, 
+// passing relevant data like the habit's name, color, completed days, active days, the current date, and category.
+
 export default function HabitsListContents({ date }) {
     const { userData } = useUserData();
     const habitsGroup = userData.habits;
