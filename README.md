@@ -1,10 +1,12 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
+Web-Course-61776
+<Habit Tracker> <61776><g-6>
 ## Getting Started
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
 ```
 
