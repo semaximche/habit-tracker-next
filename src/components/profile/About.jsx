@@ -8,14 +8,17 @@ const About = () => {
     const aboutText =
         userData.profile?.about || 'Login to write about yourself';
 
+    // Show loading state if user data is not loaded
     if (!isUserDataLoaded) {
         return (
             <div>
                 <p>Loading...</p>
-                <Loading></Loading>
+                <Loading />
             </div>
-        ); // or a spinner component
+        );
     }
+
+    // Render user information
     return (
         <div className="mt-5">
             <div className="flex mt-3">
