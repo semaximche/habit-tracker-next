@@ -1,9 +1,7 @@
 'use client';
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback } from 'react';
 
 const EmbedHandler = () => {
-  const [lastHeight, setLastHeight] = useState(0);
-
   const debounce = (func, wait) => {
     let timeout;
     return (...args) => {
@@ -13,13 +11,10 @@ const EmbedHandler = () => {
   };
 
   const sendHeightToParent = useCallback(() => {
-    const currentHeight = Math.min(document.body.offsetHeight, 1500); // Adjust the max height as needed
-    if (Math.abs(currentHeight - lastHeight) > 10) { // Only update if height changes significantly
-      setLastHeight(currentHeight);
-      console.log(`Sending height: ${currentHeight}`); // Debugging line
-      window.parent.postMessage({ type: 'myApp', action: 'setHeight', currentHeight }, '*');
-    }
-  }, [lastHeight]);
+    const height = Math.min(document.body.offsetHeight, 1000); // Adjust to use offsetHeight
+    console.log(`Sending height: ${height}`); // Debugging line
+    window.parent.postMessage({ type: 'myApp', action: 'setHeight', height }, '*');
+  }, []);
 
   const debouncedSendHeight = useCallback(debounce(sendHeightToParent, 200), [sendHeightToParent]);
 
@@ -34,7 +29,7 @@ const EmbedHandler = () => {
 
     window.addEventListener('message', handleMessage);
 
-    // Send height after a short delay to allow initial render
+    // Initial height send
     setTimeout(sendHeightToParent, 100);
 
     // Set up ResizeObserver
