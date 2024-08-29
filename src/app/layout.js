@@ -3,8 +3,11 @@ import { Inter } from 'next/font/google';
 import { AuthContextProvider } from '@/contexts/AuthContext';
 import { DarkModeProvider } from '@/contexts/DarkModeContext';
 import Topbar from '@/components/MainLayout/Topbar';
-
+import dynamic from 'next/dynamic';
 const inter = Inter({ subsets: ['latin'] });
+
+// Dynamically import EmbedHandler with ssr: false
+const EmbedHandler = dynamic(() => import('@/contexts/EmbedHandler'), { ssr: false });
 
 export const metadata = {
     title: 'Habit-Tracker',
@@ -21,6 +24,7 @@ export default function RootLayout({ children }) {
                     <DarkModeProvider>
                         <Topbar />
                         {children}
+                        <EmbedHandler />
                     </DarkModeProvider>
                 </AuthContextProvider>
             </body>
