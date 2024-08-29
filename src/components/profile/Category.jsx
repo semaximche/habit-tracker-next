@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * Category component displays information about a specific habit category.
+ * It shows the category name, total experience points (XP), number of habits, 
+ * days recorded, last completion date, and a corresponding rank and images.
+ */
+
+// Maps category names to their corresponding image paths
 const categoryImages = {
     health: '/images/health.png',
     fitness: '/images/fitness.png',
@@ -13,6 +20,7 @@ const categoryImages = {
     abstract: '/images/abstract.png',
 };
 
+// Maps rank names to their corresponding image paths
 const rankImages = {
     beginner: '/images/beginner.png',
     good: '/images/good.png',
@@ -21,6 +29,7 @@ const rankImages = {
     world_class: '/images/world_class.png',
 };
 
+// Determines the rank based on total experience points (XP)
 const getRank = (xp) => {
     if (xp >= 700) return 'world_class';
     if (xp >= 400) return 'elite';
@@ -29,6 +38,7 @@ const getRank = (xp) => {
     return 'beginner';
 };
 
+// Formats a timestamp into a readable date string
 const formatDate = (timestamp) => {
     const date = new Date(timestamp * 1000);
     const currentYear = new Date().getFullYear();

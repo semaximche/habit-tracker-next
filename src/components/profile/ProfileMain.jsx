@@ -10,6 +10,13 @@ import { useUserData } from '@/contexts/UserContext'; // Updated import
 import RecentCategories from '@/components/profile/RecentCategories';
 import { useDarkMode } from '@/contexts/DarkModeContext';
 
+// The ProfileMain component manages user profile display and editing features.
+// It includes user profile details, category summaries, editable showcases, 
+// and level badges. It supports both light and dark themes using gradient colors.
+// The component handles the state of whether the user is editing their profile 
+// and updates gradient colors based on user preferences. It also checks if 
+// the user is a guest and adjusts functionalities accordingly.
+
 // Import the gradient color options
 import {
     darkGradientColors,

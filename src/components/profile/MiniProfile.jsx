@@ -3,6 +3,12 @@ import React from 'react';
 import SteamLevel from 'react-steam-level';
 import { useRouter } from 'next/navigation'; // Changed to next/navigation
 
+/**
+ * MiniProfile component displays a user's profile information 
+ * including their avatar, last online status, badge level, 
+ * and a follow/unfollow button.
+ */
+
 const MiniProfile = ({
     name,
     lastOnline,

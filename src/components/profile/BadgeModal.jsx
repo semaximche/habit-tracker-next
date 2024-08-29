@@ -3,6 +3,13 @@ import { useUserData } from '@/contexts/UserContext';
 import Modal from './Modal'; // Assuming you have a Modal component
 import Badge from './Badge'; // Assuming you have a Badge component
 
+/**
+ * BadgeModal component displays a modal containing the user's badges.
+ * - Receives `isOpen` to control visibility and `toggleModal` for closing.
+ * - Fetches user data to retrieve and display badges.
+ * - Renders each badge using the Badge component.
+ */
+
 const BadgeModal = ({ isOpen, toggleModal }) => {
     const { userData } = useUserData();
 

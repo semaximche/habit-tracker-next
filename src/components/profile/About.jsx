@@ -3,11 +3,13 @@ import { useUserData } from '@/contexts/UserContext';
 import Loading from '../loading';
 
 const About = () => {
+    // Get user data and loading state from UserContext
     const { userData, isUserDataLoaded } = useUserData();
     const location = userData.profile?.location || 'Unknown Location';
     const aboutText =
         userData.profile?.about || 'Login to write about yourself';
 
+    // Show loading state while user data is being fetched    
     if (!isUserDataLoaded) {
         return (
             <div>

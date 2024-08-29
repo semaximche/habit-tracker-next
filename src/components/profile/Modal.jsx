@@ -1,5 +1,7 @@
 import React from 'react';
 
+ //Modal component displays a modal dialog when isOpen is true.
+
 const Modal = ({ isOpen, onClose, children }) => {
     if (!isOpen) return null;
 

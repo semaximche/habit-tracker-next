@@ -7,6 +7,14 @@ import Loading from '@/components/loading'; // Assuming you have a Loading compo
 import { Button } from '@material-tailwind/react';
 import Link from 'next/link';
 
+/**
+ * Home component serves as the landing page of the application.
+ * It displays a Vanta.js background effect and either a sign-up form 
+ * or a welcome message with a link to the dashboard based on user authentication status.
+ * The component handles loading of necessary scripts for the Vanta effect and 
+ * manages the dark mode configuration.
+ */
+
 export default function Home() {
     const [vantaEffect, setVantaEffect] = useState(null);
     const { darkMode } = useDarkMode();

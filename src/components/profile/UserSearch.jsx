@@ -13,8 +13,14 @@ import { unfollowUser } from './followSYS/unFollowing';
 import MiniProfile from './MiniProfile';
 import { useRouter } from 'next/navigation';
 
+// The UserSearch component allows users to search for other users by their username. 
+// It retrieves users from Firestore based on the search term and shows their profiles, 
+// along with the option to follow or unfollow them. The component also provides 
+// feedback messages to the user and manages loading states during search operations.
+
 const db = getFirestore();
 
+// Function to handle user search
 const UserSearch = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -43,6 +49,7 @@ const UserSearch = () => {
             const querySnapshot = await getDocs(q);
             const results = [];
 
+            // Loop through each document returned by the query
             for (let doc of querySnapshot.docs) {
                 const userData = { id: doc.id, ...doc.data() };
                 const followQuery = query(
@@ -73,6 +80,7 @@ const UserSearch = () => {
         }
     };
 
+    // Function to toggle follow status of a user
     const handleFollowToggle = async (friendId, isCurrentlyFollowed) => {
         if (user) {
             try {
@@ -101,6 +109,7 @@ const UserSearch = () => {
         }
     };
 
+    // Function to navigate to the user's profile page
     const handleNavigate = (userId) => {
         router.push(`/profile/${userId}`);
     };

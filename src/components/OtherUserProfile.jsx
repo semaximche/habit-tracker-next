@@ -23,6 +23,15 @@ import {
     lightGradientColors,
 } from '@/components/profile/gradientColors';
 
+/**
+ * Displays another user's profile, including their avatar, username,
+ * about section, habit summaries, and badges. Allows following/unfollowing
+ * the user and adapts to dark mode.
+ *
+ * Fetches user data from Firestore based on username or UID.
+ * Shows loading state while data is being retrieved.
+ */
+
 const db = getFirestore();
 
 const OtherUserProfile = () => {

@@ -9,6 +9,13 @@ import CreateHabit from './CreateHabit';
 import ManageHabitsVisibilityModal from './ManageHabitsVisibilityModal';
 import { convertToWords, incrementDate } from '@/lib/utils/dateUtils';
 
+// This component, `HabitsListTable`, manages and displays the user's habit list along with 
+// options to navigate between dates, add new habits, and manage habit visibility.
+// It utilizes various states to control the visibility of modals, the current date being viewed, 
+// and whether user data is loaded. The main content includes buttons for navigating dates, 
+// adding habits, and managing habit visibility. The habit items are displayed through 
+// the `HabitsListContents` component, which is rendered based on the selected date.
+
 export default function HabitsListTable() {
     const { userData, isUserDataLoaded } = useUserData();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +25,7 @@ export default function HabitsListTable() {
     const toggleModal = () => setIsModalOpen(!isModalOpen);
     const toggleManageModal = () => setIsManageModalOpen(!isManageModalOpen);
 
+    // Render the main layout based on user data loading state
     return (
         <div>
             {isUserDataLoaded ? (
@@ -92,7 +100,7 @@ export default function HabitsListTable() {
                     />
                 </div>
             ) : (
-                <Loading />
+                <Loading /> // Show loading component while user data is being fetched
             )}
             <CreateHabit isModalOpen={isModalOpen} toggleModal={toggleModal} />
         </div>

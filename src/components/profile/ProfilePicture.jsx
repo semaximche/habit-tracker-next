@@ -2,6 +2,12 @@ import React from 'react';
 import { useUserData } from '@/contexts/UserContext';
 import Loading from '../loading';
 
+// The ProfilePicture component displays the user's profile picture. 
+// It first checks if the user data is loaded; if not, it shows a 
+// loading indicator. Once the data is available, it displays the 
+// user's avatar or a default image if the avatar is not set. 
+// The image is styled with specific dimensions and a border.
+
 const ProfilePicture = () => {
     const { userData, isUserDataLoaded } = useUserData();
 

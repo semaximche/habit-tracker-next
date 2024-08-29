@@ -1,5 +1,7 @@
 import React from 'react';
 
+//Container component for wrapping content with a title and optional padding.
+
 const Container = ({ title, pad, children }) => {
     return (
         <div>

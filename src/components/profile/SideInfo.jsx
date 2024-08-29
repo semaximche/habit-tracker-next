@@ -19,6 +19,13 @@ import { useUserData } from '@/contexts/UserContext';
 import Link from 'next/link';
 import AllCategories from './AllCategories';
 
+// The SideInfo component displays information about the user's online status, badges, 
+// habits, and followed users. It fetches followed users from Firestore and allows 
+// users to follow or unfollow other users. The component also includes a modal 
+// for viewing badges and a search feature to find other users. It dynamically 
+// updates the followed users list based on Firestore data and navigates to 
+// other users' profiles when clicked.
+
 const db = getFirestore();
 
 const SideInfo = ({ className }) => {
@@ -35,6 +42,7 @@ const SideInfo = ({ className }) => {
             const q = query(followsRef, where('followerId', '==', user.uid));
 
             const unsubscribe = onSnapshot(q, async (snapshot) => {
+                // Loop through each followed user document
                 const followedUsersData = [];
                 for (const doc of snapshot.docs) {
                     const followedUserId = doc.data().followedId;
@@ -44,6 +52,8 @@ const SideInfo = ({ className }) => {
                             where('uid', '==', followedUserId)
                         )
                     );
+
+                    // If the user document exists, push user data to followedUsersData array
                     if (!userDoc.empty) {
                         followedUsersData.push({
                             id: followedUserId,
@@ -61,6 +71,7 @@ const SideInfo = ({ className }) => {
         }
     }, [user]);
 
+    // Function to follow a user
     const handleFollow = async (friendId) => {
         if (user) {
             try {
@@ -73,6 +84,7 @@ const SideInfo = ({ className }) => {
         }
     };
 
+    // Function to unfollow a user
     const handleUnfollow = async (friendId) => {
         if (user) {
             try {
@@ -83,9 +95,7 @@ const SideInfo = ({ className }) => {
         }
     };
 
-    // const handleNavigateToProfile = (username) => {
-    //   router.push(`/profile/${username}`);
-    // };
+
     const handleNavigateToProfile = (username) => {
         router.push(`/OtherUserProfile?username=${username}`);
     };

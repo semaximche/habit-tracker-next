@@ -9,6 +9,12 @@ import {
 } from 'firebase/firestore';
 import { useAuth } from '@/contexts/AuthContext';
 
+/**
+ * Removes a follow relationship in the Firestore database.
+ * Queries the 'follows' collection to find and delete the document
+ * where the followerId matches the given follower and followed IDs.
+ */
+
 const db = getFirestore();
 
 async function unfollowUser(followerId, followedId) {

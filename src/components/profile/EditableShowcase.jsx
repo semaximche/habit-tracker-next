@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
 
+/**
+ * EditableShowcase component allows users to add a showcase to their profile.
+ * It includes a button to trigger the editing mode and displays a message.
+ */
+
 const EditableShowcase = () => {
     const [gotoEditShowCases, setGotoEditShowCases] = useState(false);
 

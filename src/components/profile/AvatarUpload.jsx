@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 
+/**
+ * AvatarUpload component allows users to upload and preview an avatar image.
+ * - Displays a preview of the selected avatar or a placeholder if none is selected.
+ * - Handles file selection via a hidden input, updating the preview when a new file is chosen.
+ * - Notifies the parent component of the selected file through the `onAvatarSelect` callback.
+ */
+
 const AvatarUpload = ({ currentAvatarURL, onAvatarSelect }) => {
     const [preview, setPreview] = useState(currentAvatarURL);
 
+    // Handle the change event when a new avatar is selected
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
         if (file) {

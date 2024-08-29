@@ -6,10 +6,20 @@ import { useUserData } from '@/contexts/UserContext';
 import Loading from '../loading';
 import { UseAuth } from '@/contexts/AuthContext';
 
+/**
+ * AllCategories component displays a summary of user habits organized by categories.
+ * - Retrieves user data and calculates categories based on habits.
+ * - Each category shows total XP, number of habits, and last completed date.
+ * - Displays a loading indicator while user data is being fetched.
+ * - Renders a list of categories or a message if no categories are available.
+ */
+
 const AllCategories = () => {
+    // Get the authenticated user and user data
     const { user } = UseAuth();
     const { userData, isUserDataLoaded } = useUserData();
 
+    // Show loading indicator while user data is being fetched
     if (!isUserDataLoaded) {
         return (
             <div className="flex justify-center items-center h-full">
@@ -23,6 +33,7 @@ const AllCategories = () => {
         const habit = userData.habits[habitKey];
         const category = habit.category;
 
+        // Initialize category if it doesn't exist
         if (!acc[category]) {
             acc[category] = {
                 name: category,
