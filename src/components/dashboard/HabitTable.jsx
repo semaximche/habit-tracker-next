@@ -13,15 +13,14 @@ import {
 import { useDarkMode } from '@/contexts/DarkModeContext';
 
 const HabitTable = () => {
-    const [habits, setHabits] = useState([]); // State to store the habits fetched from Firebase
-    const { user } = UseAuth(); // Accessing the authenticated user from the AuthContext
-    const { isUserDataLoaded } = useUserData(); // Checking if user data is loaded from UserContext
-    const [thisDate, setThisDate] = useState(new Date()); // State to track the current date
-    const { darkMode } = useDarkMode(); // Accessing dark mode preference from DarkModeContext
+    const [habits, setHabits] = useState([]);
+    const { user } = UseAuth();
+    const { isUserDataLoaded } = useUserData();
+    const [thisDate, setThisDate] = useState(new Date());
+    const { darkMode } = useDarkMode();
 
     useEffect(() => {
         if (user && isUserDataLoaded) {
-            // Fetch habits from Firebase once user data is loaded
             const habitsRef = collection(db, `/users/${user.uid}/habits`);
             const q = query(habitsRef, where('isHidden', '==', false)); // Only fetch non-hidden habits
 
@@ -39,21 +38,19 @@ const HabitTable = () => {
                         isHidden: habit.isHidden,
                     });
                 });
-                setHabits(habitsData); // Update the habits state with the fetched data
+                setHabits(habitsData);
             });
 
-            return () => unsubscribe(); // Cleanup the subscription on component unmount
+            return () => unsubscribe();
         }
     }, [user, isUserDataLoaded]);
 
-    // Calculate the week days based on the current date (thisDate)
     const weekDays = Array.from({ length: 7 }, (_, i) => {
         return incrementDate(thisDate, i - thisDate.getDay());
     });
 
     return (
         <div>
-            {/* Date navigation: allows switching between weeks */}
             <div className="flex flex-row justify-between items-center mb-4">
                 <button
                     onClick={() => setThisDate(incrementDate(thisDate, -7))}
@@ -73,12 +70,10 @@ const HabitTable = () => {
                 </button>
             </div>
 
-            {/* Habit table displaying the habits for the week */}
             <table className="w-full mt-6">
                 <thead>
                     <tr>
                         <th className="w-44"></th>
-                        {/* Display the days of the week as table headers */}
                         {weekDays.map((day, index) => (
                             <th
                                 key={index}
@@ -90,7 +85,6 @@ const HabitTable = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* Display each habit in a row */}
                     {habits.map((item, idx) => (
                         <tr key={idx}>
                             <td className="flex p-2">
@@ -98,7 +92,6 @@ const HabitTable = () => {
                                     {item.name}
                                 </span>
                             </td>
-                            {/* Display each day's status (active/inactive, complete/incomplete) */}
                             {weekDays.map((day, dayIdx) => (
                                 <td
                                     key={dayIdx}
@@ -111,16 +104,15 @@ const HabitTable = () => {
                                                 ? item.completeDays.includes(
                                                       convertToFormat(day)
                                                   )
-                                                    ? item.color // Marked complete color
+                                                    ? item.color //Marked complete colour
                                                     : darkMode
-                                                      ? 'rgb(15, 23, 42)' // Active dark mode color
-                                                      : 'rgb(229, 231, 235)' // Active light mode color
+                                                      ? 'rgb(15, 23, 42)' //Active dark mode colour
+                                                      : 'rgb(229, 231, 235)' //Active light mode colour
                                                 : darkMode
-                                                  ? 'rgb(25, 32, 52)' // Inactive dark mode color
-                                                  : 'rgb(209, 213, 219)', // Inactive light mode color
+                                                  ? 'rgb(25, 32, 52)' //Inactive dark mode colour
+                                                  : 'rgb(209, 213, 219)', //Inactive light mode colour
                                     }}
                                 >
-                                    {/* Display a checkmark if the habit is complete for that day */}
                                     {item.completeDays.includes(
                                         convertToFormat(day)
                                     )

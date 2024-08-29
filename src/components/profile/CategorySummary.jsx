@@ -6,17 +6,18 @@ import {
     subMonths,
     startOfMonth,
     endOfMonth,
-    parse,
+    parseISO,
     isBefore,
     isAfter,
     isValid,
+    parse,
 } from 'date-fns';
 import Loading from '../loading';
 
 const CategorySummary = () => {
     const { userData, isUserDataLoaded, awardBadge } = useUserData();
 
-    // Display a loading screen while user data is being fetched
+    // If data is still loading, show the Loading component
     if (!isUserDataLoaded) {
         return (
             <Container
@@ -29,14 +30,12 @@ const CategorySummary = () => {
         );
     }
 
-    // Determine the start and end dates for the month to review
     const lastMonthDate = subMonths(new Date(), 1);
     const currentMonthDate = new Date();
     let monthStart, monthEnd;
 
     const currentMonthStart = startOfMonth(currentMonthDate);
 
-    // Check if there are any completions before the start of the current month
     const hasPastCompletions = Object.keys(userData.habits).some((habitKey) => {
         const habit = userData.habits[habitKey];
         return habit.completeDays.some((dateStr) => {
@@ -48,7 +47,6 @@ const CategorySummary = () => {
         });
     });
 
-    // Set month boundaries based on whether there are past completions
     if (hasPastCompletions) {
         monthStart = startOfMonth(lastMonthDate);
         monthEnd = endOfMonth(lastMonthDate);
@@ -62,12 +60,10 @@ const CategorySummary = () => {
     let newHabits = 0;
     const categoryStats = {};
 
-    // Calculate statistics for each habit
     Object.keys(userData.habits).forEach((habitKey) => {
         const habit = userData.habits[habitKey];
         const { completeDays, category } = habit;
 
-        // Check if habit was completed in the review month
         const completedInMonth = completeDays.some((dateStr) => {
             const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
             return (
@@ -99,14 +95,14 @@ const CategorySummary = () => {
                     totalDays: 0,
                 };
             }
-            categoryStats[category].daysCompleted += lastMonthCompletions.length;
-            categoryStats[category].totalDays += 30; // Assuming 30 days in a month
+            categoryStats[category].daysCompleted +=
+                lastMonthCompletions.length;
+            categoryStats[category].totalDays += 30; // Assuming each habit has 30 days in a month
 
-            // Award XP for completed days
-            categoryStats[category].xp += lastMonthCompletions.length * 10;
+            // Calculate XP for the category
+            categoryStats[category].xp += lastMonthCompletions.length * 10; // XP per completed day
         }
 
-        // Check if habit was newly completed in the review month
         const firstCompletionInMonth = completeDays
             .map((dateStr) => parse(dateStr, 'd-M-yyyy', new Date()))
             .filter(
@@ -129,7 +125,26 @@ const CategorySummary = () => {
         }
     });
 
-    // Sort categories by the percentage of days completed
+    // Award badges based on the criteria
+    // useEffect(() => {
+    //   // Category badges
+    //   Object.keys(categoryStats).forEach(categoryName => {
+    //     if (categoryStats[categoryName].xp >= 300) {
+    //       awardBadge(`${categoryName} Expert`, `/images/${categoryName.toLowerCase().replace(/\s+/g, '_')}_expert.png`);
+    //     }
+    //   });
+
+    //   // Task badges
+    //   if (tasksCompleted >= 10) awardBadge('Little Task', '/images/little_task.png');
+    //   if (tasksCompleted >= 30) awardBadge('Tasky Tasky', '/images/tasky_tasky.png');
+    //   if (tasksCompleted >= 100) awardBadge('Task Expert', '/images/task_expert.png');
+    //   if (tasksCompleted >= 200) awardBadge('Task Ninja', '/images/task_ninja.png');
+
+    //   // Habit badges
+    //   if (habitsAchieved >= 5 && habitsAchieved <= 9) awardBadge('Habit Enjoyer', '/images/habit_enjoyer.png');
+    //   if (habitsAchieved >= 10) awardBadge('Habit Lover', '/images/habit_lover.png');
+    // }, [tasksCompleted, habitsAchieved, categoryStats, awardBadge]);
+
     const sortedCategories = Object.values(categoryStats)
         .map((cat) => ({
             ...cat,
@@ -137,7 +152,6 @@ const CategorySummary = () => {
         }))
         .sort((a, b) => b.percentage - a.percentage);
 
-    // Get the top 4 categories
     const topCategories = sortedCategories.slice(0, 4);
 
     return (

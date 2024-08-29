@@ -9,30 +9,24 @@ import { Button, Input } from '@/components/MaterialUI';
 import { signInAsGuest, signInWithGoogle } from '@/lib/firebase/auth';
 
 export default function LoginForm() {
-    // State variables to store the user's email, password, and any error messages
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    
-    const { user } = UseAuth(); // Retrieves the currently authenticated user from context
-    const router = useRouter(); // Next.js router for navigation
+    const { user } = UseAuth();
+    const router = useRouter();
 
-    // useEffect hook to redirect the user to the dashboard if they are already logged in
     useEffect(() => {
         if (user) {
-            router.push('/dashboard'); // Redirect to the dashboard if the user is already authenticated
+            router.push('/dashboard'); // Redirect if already logged in
         }
     }, [user, router]);
 
-    // Function to handle form submission for logging in with email and password
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent the default form submission behavior
+        e.preventDefault();
         try {
-            // Attempt to sign in the user with the provided email and password
             await signInWithEmailAndPassword(auth, email, password);
-            router.push('/dashboard'); // Redirect to the dashboard upon successful login
+            router.push('/dashboard'); // Redirect to main page after logging in
         } catch (error) {
-            // Display an error message if the login fails
             setError('Invalid email or password. Please try again.');
             console.error('Error signing in:', error);
         }
@@ -40,13 +34,11 @@ export default function LoginForm() {
 
     return (
         <div className="flex flex-col items-center gap-3">
-            {/* Button to sign in with Google */}
             <Button
                 className="flex items-center gap-2 w-52 h-10"
                 color="blue"
                 onClick={signInWithGoogle}
             >
-                {/* Google logo SVG */}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
@@ -59,8 +51,6 @@ export default function LoginForm() {
                 </svg>
                 Login with Google
             </Button>
-            
-            {/* Button to sign in as a guest */}
             <Button
                 className="w-52 h-10"
                 color="blue-gray"
@@ -68,23 +58,16 @@ export default function LoginForm() {
             >
                 Login as Guest
             </Button>
-            
-            {/* Divider with text "Or" */}
             <div className="flex flex-row items-center gap-2">
                 <span className="bg-accent-light block px-20 h-0.5"></span>
                 <p className="text-accent-light">Or</p>
                 <span className="bg-accent-light block px-20 h-0.5"></span>
             </div>
-            
-            {/* Display error message if there is one */}
             {error && <p className="text-red-500">{error}</p>}
-            
-            {/* Login form for email and password */}
             <form
                 onSubmit={handleSubmit}
                 className="flex flex-col w-52 items-center gap-3"
             >
-                {/* Input for the email address */}
                 <Input
                     label="Email"
                     type="email"
@@ -94,8 +77,6 @@ export default function LoginForm() {
                     required
                     className="p-2 w-52"
                 />
-                
-                {/* Input for the password */}
                 <Input
                     label="Password"
                     type="password"
@@ -104,8 +85,6 @@ export default function LoginForm() {
                     required
                     className="p-2 w-52"
                 />
-                
-                {/* Submit button */}
                 <Button type="submit" className="w-52 h-10" color="blue-gray">
                     Login
                 </Button>

@@ -17,23 +17,19 @@ import {
 } from '@/components/profile/gradientColors';
 
 function ProfileMain() {
-    // Retrieve dark mode status and user data
     const { darkMode } = useDarkMode();
     const { userData, isUserDataLoaded } = useUserData(); // Updated hook
     const [colors, setColors] = useState(darkGradientColors.user.colors);
 
-    // State to manage editing mode and selected gradients
     const [isEditing, setIsEditing] = useState(false);
     const [selectedLightGradient, setSelectedLightGradient] =
         useState('oceanBreeze');
     const [selectedDarkGradient, setSelectedDarkGradient] = useState('user');
 
-    // Check if the user is a guest
     const isGuest = isUserDataLoaded && userData?.isAnonymous;
 
     useEffect(() => {
         if (isUserDataLoaded && userData) {
-            // Update selected gradients based on user data
             setSelectedLightGradient(
                 userData.profile?.lightGradient || 'oceanBreeze'
             );
@@ -42,7 +38,6 @@ function ProfileMain() {
     }, [isUserDataLoaded, userData]);
 
     const handleColorChange = (lightColorKey, darkColorKey) => {
-        // Update gradients and colors based on user selection
         setSelectedLightGradient(lightColorKey);
         setSelectedDarkGradient(darkColorKey);
         setColors(
@@ -53,7 +48,7 @@ function ProfileMain() {
     };
 
     useEffect(() => {
-        // Update colors when dark mode or selected gradients change
+        // Update colors when dark mode changes based on the selected gradient keys
         setColors(
             darkMode
                 ? darkGradientColors[selectedDarkGradient].colors
@@ -63,7 +58,6 @@ function ProfileMain() {
 
     return (
         <div className="relative max-w-screen-xl mx-auto p-5 bg-gray-800">
-            {/* Background gradient overlay */}
             <div
                 className="absolute inset-0"
                 style={{
@@ -72,7 +66,6 @@ function ProfileMain() {
                 }}
             ></div>
             <div className="relative flex flex-wrap lg:flex-nowrap lg:space-x-5">
-                {/* Main content area */}
                 <div className="flex-1 flex flex-col space-y-5">
                     {isEditing && !isGuest ? (
                         <EditProfile
@@ -89,7 +82,6 @@ function ProfileMain() {
                         </>
                     )}
                 </div>
-                {/* Sidebar area */}
                 <div className="w-full lg:w-[360px] flex-shrink-0 mt-5 lg:mt-0">
                     <LevelBadge onEdit={() => setIsEditing(true)} />
                     <div className="mt-5 lg:mt-24">

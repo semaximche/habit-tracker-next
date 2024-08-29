@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Container from './profile/pContainer'; // Import the Container component for layout
+import Container from './profile/pContainer';
 import {
     getFirestore,
     doc,
@@ -12,28 +12,26 @@ import {
     subMonths,
     startOfMonth,
     endOfMonth,
-    parse,
     parseISO,
     isBefore,
     isAfter,
     isValid,
+    parse,
 } from 'date-fns';
-import Loading from './loading'; // Import the Loading component to show a loading state
+import Loading from './loading';
 
-const db = getFirestore(); // Initialize Firestore
+const db = getFirestore();
 
 const OtherUserCategorySummary = ({ userId }) => {
-    const [userData, setUserData] = useState(null); // State to hold user data
-    const [isLoading, setIsLoading] = useState(true); // State to manage loading state
+    const [userData, setUserData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                // Fetch user document
                 const userDoc = await getDoc(doc(db, 'users', userId));
                 if (userDoc.exists()) {
                     const user = userDoc.data();
-                    // Fetch user habits
                     const habitsCollection = await getDocs(
                         collection(db, `users/${userId}/habits`)
                     );
@@ -41,34 +39,34 @@ const OtherUserCategorySummary = ({ userId }) => {
                     habitsCollection.forEach((doc) => {
                         habits[doc.id] = doc.data();
                     });
-                    setUserData({ ...user, habits }); // Set user data state
+                    setUserData({ ...user, habits });
                 }
             } catch (error) {
-                console.error('Error fetching user data:', error); // Handle errors
+                console.error('Error fetching user data:', error);
             } finally {
-                setIsLoading(false); // Set loading state to false
+                setIsLoading(false);
             }
         };
 
         fetchUserData();
-    }, [userId]); // Run effect when userId changes
+    }, [userId]);
 
     if (isLoading) {
         return (
             <Container title={`Habit Month Review`}>
                 <div className="bg-gradient-to-r from-purple-700 via-purple-800 to-blue-900 p-5 mb-5 text-white items-center justify-center">
-                    <Loading /> {/* Show loading spinner while data is being fetched */}
+                    <Loading />
                 </div>
             </Container>
         );
     }
 
     if (!userData) {
-        return null; // Return nothing if no user data is available
+        return null;
     }
 
-    const lastMonthDate = subMonths(new Date(), 1); // Get the date for last month
-    const currentMonthDate = new Date(); // Get the current date
+    const lastMonthDate = subMonths(new Date(), 1);
+    const currentMonthDate = new Date();
     let monthStart, monthEnd;
 
     // Check if the user has any habits completed before the current month
@@ -107,7 +105,7 @@ const OtherUserCategorySummary = ({ userId }) => {
             ? new Date(lastCompleted.seconds * 1000)
             : null;
 
-        // Check if the habit was completed at least once in the month
+        // Check if the habit was completed at least once in the last month
         const completedInMonth = completeDays.some((dateStr) => {
             const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
             return (
@@ -118,9 +116,9 @@ const OtherUserCategorySummary = ({ userId }) => {
         });
 
         if (completedInMonth) {
-            habitsAchieved += 1; // Increment habits achieved
+            habitsAchieved += 1;
 
-            // Count only completions made in the month
+            // Count only completions made in the last month
             const lastMonthCompletions = completeDays.filter((dateStr) => {
                 const completedDate = parse(dateStr, 'd-M-yyyy', new Date());
                 return (
@@ -130,7 +128,7 @@ const OtherUserCategorySummary = ({ userId }) => {
                 );
             });
 
-            tasksCompleted += lastMonthCompletions.length; // Increment tasks completed
+            tasksCompleted += lastMonthCompletions.length;
 
             // Update category stats
             if (!categoryStats[category]) {
@@ -140,11 +138,12 @@ const OtherUserCategorySummary = ({ userId }) => {
                     totalDays: 0,
                 };
             }
-            categoryStats[category].daysCompleted += lastMonthCompletions.length;
+            categoryStats[category].daysCompleted +=
+                lastMonthCompletions.length;
             categoryStats[category].totalDays += 30; // Assuming each habit has 30 days in a month
         }
 
-        // Check the first completion in the month
+        // Iterate over completeDays to check the first completion in the last month
         const firstCompletionInMonth = completeDays
             .map((dateStr) => parse(dateStr, 'd-M-yyyy', new Date()))
             .filter(
@@ -163,9 +162,9 @@ const OtherUserCategorySummary = ({ userId }) => {
             );
         });
 
-        // If the habit was first completed in the month and had no prior completions
+        // If the habit was first completed last month and had no prior completions
         if (firstCompletionInMonth && hadNoPriorCompletions) {
-            newHabits += 1; // Increment new habits count
+            newHabits += 1;
         }
     });
 

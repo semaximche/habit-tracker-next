@@ -16,13 +16,11 @@ const EditProfileInfoText = ({
     darkGradient,
     setDarkGradient,
 }) => {
-    // List of predefined locations
     const locations = ['Israel, Tel-Aviv', 'Israel, Haifa', 'Israel, Carmiel'];
 
     return (
         <div className="tab-pane active">
             <form className="form" onSubmit={(e) => e.preventDefault()}>
-                {/* Username Input Field */}
                 <div className="mb-4">
                     <label className="block mb-2">Username</label>
                     <input
@@ -33,8 +31,6 @@ const EditProfileInfoText = ({
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </div>
-
-                {/* About Textarea Field */}
                 <div className="mb-4">
                     <label className="block mb-2">About</label>
                     <textarea
@@ -45,8 +41,6 @@ const EditProfileInfoText = ({
                         onChange={(e) => setAbout(e.target.value)}
                     ></textarea>
                 </div>
-
-                {/* Location Dropdown */}
                 <div className="mb-4">
                     <label className="block mb-2">Location</label>
                     <select
@@ -62,7 +56,7 @@ const EditProfileInfoText = ({
                     </select>
                 </div>
 
-                {/* Light Mode Gradient Dropdown */}
+                {/* Light Mode Color Picker */}
                 <div className="mb-4">
                     <label htmlFor="lightGradient" className="block mb-2">
                         Light Mode Gradient
@@ -82,7 +76,7 @@ const EditProfileInfoText = ({
                     </select>
                 </div>
 
-                {/* Dark Mode Gradient Dropdown */}
+                {/* Dark Mode Color Picker */}
                 <div className="mb-4">
                     <label htmlFor="darkGradient" className="block mb-2">
                         Dark Mode Gradient

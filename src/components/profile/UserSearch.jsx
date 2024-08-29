@@ -34,7 +34,6 @@ const UserSearch = () => {
         setSearchResults([]);
 
         try {
-            // Firestore query to search for users with a username matching the searchTerm
             const usersRef = collection(db, 'users');
             const q = query(
                 usersRef,
@@ -44,7 +43,6 @@ const UserSearch = () => {
             const querySnapshot = await getDocs(q);
             const results = [];
 
-            // Iterate through query results and check if the current user follows them
             for (let doc of querySnapshot.docs) {
                 const userData = { id: doc.id, ...doc.data() };
                 const followQuery = query(
@@ -55,7 +53,6 @@ const UserSearch = () => {
                 const followSnapshot = await getDocs(followQuery);
                 userData.isFollowed = !followSnapshot.empty;
 
-                // Exclude the current user's own profile from the search results
                 if (userData.id !== user.uid) {
                     results.push(userData);
                 }
@@ -63,7 +60,11 @@ const UserSearch = () => {
 
             setSearchResults(results);
 
-            setMessage(results.length === 0 ? 'No users found.' : `Found ${results.length} user(s).`);
+            if (results.length === 0) {
+                setMessage('No users found.');
+            } else {
+                setMessage(`Found ${results.length} user(s).`);
+            }
         } catch (error) {
             console.error('Error searching for users:', error);
             setMessage('An error occurred while searching. Please try again.');
@@ -83,7 +84,6 @@ const UserSearch = () => {
                     setMessage('User followed successfully!');
                 }
 
-                // Update the local state to reflect the follow/unfollow action
                 setSearchResults((prevResults) =>
                     prevResults.map((result) =>
                         result.id === friendId
@@ -115,12 +115,12 @@ const UserSearch = () => {
                     placeholder="Search for users..."
                     className="w-full px-4 py-2 bg-gray-800 text-white rounded-lg focus:outline-none"
                     style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
-                    disabled={isLoading} // Disable input while loading to prevent multiple requests
+                    disabled={isLoading}
                 />
                 <button
                     onClick={handleSearch}
                     className="absolute right-0 top-0 mt-2 mr-2 text-white"
-                    disabled={isLoading} // Disable button while loading to prevent multiple clicks
+                    disabled={isLoading}
                 >
                     🔍
                 </button>
@@ -139,7 +139,9 @@ const UserSearch = () => {
                         name={result.username}
                         lastOnline={result.lastOnline || 'Unknown'}
                         badgeNumber={result.badgeNumber || 1}
-                        onFollow={() => handleFollowToggle(result.id, result.isFollowed)}
+                        onFollow={() =>
+                            handleFollowToggle(result.id, result.isFollowed)
+                        }
                         onNavigate={() => handleNavigate(result.id)}
                         isFollowed={result.isFollowed}
                     />

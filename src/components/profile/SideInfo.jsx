@@ -22,24 +22,18 @@ import AllCategories from './AllCategories';
 const db = getFirestore();
 
 const SideInfo = ({ className }) => {
-    // State for handling the modal visibility
     const [isModalOpen, setIsModalOpen] = useState(false);
     const toggleModal = () => setIsModalOpen(!isModalOpen);
-
-    // State for storing the list of followed users
     const [followedUsers, setFollowedUsers] = useState([]);
-    
     const router = useRouter();
-    const { user } = useAuth(); // Accessing the current logged-in user
-    const { userData } = useUserData(); // Accessing user data from context
+    const { user } = useAuth();
+    const { userData } = useUserData();
 
-    // Effect to fetch and listen to followed users when the component mounts
     useEffect(() => {
         if (user) {
             const followsRef = collection(db, 'follows');
             const q = query(followsRef, where('followerId', '==', user.uid));
 
-            // Listening for real-time updates on followed users
             const unsubscribe = onSnapshot(q, async (snapshot) => {
                 const followedUsersData = [];
                 for (const doc of snapshot.docs) {
@@ -63,12 +57,10 @@ const SideInfo = ({ className }) => {
                 setFollowedUsers(followedUsersData);
             });
 
-            // Clean up the subscription when the component unmounts
             return () => unsubscribe();
         }
     }, [user]);
 
-    // Function to handle following a user
     const handleFollow = async (friendId) => {
         if (user) {
             try {
@@ -81,7 +73,6 @@ const SideInfo = ({ className }) => {
         }
     };
 
-    // Function to handle unfollowing a user
     const handleUnfollow = async (friendId) => {
         if (user) {
             try {
@@ -92,11 +83,12 @@ const SideInfo = ({ className }) => {
         }
     };
 
-    // Function to navigate to another user's profile
+    // const handleNavigateToProfile = (username) => {
+    //   router.push(`/profile/${username}`);
+    // };
     const handleNavigateToProfile = (username) => {
         router.push(`/OtherUserProfile?username=${username}`);
     };
-
     return (
         <div
             className={`p-5 bg-gray-950 rounded-lg ${className}`}
@@ -111,12 +103,11 @@ const SideInfo = ({ className }) => {
                 </p>
             </div>
             <div className="mb-4">
-                {/* Button to open the badges modal */}
                 <button
                     onClick={toggleModal}
                     className="text-white font-semibold"
                 >
-                    <Badges />
+                    <Badges></Badges>
                 </button>
                 <BadgeModal isOpen={isModalOpen} toggleModal={toggleModal} />
             </div>
@@ -124,14 +115,13 @@ const SideInfo = ({ className }) => {
                 <p className="text-lg">
                     Habits {Object.keys(userData.habits).length}
                 </p>
-                {/* Link to the categories page */}
                 <Link href="/AllCategories" className="text-white">
+                    {' '}
                     Categories
                 </Link>
             </div>
             <div>
                 <p className="text-lg mb-2">Following {followedUsers.length}</p>
-                {/* Render a mini profile for each followed user */}
                 {followedUsers.map((friend) => (
                     <MiniProfile
                         key={friend.id}
