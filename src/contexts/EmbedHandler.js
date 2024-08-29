@@ -11,7 +11,7 @@ const EmbedHandler = () => {
   };
 
   const sendHeightToParent = useCallback(() => {
-    const height = Math.min(document.body.offsetHeight, 1000); // Adjust to use offsetHeight
+    const height = Math.min(document.body.offsetHeight, 500); // Adjust to use offsetHeight
     console.log(`Sending height: ${height}`); // Debugging line
     window.parent.postMessage({ type: 'myApp', action: 'setHeight', height }, '*');
   }, []);
