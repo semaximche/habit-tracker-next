@@ -13,7 +13,7 @@ const EmbedHandler = () => {
   };
 
   const sendHeightToParent = useCallback(() => {
-    const currentHeight = Math.min(document.body.offsetHeight, 1500); // Adjust the max height as needed
+    const currentHeight = Math.min(document.body.offsetHeight, 200); // Adjust the max height as needed
     if (Math.abs(currentHeight - lastHeight) > 10) { // Only update if height changes significantly
       setLastHeight(currentHeight);
       console.log(`Sending height: ${currentHeight}`); // Debugging line
