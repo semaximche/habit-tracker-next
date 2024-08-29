@@ -1,11 +1,16 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 const EmbedHandler = () => {
+  const prevHeightRef = useRef(0);
+
   useEffect(() => {
     const sendHeightToParent = () => {
-      const height = document.body.scrollHeight;
-      window.parent.postMessage({ type: 'myApp', action: 'setHeight', height }, '*');
+      const currentHeight = document.body.scrollHeight;
+      if (currentHeight !== prevHeightRef.current) {
+        window.parent.postMessage({ type: 'myApp', action: 'setHeight', height: currentHeight }, '*');
+        prevHeightRef.current = currentHeight;
+      }
     };
 
     const handleMessage = (event) => {
@@ -13,26 +18,27 @@ const EmbedHandler = () => {
         sendHeightToParent();
       }
       if (event.data.action === 'setTheme') {
-        // You can handle theme setting here if needed
+        // Implement theme setting logic here if needed
       }
     };
 
     window.addEventListener('message', handleMessage);
 
-    // Send height immediately and after a short delay
-    sendHeightToParent();
+    // Send height after a short delay to ensure content is rendered
     setTimeout(sendHeightToParent, 100);
 
-    // Set up ResizeObserver
+    // Set up ResizeObserver with debounce
+    let resizeTimer;
     const resizeObserver = new ResizeObserver(() => {
-      sendHeightToParent();
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(sendHeightToParent, 100);
     });
     resizeObserver.observe(document.body);
 
-    // Cleanup
     return () => {
       window.removeEventListener('message', handleMessage);
       resizeObserver.disconnect();
+      clearTimeout(resizeTimer);
     };
   }, []);
 
