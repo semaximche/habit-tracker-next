@@ -14,13 +14,14 @@ import { UseAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase/firebaseInit';
 import { addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
-import { HexColorPicker } from 'react-colorful';
+import { HexColorPicker } from 'react-colorful'; // HexColorPicker component for color selection
+
 
 export default function CreateHabit({ isModalOpen, toggleModal }) {
-    const [handling, setHandling] = useState(false);
-    const [category, setCategory] = useState('');
-    const [color, setColor] = useState('#aabbcc');
-    const { user } = UseAuth();
+    const [handling, setHandling] = useState(false); 
+    const [category, setCategory] = useState(''); 
+    const [color, setColor] = useState('#aabbcc'); 
+    const { user } = UseAuth(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
