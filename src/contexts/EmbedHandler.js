@@ -11,7 +11,8 @@ const EmbedHandler = () => {
   };
 
   const sendHeightToParent = useCallback(() => {
-    const height = Math.min(document.body.scrollHeight, 5000); // Set a maximum height
+    const height = Math.min(document.body.offsetHeight, 5000); // Adjust to use offsetHeight
+    console.log(`Sending height: ${height}`); // Debugging line
     window.parent.postMessage({ type: 'myApp', action: 'setHeight', height }, '*');
   }, []);
 
@@ -21,15 +22,14 @@ const EmbedHandler = () => {
     const handleMessage = (event) => {
       if (event.data === 'requestHeight') {
         sendHeightToParent();
-      }
-      if (event.data.action === 'setTheme') {
+      } else if (event.data.action === 'setTheme') {
         // Handle theme setting if needed
       }
     };
 
     window.addEventListener('message', handleMessage);
 
-    // Send height after a short delay to allow initial render
+    // Initial height send
     setTimeout(sendHeightToParent, 100);
 
     // Set up ResizeObserver
