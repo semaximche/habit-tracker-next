@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
  *Habit-Tracker* *61776* *g-6*
 
- Habit-tracking app with social features: Design a tool for users to track habits and goals while competing or collaborating with friends.
+ Habit-tracking app with social features:a tool for users to track habits and goals while competing or collaborating with friends.
 ## Getting Started
 
 First, run the development server:
