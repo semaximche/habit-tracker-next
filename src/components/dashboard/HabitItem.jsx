@@ -24,6 +24,7 @@ import {
 function getTodayFormatted() {
     const today = new Date();
     return convertToFormat(today);
+    //
 }
 
 function getYesterdayFormatted() {
