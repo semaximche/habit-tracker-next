@@ -10,19 +10,24 @@ import ManageHabitsVisibilityModal from './ManageHabitsVisibilityModal';
 import { convertToWords, incrementDate } from '@/lib/utils/dateUtils';
 
 export default function HabitsListTable() {
-    const { userData, isUserDataLoaded } = useUserData();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isManageModalOpen, setIsManageModalOpen] = useState(false);
-    const [thisDate, setThisDate] = useState(new Date());
+    const { userData, isUserDataLoaded } = useUserData(); // Accessing user data and loading status from UserContext
+    const [isModalOpen, setIsModalOpen] = useState(false); // State to manage the visibility of the Create Habit modal
+    const [isManageModalOpen, setIsManageModalOpen] = useState(false); // State to manage the visibility of the Manage Habits Visibility modal
+    const [thisDate, setThisDate] = useState(new Date()); // State to track the current date displayed
 
+    // Toggles the visibility of the Create Habit modal
     const toggleModal = () => setIsModalOpen(!isModalOpen);
+
+    // Toggles the visibility of the Manage Habits Visibility modal
     const toggleManageModal = () => setIsManageModalOpen(!isManageModalOpen);
 
     return (
         <div>
+            {/* Check if user data is loaded before rendering the main content */}
             {isUserDataLoaded ? (
                 <div className="flex flex-col justify-between h-fit gap-2">
                     <div className="flex flex-row justify-between items-center">
+                        {/* Button to reset the displayed date to today */}
                         <div className="pb-3">
                             <Button
                                 onClick={() => setThisDate(new Date())}
@@ -32,6 +37,7 @@ export default function HabitsListTable() {
                                 Today
                             </Button>
                         </div>
+                        {/* Date navigation buttons to move to the previous or next day */}
                         <div className="flex flex-row gap-4 mb-4 ml-1">
                             <button
                                 onClick={() =>
@@ -41,6 +47,7 @@ export default function HabitsListTable() {
                             >
                                 &lt;
                             </button>
+                            {/* Display the current date in words */}
                             <h2 className="text-lg font-semibold text-accent-light dark:text-accent-dark">
                                 {convertToWords(thisDate)}
                             </h2>
@@ -53,6 +60,7 @@ export default function HabitsListTable() {
                                 &gt;
                             </button>
                         </div>
+                        {/* Button to open the Create Habit modal */}
                         <div className="pb-3 flex gap-2">
                             <Button
                                 onClick={toggleModal}
@@ -63,8 +71,10 @@ export default function HabitsListTable() {
                             </Button>
                         </div>
                     </div>
+                    {/* Render the contents of the habit list for the current date */}
                     <HabitsListContents date={thisDate} />
                     <div className="flex justify-end">
+                        {/* Button to open the Manage Habits Visibility modal */}
                         <IconButton
                             onClick={toggleManageModal}
                             size="sm"
@@ -86,14 +96,16 @@ export default function HabitsListTable() {
                             </svg>
                         </IconButton>
                     </div>
+                    {/* Render the Manage Habits Visibility modal */}
                     <ManageHabitsVisibilityModal
                         isOpen={isManageModalOpen}
                         onClose={toggleManageModal}
                     />
                 </div>
             ) : (
-                <Loading />
+                <Loading /> // Show a loading component while user data is being loaded
             )}
+            {/* Render the Create Habit modal */}
             <CreateHabit isModalOpen={isModalOpen} toggleModal={toggleModal} />
         </div>
     );

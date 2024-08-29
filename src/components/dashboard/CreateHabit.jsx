@@ -5,7 +5,6 @@ import {
     DialogBody,
     DialogFooter,
     Input,
-    Radio,
     Checkbox,
     Select,
     Option,
@@ -14,68 +13,82 @@ import { UseAuth } from '@/contexts/AuthContext';
 import { db } from '@/lib/firebase/firebaseInit';
 import { addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
-import { HexColorPicker } from 'react-colorful'; // HexColorPicker component for color selection
-
+import { HexColorPicker } from 'react-colorful';
 
 export default function CreateHabit({ isModalOpen, toggleModal }) {
-    const [handling, setHandling] = useState(false); 
-    const [category, setCategory] = useState(''); 
-    const [color, setColor] = useState('#aabbcc'); 
-    const { user } = UseAuth(); 
+    const [handling, setHandling] = useState(false);
+    const [category, setCategory] = useState('');
+    const [color, setColor] = useState('#aabbcc');
+    const { user } = UseAuth();
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent the default form submission behavior
+
         if (!handling) {
-            toggleModal();
-            setHandling(true);
-            const habitsRef = collection(db, `/users/${user?.uid}/habits`);
-            const formActiveDays = [];
+            toggleModal(); // Close the modal
+            setHandling(true); // Set handling to true to prevent multiple submissions
+
+            const habitsRef = collection(db, `/users/${user?.uid}/habits`); // Reference to the user's habits collection in Firestore
+
+            const formActiveDays = []; // Array to store the selected active days
             e.target.elements.activeDays.forEach((element, index) => {
                 if (element.checked) {
-                    formActiveDays.push(index);
+                    formActiveDays.push(index); // Add the index of the checked day to the array
                 }
             });
+
+            // Add a new habit document to the Firestore collection
             const docRef = await addDoc(habitsRef, {
-                name: e.target.elements.name.value,
-                color: color,
-                category: category,
-                completeDays: [],
-                activeDays: formActiveDays,
-                isHidden: false, // Add this line
+                name: e.target.elements.name.value, // Habit name from the input field
+                color: color, // Selected color
+                category: category, // Selected category
+                completeDays: [], // Empty array for completed days
+                activeDays: formActiveDays, // Selected active days
+                isHidden: false, // Habit visibility status, default is false
             });
-            setHandling(false);
+
+            setHandling(false); // Reset handling status after submission
         }
     };
 
     return (
         <>
+            {/* Dialog component for the modal */}
             <Dialog
-                open={isModalOpen}
-                handler={toggleModal}
+                open={isModalOpen} // Open the modal if isModalOpen is true
+                handler={toggleModal} // Toggle modal visibility
                 size="xs"
                 className="bg-foreground-light dark:bg-foreground-dark"
             >
                 <DialogHeader className="text-accent-light dark:text-accent-dark">
-                    New Habit
+                    New Habit {/* Modal title */}
                 </DialogHeader>
+
+                {/* Form for creating a new habit */}
                 <form onSubmit={handleSubmit}>
                     <DialogBody>
+                        {/* Input field for the habit name */}
                         <Input
                             className="text-accent-light dark:text-accent-dark"
                             label="Habit Name"
                             placeholder="Exercise"
                             id="name"
                         />
+                        
+                        {/* Color picker for selecting the habit color */}
                         <label>Color</label>
                         <HexColorPicker color={color} onChange={setColor} />
+                        
+                        {/* Dropdown for selecting the habit category */}
                         <label htmlFor="category">Category</label>
                         <select
                             id="category"
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
-                            className="w-full p-2 border rounded text-accent-light dark:text-accent-dark bg-background-light  dark:bg-foreground-dark"
+                            className="w-full p-2 border rounded text-accent-light dark:text-accent-dark bg-background-light dark:bg-foreground-dark"
                         >
                             <option value="">Select a category</option>
+                            {/* Map through the categories and create an option for each */}
                             {[
                                 'Health',
                                 'Fitness',
@@ -92,7 +105,10 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                                 </option>
                             ))}
                         </select>
+                        
                         <br />
+
+                        {/* Checkbox group for selecting active days */}
                         <label>Frequency</label>
                         <div className="flex flex-wrap">
                             {[
@@ -120,6 +136,7 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                         </div>
                     </DialogBody>
                     <DialogFooter>
+                        {/* Button to cancel and close the modal */}
                         <Button
                             variant="text"
                             color="red"
@@ -129,6 +146,7 @@ export default function CreateHabit({ isModalOpen, toggleModal }) {
                         >
                             <span>Cancel</span>
                         </Button>
+                        {/* Button to submit the form and add the habit */}
                         <Button
                             variant="gradient"
                             color="blue-gray"

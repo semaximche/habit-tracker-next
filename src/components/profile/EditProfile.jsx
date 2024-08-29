@@ -12,7 +12,7 @@ const EditProfile = ({ onCancel }) => {
     const { user } = UseAuth(); // Get the current authenticated user
     const { userData } = useUserData();
 
-    // Initialize state for profile fields
+    // State for managing profile fields
     const [username, setUsername] = useState(userData.profile?.username || '');
     const [about, setAbout] = useState(userData.profile?.about || '');
     const [location, setLocation] = useState(
@@ -86,7 +86,7 @@ const EditProfile = ({ onCancel }) => {
                             <a
                                 href="#"
                                 className="text-blue-300 hover:underline"
-                                onClick={onCancel}
+                                onClick={onCancel} // Navigate back to profile
                             >
                                 Back To Profile
                             </a>
@@ -126,7 +126,7 @@ const EditProfile = ({ onCancel }) => {
                                 <div className="flex justify-end mt-4">
                                     <button
                                         className="btn btn-primary"
-                                        onClick={handleSaveChanges}
+                                        onClick={handleSaveChanges} // Save changes on button click
                                     >
                                         Save Changes
                                     </button>
